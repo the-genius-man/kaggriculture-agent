@@ -1,0 +1,37 @@
+name: kaggle-auth-check
+# Read-only diagnostic. Confirms KAGGLE_USERNAME/KAGGLE_KEY reach the CLI and are
+# accepted by Kaggle, without printing either value. Probes generic endpoints first
+# so a competition-rules problem is distinguishable from a bad key.
+on: { workflow_dispatch: {} }
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      COMPETITION: ${{ vars.KAGGLE_COMPETITION }}
+    steps:
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install "kaggle<2"
+      - name: Credential shape (no values printed)
+        run: |
+          python - <<'PY'
+          import os
+          for n in ("KAGGLE_USERNAME", "KAGGLE_KEY"):
+              v = os.environ.get(n, "")
+              print(f"{n}: len={len(v)} len_stripped={len(v.strip())} "
+                    f"has_quote={any(c in v for c in '\"\'')} has_space={' ' in v} "
+                    f"has_newline={any(c in v for c in chr(10)+chr(13))} "
+                    f"alnum={v.strip().isalnum()} lower={v.strip()==v.strip().lower()}")
+          PY
+      - name: Auth probes
+        run: |
+          set +e
+          echo "--- datasets list (generic auth) ---"
+          kaggle datasets list -s titanic --page-size 1 2>&1 | head -6
+          echo "--- competitions list (generic auth) ---"
+          kaggle competitions list --page-size 1 2>&1 | head -6
+          echo "--- target competition leaderboard ---"
+          kaggle competitions leaderboard -c "$COMPETITION" --show 2>&1 | head -6
+          exit 0
