@@ -17,6 +17,9 @@ _baseline.py
 _prefix.py
 main.py
 
+#production environment
+.env
+
 # Kaggle MCP credentials / local config (never commit)
 .mcp.json
 .env
