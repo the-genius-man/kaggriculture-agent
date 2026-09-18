@@ -18,12 +18,17 @@ jobs:
         run: |
           python - <<'PY'
           import os
+          QUOTES = chr(34) + chr(39)
+          NEWLINES = chr(10) + chr(13)
           for n in ("KAGGLE_USERNAME", "KAGGLE_KEY"):
               v = os.environ.get(n, "")
-              print(f"{n}: len={len(v)} len_stripped={len(v.strip())} "
-                    f"has_quote={any(c in v for c in '\"\'')} has_space={' ' in v} "
-                    f"has_newline={any(c in v for c in chr(10)+chr(13))} "
-                    f"alnum={v.strip().isalnum()} lower={v.strip()==v.strip().lower()}")
+              t = v.strip()
+              print(n, "len=%d" % len(v), "len_stripped=%d" % len(t),
+                    "has_quote=%s" % any(c in v for c in QUOTES),
+                    "has_space=%s" % (" " in v),
+                    "has_newline=%s" % any(c in v for c in NEWLINES),
+                    "alnum=%s" % t.isalnum(),
+                    "is_lower=%s" % (t == t.lower()))
           PY
       - name: Auth probes
         run: |
