@@ -1,0 +1,18 @@
+# training artifacts (regenerated on Kaggle/Colab; keep them out of git)
+enhanced_game_v1/
+enhanced_game_v2/
+enhanced_game_v14/
+*_code/
+.enhanced_game_*_env/
+*.zip
+study.db
+study-backup.db
+games.jsonl
+training.log
+__pycache__/
+*.pyc
+_cand.py
+_v14.py
+_baseline.py
+_prefix.py
+main.py

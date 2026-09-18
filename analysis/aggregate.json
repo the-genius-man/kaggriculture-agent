@@ -1,0 +1,18 @@
+{
+  "games": 11,
+  "wins": 4,
+  "losses": 7,
+  "average_loss_margin": -18186.0,
+  "losses_ahead_day20": 6,
+  "mean_ours_strawberry_revenue_in_losses": 8569.142857142857,
+  "mean_opponent_strawberry_revenue_in_losses": 43671.57142857143,
+  "mean_ours_day20_strawberries_in_losses": 3.857142857142857,
+  "mean_opponent_day20_strawberries_in_losses": 34.285714285714285,
+  "mean_ours_day20_wheat_in_losses": 19.571428571428573,
+  "mean_opponent_day20_wheat_in_losses": 2.5714285714285716,
+  "mean_ours_day20_productive_tiles_in_losses": 45.57142857142857,
+  "mean_opponent_day20_productive_tiles_in_losses": 59.42857142857143,
+  "losing_opponents_with_3_quadrants": 6,
+  "total_our_melon_harvests": 211,
+  "total_our_melon_harvests_early_below6": 167
+}

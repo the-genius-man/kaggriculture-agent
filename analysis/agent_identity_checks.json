@@ -1,0 +1,79 @@
+[
+  {
+    "episode": "110227152",
+    "seat": 0,
+    "decisions": 719,
+    "mismatch_count": 0,
+    "first_mismatches": []
+  },
+  {
+    "episode": "110228277",
+    "seat": 1,
+    "decisions": 719,
+    "mismatch_count": 0,
+    "first_mismatches": []
+  },
+  {
+    "episode": "110229384",
+    "seat": 0,
+    "decisions": 719,
+    "mismatch_count": 0,
+    "first_mismatches": []
+  },
+  {
+    "episode": "110230499",
+    "seat": 1,
+    "decisions": 719,
+    "mismatch_count": 0,
+    "first_mismatches": []
+  },
+  {
+    "episode": "110232664",
+    "seat": 1,
+    "decisions": 719,
+    "mismatch_count": 0,
+    "first_mismatches": []
+  },
+  {
+    "episode": "110234986",
+    "seat": 1,
+    "decisions": 719,
+    "mismatch_count": 0,
+    "first_mismatches": []
+  },
+  {
+    "episode": "110236097",
+    "seat": 1,
+    "decisions": 719,
+    "mismatch_count": 0,
+    "first_mismatches": []
+  },
+  {
+    "episode": "110237175",
+    "seat": 1,
+    "decisions": 719,
+    "mismatch_count": 0,
+    "first_mismatches": []
+  },
+  {
+    "episode": "110252487",
+    "seat": 0,
+    "decisions": 719,
+    "mismatch_count": 0,
+    "first_mismatches": []
+  },
+  {
+    "episode": "110280859",
+    "seat": 0,
+    "decisions": 719,
+    "mismatch_count": 0,
+    "first_mismatches": []
+  },
+  {
+    "episode": "110287958",
+    "seat": 0,
+    "decisions": 719,
+    "mismatch_count": 0,
+    "first_mismatches": []
+  }
+]
