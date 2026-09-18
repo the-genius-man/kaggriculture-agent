@@ -30,13 +30,20 @@ jobs:
                     "alnum=%s" % t.isalnum(),
                     "is_lower=%s" % (t == t.lower()))
           PY
-      - name: Auth probes
+      - name: Auth probe A - legacy client, username + key
         run: |
           set +e
-          echo "--- datasets list (generic auth) ---"
-          kaggle datasets list -s titanic --page-size 1 2>&1 | head -6
-          echo "--- competitions list (generic auth) ---"
-          kaggle competitions list --page-size 1 2>&1 | head -6
-          echo "--- target competition leaderboard ---"
-          kaggle competitions leaderboard -c "$COMPETITION" --show 2>&1 | head -6
+          echo "--- 1.x competitions list ---"
+          kaggle competitions list 2>&1 | head -4
           exit 0
+      - name: Auth probe B - 2.x client, KAGGLE_API_TOKEN
+        run: |
+          set +e
+          pip install -q -U "kaggle>=2"
+          unset KAGGLE_USERNAME KAGGLE_KEY
+          export KAGGLE_API_TOKEN="${STORED_KEY}"
+          echo "--- 2.x competitions list (key as API token) ---"
+          kaggle competitions list 2>&1 | head -6
+          exit 0
+        env:
+          STORED_KEY: ${{ secrets.KAGGLE_KEY }}
