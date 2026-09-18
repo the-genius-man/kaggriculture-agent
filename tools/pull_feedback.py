@@ -9,6 +9,9 @@ def run(cmd, outfile):
     r = subprocess.run(cmd, capture_output=True, text=True)
     Path(outfile).write_text(r.stdout or r.stderr)
     print(f"{'ok  ' if r.returncode==0 else 'warn'} {' '.join(cmd)} -> {outfile}")
+    if r.returncode != 0:                      # say WHY, or the pull is undiagnosable
+        for line in (r.stderr or r.stdout or "<no output>").strip().splitlines()[:8]:
+            print("      " + line)
     return r.returncode == 0
 
 def main():

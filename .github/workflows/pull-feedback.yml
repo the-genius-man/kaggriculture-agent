@@ -26,5 +26,5 @@ jobs:
       - name: Commit feedback
         run: |
           git config user.name kaggle-bot; git config user.email bot@users.noreply.github.com
-          git add analysis/feedback && git commit -m "feedback $(date -u +%FT%TZ)" || echo "no changes"
+          git add -f analysis/feedback && git commit -m "feedback $(date -u +%FT%TZ)" || echo "no changes"
           git push || echo "nothing to push"
