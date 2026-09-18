@@ -8,7 +8,8 @@ from pathlib import Path
 def run(cmd, outfile):
     r = subprocess.run(cmd, capture_output=True, text=True)
     Path(outfile).write_text(r.stdout or r.stderr)
-    print(("ok  " if r.returncode==0 else "warn")+" "+" ".join(cmd)+" -> "+outfile)
+    print(f"{'ok  ' if r.returncode==0 else 'warn'} {' '.join(cmd)} -> {outfile}")
+    return r.returncode == 0
 
 def main():
     p = argparse.ArgumentParser()
