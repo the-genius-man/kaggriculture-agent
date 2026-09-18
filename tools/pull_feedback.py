@@ -18,8 +18,8 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--competition", required=True); p.add_argument("--out", required=True)
     a = p.parse_args(); out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
-    run(["kaggle","competitions","leaderboard","-c",a.competition,"--show"], out/"leaderboard.txt")
-    run(["kaggle","competitions","submissions","-c",a.competition,"-v"], out/"submissions.csv")
+    run(["kaggle","competitions","leaderboard",a.competition,"--show"], out/"leaderboard.txt")
+    run(["kaggle","competitions","submissions",a.competition,"-v"], out/"submissions.csv")
     # TODO(episodes): our earlier replay analysis used kaggle-environments 1.32.7 replays.
     # Wire the ListEpisodes endpoint here to fetch the last 10-20 of OUR games for the
     # Claude Code + MCP diagnosis step. Left as a stub: competition-specific, unverified.

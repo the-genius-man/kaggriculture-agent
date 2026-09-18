@@ -16,19 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     env:
       KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
-      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      # kaggle 2.x authenticates with a single API token; the stored
+      # KAGGLE_KEY secret holds that token.
+      KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_KEY }}
       KERNEL_SLUG: ${{ vars.KERNEL_SLUG }}        # e.g. yourname/kaggriculture-train
       REF: ${{ github.event.inputs.ref || github.sha }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
-      - run: pip install "kaggle<2"            # 2.x drops username+key auth
-      - name: Configure Kaggle credentials
-        run: |
-          mkdir -p ~/.kaggle
-          printf '{"username":"%s","key":"%s"}' "$KAGGLE_USERNAME" "$KAGGLE_KEY" > ~/.kaggle/kaggle.json
-          chmod 600 ~/.kaggle/kaggle.json
+      - run: pip install "kaggle>=2"
       - name: Template kernel (repo ref + slug)
         run: |
           sed -i "s|__REF__|${REF}|g;s|__REPO__|${{ github.repository }}|g" kernel/run.py

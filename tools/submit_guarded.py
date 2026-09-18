@@ -6,7 +6,7 @@ import argparse, csv, datetime, os, subprocess, sys
 from pathlib import Path
 
 def today_count(comp):
-    r = subprocess.run(["kaggle","competitions","submissions","-c",comp,"-v"],
+    r = subprocess.run(["kaggle","competitions","submissions",comp,"-v"],
                        capture_output=True, text=True)
     if r.returncode != 0:
         print(r.stderr, file=sys.stderr); return None
@@ -28,7 +28,7 @@ def main():
     if n is None: sys.exit("Refused: could not read submission history.")
     print(f"Submissions today: {n}/{a.cap}")
     if n >= a.cap: sys.exit(f"Refused: daily cap reached ({n}/{a.cap}).")
-    subprocess.run(["kaggle","competitions","submit","-c",comp,"-f",a.file,"-m",a.message], check=True)
+    subprocess.run(["kaggle","competitions","submit",comp,"-f",a.file,"-m",a.message], check=True)
     log = Path("analysis/submissions_log.csv"); log.parent.mkdir(exist_ok=True, parents=True)
     new = not log.exists()
     with log.open("a", newline="") as f:

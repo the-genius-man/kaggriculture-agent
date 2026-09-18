@@ -10,18 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     env:
       KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
-      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      # kaggle 2.x authenticates with a single API token; the stored
+      # KAGGLE_KEY secret holds that token.
+      KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_KEY }}
       COMPETITION: ${{ vars.KAGGLE_COMPETITION }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
-      - run: pip install "kaggle<2" requests   # 2.x drops username+key auth
-      - name: Configure Kaggle credentials
-        run: |
-          mkdir -p ~/.kaggle
-          printf '{"username":"%s","key":"%s"}' "$KAGGLE_USERNAME" "$KAGGLE_KEY" > ~/.kaggle/kaggle.json
-          chmod 600 ~/.kaggle/kaggle.json
+      - run: pip install "kaggle>=2" requests
       - run: python tools/pull_feedback.py --competition "$COMPETITION" --out analysis/feedback
       - name: Commit feedback
         run: |
