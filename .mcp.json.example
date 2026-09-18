@@ -1,0 +1,13 @@
+{
+  "// note": "Copy to .mcp.json (gitignored). No secrets in this file: KAGGLE_* are read from your environment via ${VAR} expansion. Pick ONE server, review its source first, and set the command/args to how you installed it. Example below is the PyPI mcp-server-kaggle run via uv; adjust for your choice.",
+  "mcpServers": {
+    "kaggle": {
+      "command": "uv",
+      "args": ["--directory", "/ABSOLUTE/PATH/TO/Kaggle-mcp", "run", "kaggle_mcp/server.py"],
+      "env": {
+        "KAGGLE_USERNAME": "${KAGGLE_USERNAME}",
+        "KAGGLE_KEY": "${KAGGLE_KEY}"
+      }
+    }
+  }
+}

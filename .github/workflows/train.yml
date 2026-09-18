@@ -1,0 +1,55 @@
+name: train-and-export
+# Plane 1 (deterministic, no LLM): push a Kaggle kernel that runs the bounded
+# validation, then pull its output (validated main.py + validation.json) and open a
+# PR for human review. Does NOT submit.
+on:
+  workflow_dispatch:
+    inputs:
+      ref: { description: "git ref to train", required: false, default: "main" }
+  push:
+    branches: [main]
+    paths: ["policy/**", "league/**", "agents/**", "experiments/validate.py", "kernel/**"]
+concurrency: { group: kaggle-kernel, cancel-in-progress: false }
+permissions: { contents: write, pull-requests: write }
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      KERNEL_SLUG: ${{ vars.KERNEL_SLUG }}        # e.g. yourname/kaggriculture-train
+      REF: ${{ github.event.inputs.ref || github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install kaggle
+      - name: Configure Kaggle credentials
+        run: |
+          mkdir -p ~/.kaggle
+          printf '{"username":"%s","key":"%s"}' "$KAGGLE_USERNAME" "$KAGGLE_KEY" > ~/.kaggle/kaggle.json
+          chmod 600 ~/.kaggle/kaggle.json
+      - name: Template kernel (repo ref + slug)
+        run: |
+          sed -i "s|__REF__|${REF}|g;s|__REPO__|${{ github.repository }}|g" kernel/run.py
+          sed -i "s|__KERNEL_SLUG__|${KERNEL_SLUG}|g" kernel/kernel-metadata.json
+      - name: Push kernel and wait
+        run: kaggle kernels push -p kernel && python tools/wait_kernel.py "$KERNEL_SLUG"
+      - name: Download kernel output
+        run: kaggle kernels output "$KERNEL_SLUG" -p artifact
+      - uses: actions/upload-artifact@v4
+        with: { name: candidate, path: artifact }
+      - name: Open PR with validated candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test -f artifact/validation.json || { echo "no validation.json"; exit 1; }
+          python -c "import json,sys; v=json.load(open('artifact/validation.json')); print(json.dumps(v,indent=2)); sys.exit(0 if v.get('gate_pass') else 0)"
+          mkdir -p candidates
+          cp artifact/main.py "candidates/${REF}.py"
+          cp artifact/validation.json "candidates/${REF}.validation.json"
+          br="candidate/${REF}"
+          git config user.name  "kaggle-bot"; git config user.email "bot@users.noreply.github.com"
+          git checkout -b "$br"; git add candidates; git commit -m "candidate ${REF}: validation attached"
+          git push -u origin "$br"
+          gh pr create --title "Candidate ${REF}" --body-file artifact/validation.json --base main --head "$br" || true

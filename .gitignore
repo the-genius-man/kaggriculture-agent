@@ -16,3 +16,14 @@ _v14.py
 _baseline.py
 _prefix.py
 main.py
+
+# Kaggle MCP credentials / local config (never commit)
+.mcp.json
+.env
+kaggle.json
+**/kaggle.json
+
+# CI scratch
+artifact/
+analysis/feedback/
+candidates/*.validation.json

@@ -1,0 +1,31 @@
+name: submit-guarded
+# Plane 1, GATED. Manual only. Requires the "production" environment (add a required
+# reviewer in repo Settings > Environments) AND passes a same-day quota check before
+# it will call `kaggle competitions submit`.
+on:
+  workflow_dispatch:
+    inputs:
+      file:    { description: "agent file to submit (path in repo)", required: true }
+      message: { description: "submission message", required: true }
+      confirm: { description: "type SUBMIT to confirm", required: true }
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    environment: production            # manual-approval gate
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      COMPETITION: ${{ vars.KAGGLE_COMPETITION }}   # competition slug
+      DAILY_CAP: ${{ vars.DAILY_SUBMISSION_CAP }}   # e.g. 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install kaggle
+      - name: Configure Kaggle credentials
+        run: |
+          mkdir -p ~/.kaggle
+          printf '{"username":"%s","key":"%s"}' "$KAGGLE_USERNAME" "$KAGGLE_KEY" > ~/.kaggle/kaggle.json
+          chmod 600 ~/.kaggle/kaggle.json
+      - name: Guarded submit (quota + confirm)
+        run: python tools/submit_guarded.py --file "${{ inputs.file }}" --message "${{ inputs.message }}" --confirm "${{ inputs.confirm }}" --cap "${DAILY_CAP:-5}"

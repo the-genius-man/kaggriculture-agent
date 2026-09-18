@@ -38,3 +38,11 @@ remaining daily submission quota before submitting anything.
 
 Fallback champion: V12 trial-23. V14 is a promising but unvalidated candidate; see
 `CHANGELOG.md` and `CLAUDE.md`.
+
+## Kaggle MCP (optional)
+
+Claude Code can connect a Kaggle MCP server to read the leaderboard and your
+submissions, run the league on a Kaggle Kernel, and submit. See the **Kaggle MCP**
+section of `CLAUDE.md` for the security and submission-approval rules, and copy
+`.mcp.json.example` to `.mcp.json` to configure it (credentials come from your
+environment, never the repo).

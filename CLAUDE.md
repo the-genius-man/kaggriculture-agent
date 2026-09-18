@@ -30,8 +30,11 @@ self-play league with strict promotion gates.
   version. Do not reuse a version number for different code.
 - **Kaggle limits:** at most **5 submissions per day**. **Check the actual remaining
   quota before any submission.** No submission automation is wired up here.
-- **No monitoring/submission connection is configured.** Do not assume cloud
-  monitoring, a Kaggle API link, or replay download is set up. It is not.
+- **Kaggle access is via an optional MCP connection (see "Kaggle MCP" below), not
+  assumed.** If it is connected: reads (leaderboard, submissions, remaining quota,
+  competition/dataset/kernel files) may be used freely; **a submission is taken only
+  on explicit human approval, one at a time, after checking the day's remaining
+  quota**. Never automate the 5th-of-5 away.
 - **Long training runs belong on Kaggle or Colab**, not on a local machine that may
   shut down. Use `notebooks/kaggriculture_enhanced_game_v2.ipynb` there. Use Claude
   Code locally for development, tests and orchestration, then pull artifacts
@@ -92,6 +95,55 @@ Priorities, in order:
 
 Do each as an explicit candidate with paired seeds, both seats, the same opponent
 pool, against V9 and V13. Do not change all settings at once.
+
+## Pipeline (GitHub Actions + kernel + MCP)
+
+Two planes. **CI plane** = deterministic Kaggle-CLI scripts in `.github/workflows`:
+`train.yml` pushes `kernel/` to a Kaggle Kernel, which clones the repo, runs
+`experiments/validate.py` (renders `candidate.json`, plays the gate vs V9/V12/V13 on
+fresh seeds), and returns `main.py` + `validation.json`; the workflow opens a PR.
+`pull-feedback.yml` refreshes leaderboard + our submissions into `analysis/feedback/`.
+`submit.yml` is manual, needs the `production` environment approval AND passes
+`tools/submit_guarded.py` (same-day quota check vs `DAILY_SUBMISSION_CAP`).
+
+**Reasoning plane** = Claude Code + Kaggle MCP: reads the pulled replays/leaderboard,
+diagnoses the last 10-20 games, writes findings to `analysis/`, and opens a code PR.
+
+**Two human gates, always:** merging a candidate PR, and approving a submission. The
+loop never merges its own code or spends a submission on its own.
+
+Repo config needed: secrets `KAGGLE_USERNAME`, `KAGGLE_KEY`; vars `KERNEL_SLUG`,
+`KAGGLE_COMPETITION`, `DAILY_SUBMISSION_CAP`; a `production` environment with a
+required reviewer. Note: a kernel cannot reliably self-submit an agent competition, so
+produce (auto) and submit (gated) are separate; and episode/replay download is a
+competition-specific TODO in `tools/pull_feedback.py`.
+
+## Kaggle MCP (optional connection)
+
+A Kaggle MCP server lets Claude Code talk to the Kaggle API directly: list/download
+competition files, view the leaderboard and your submission history, push/pull
+Kaggle Kernels, manage datasets, and submit. This closes the loop the project has
+lacked (a real external score, and persistent runs on a Kernel instead of a local
+machine). It does not change the honesty rules or the promotion gates.
+
+Community servers exist (e.g. PyPI `mcp-server-kaggle`, `Seif-Sameh/Kaggle-mcp`,
+`Dishant27/kaggle-MCP`, `54yyyu/kaggle-mcp`) plus a hosted Composio connector. They
+are third-party and hold a full-access Kaggle key, so:
+
+- **Secrets:** put credentials in the environment (`KAGGLE_USERNAME`, `KAGGLE_KEY`) or
+  a gitignored `~/.kaggle/kaggle.json`. Never commit them. `.mcp.json` here uses
+  `${VAR}` expansion so no key is stored in the repo. Review the server source (or use
+  a vetted host) before trusting it with the key; prefer least privilege.
+- **Submission governance:** read tools are fine to use on your own. `competition_submit`
+  is human-approved only, one at a time, after a quota check. Kaggriculture is an
+  agent/episode ("Simulations") competition, so confirm the first real submission
+  registers the agent correctly rather than assuming the CSV path applies.
+- **Loop:** use the MCP to pull leaderboard + submission scores back into `analysis/`
+  and to run the league on a Kernel; keep exported `main.py` and checkpoints in the
+  repo. The external score is the metric of record; the internal league is a proxy.
+
+Setup sketch: copy `.mcp.json.example` to `.mcp.json`, point it at your chosen server,
+export the two env vars, and start Claude Code in the repo.
 
 ## How to run
 

@@ -1,0 +1,30 @@
+name: pull-feedback
+# Plane 1 read-only: pull leaderboard + our submissions (+ best-effort episodes) into
+# analysis/, and commit. The DIAGNOSIS is done separately by Claude Code + Kaggle MCP.
+on:
+  schedule: [{ cron: "0 */6 * * *" }]   # every 6h; adjust
+  workflow_dispatch: {}
+permissions: { contents: write }
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      COMPETITION: ${{ vars.KAGGLE_COMPETITION }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install kaggle requests
+      - name: Configure Kaggle credentials
+        run: |
+          mkdir -p ~/.kaggle
+          printf '{"username":"%s","key":"%s"}' "$KAGGLE_USERNAME" "$KAGGLE_KEY" > ~/.kaggle/kaggle.json
+          chmod 600 ~/.kaggle/kaggle.json
+      - run: python tools/pull_feedback.py --competition "$COMPETITION" --out analysis/feedback
+      - name: Commit feedback
+        run: |
+          git config user.name kaggle-bot; git config user.email bot@users.noreply.github.com
+          git add analysis/feedback && git commit -m "feedback $(date -u +%FT%TZ)" || echo "no changes"
+          git push || echo "nothing to push"
