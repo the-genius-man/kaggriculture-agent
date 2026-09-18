@@ -1,11 +1,11 @@
-Next Page Token = CfDJ8OasvsPNS7VMiSwiBm2YVpMKyKhaM-3hwcSA5t4wMWojSVQvnYbzmG9XZmzEi9_JNY1mZSbh0wAuxU4W8bHbhfM
+Next Page Token = CfDJ8OasvsPNS7VMiSwiBm2YVpOL-pY47mvRFiAOQBt6SyWmQ2LasDPQlNY9iYREgM4RaeYYeRrA2vmrQUVLhjR30Hk
   teamId  teamName             submissionDate              score   
 --------  -------------------  --------------------------  ------  
 16718819  Majkel1337           2026-09-18 14:06:33.633000  3194.9  
 16640510  SpaTaro              2026-09-16 20:14:02.966000  3131.6  
 16664246  Sida Zuo             2026-09-15 22:42:16.943000  3082.2  
+16732403  ymg_aq               2026-09-17 13:21:29.843000  3069.3  
 16732748  DSM                  2026-09-18 16:47:26.306000  3068.3  
-16732403  ymg_aq               2026-09-17 13:21:29.843000  3066.1  
 16730524  THIRD FARM CLUB      2026-09-18 16:06:16.783000  3059.7  
 16675778  Orbital Terraformer  2026-09-15 22:56:40.676000  3055.9  
 16817528  QQ                   2026-09-18 10:36:37.976000  3040.0  
@@ -16,8 +16,8 @@ Next Page Token = CfDJ8OasvsPNS7VMiSwiBm2YVpMKyKhaM-3hwcSA5t4wMWojSVQvnYbzmG9XZm
 16882725  Ebi                  2026-09-15 10:01:29.283000  2986.3  
 16739633  kwa                  2026-09-18 15:17:22.323000  2979.7  
 16685556  binghua              2026-09-17 15:39:53.396000  2979.6  
-16760701  Yannik Schiffner     2026-09-18 11:07:36.650000  2968.0  
-16758882  mtmr_s1              2026-09-18 12:58:21.843000  2964.1  
+16760701  Yannik Schiffner     2026-09-18 11:07:36.650000  2971.2  
+16758882  mtmr_s1              2026-09-18 12:58:21.843000  2961.9  
 16706222  Xiangyu Liu          2026-09-15 09:31:18.180000  2961.6  
 16805699  feel the agi         2026-09-13 14:05:13.300000  2960.3  
 16748733  Driz Lo              2026-09-18 10:05:37.733000  2955.0  
