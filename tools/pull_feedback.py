@@ -20,6 +20,10 @@ def main():
     a = p.parse_args(); out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     run(["kaggle","competitions","leaderboard",a.competition,"--show"], out/"leaderboard.txt")
     run(["kaggle","competitions","submissions",a.competition,"-v"], out/"submissions.csv")
+    # full leaderboard: the --show view is only the top slice, so our own rank
+    # and the score distribution are invisible without the download.
+    run(["kaggle","competitions","leaderboard",a.competition,"-d","-p",str(out)],
+        out/"leaderboard_download.log")
     # TODO(episodes): our earlier replay analysis used kaggle-environments 1.32.7 replays.
     # Wire the ListEpisodes endpoint here to fetch the last 10-20 of OUR games for the
     # Claude Code + MCP diagnosis step. Left as a stub: competition-specific, unverified.
