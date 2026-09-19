@@ -158,14 +158,49 @@ Run on the Kaggle kernel 2026-09-19, candidate = V14 rendered from `candidate.js
 | V13 | — | >= 55% | — | — | **skipped, file absent** |
 | **main_leader** | **33.3%** | >= 55% | **-2,400** | **[-4,410, -549]** | **fail** |
 
-`gate_pass: false`. This supersedes the 8-seed table above: on a proper holdout
-`main_leader` is **confidently better than V14**, not merely V14-class — V14's margin
-interval sits entirely below zero.
+`gate_pass: false`.
 
-That is the whole point of adding a non-lineage opponent. The V14 candidate beats
-every agent we have ever written (93.8-100%) and loses two games in three to the
-first opponent that plays like the leaderboard does. The league was previously
-passing candidates on a pool that could not detect this.
+### Correction: how much better is main_leader, really?
+
+A second independent sample (12 fresh seeds, both seats, seed base 96000000) put V14
+at **45.8%** against main_leader, margin +234, not 33.3%. Pooling both samples:
+
+| sample | seed base | games | V14 wins |
+|---|---|---:|---:|
+| kernel holdout | 40000000 | 48 | 33.3% |
+| local sweep | 96000000 | 24 | 45.8% |
+| **pooled** | | **72** | **37.5%** (95% CI 26.3-48.7%) |
+
+So main_leader is better than V14, but "loses two games in three" overstated it on one
+seed set. Even 48 games does not pin this down to better than about +/-13 points.
+
+### V15 search: no variant beat V14 (24 paired games each, seed base 96000000)
+
+| config | win vs leader | margin | CI90 | own cash |
+|---|---:|---:|---|---:|
+| **V14 (control)** | 45.8% | **+234** | [-1831, +2095] | **83,856** |
+| fert_bias 1.6 only | 54.2% | +515 | [-1606, +2818] | 77,714 |
+| all 3 mechanics + fert 1.6 | 50.0% | -269 | [-2781, +2382] | 68,697 |
+| all 3 + fert 1.6 + expansion | 50.0% | -13 | [-1964, +1996] | 70,182 |
+| all 3 + fert 2.0 | 41.7% | -1,629 | [-3351, +42] | 69,632 |
+| fert 1.6 + window, no cap | **4.2%** | -8,355 | [-11622, -5377] | 80,113 |
+
+**Every margin interval straddles zero: nothing here is a measured improvement.** The
+apparent sweep-1 winner (56.2% on 8 seeds) regressed to 50.0% on 24 games -- ordinary
+small-sample selection. Two things are nonetheless real:
+
+- **The mechanics interact strongly and are not independently good.** Alone, each
+  *hurts*: survival_bias 6.2%, fert_in_window 6.2%, tiles_per_unit 18.8%. Opening the
+  fertilizer window without the planting cap is catastrophic (4.2%) -- the agent
+  fertilizes crops it then fails to water.
+- **Configs that raise win rate lower cash.** The variants reach ~50% while earning
+  68-78k against V14's 83.9k. They win marginal games and lose the big ones, which is
+  the wrong trade when the leaderboard rewards cash.
+
+Conclusion: hand-picked configs are not finding V15. The parameters now exist in the
+template; finding a setting that genuinely beats main_leader is a job for the Optuna
+search on the kernel, with main_leader in the opponent pool, not for eight hand
+guesses at 16 games apiece.
 
 `main_leader` has **not** been run through the gate as a *candidate*, which is the
 next step: it would need >= 80% vs V9, >= 60% vs V12 and >= 55% vs every league

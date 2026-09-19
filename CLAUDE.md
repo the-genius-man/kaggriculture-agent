@@ -104,11 +104,19 @@ See `analysis/REPORT_deployment_diagnosis.md` for the evidence behind all of thi
   work: melons at max yield 17% -> 86%, strawberry dry-out deaths 8.0 -> 4.0.
 - **The V14 candidate FAILS the gate, and only because of `main_leader`.** Kaggle
   kernel holdout 2026-09-19, 24 fresh seeds both seats: vs V9 100% (+11,167), vs V12
-  93.8% (+10,290, CI90 [7954, 12798]), vs **main_leader 33.3% (-2,400, CI90
-  [-4410, -549])**, V13 skipped (file absent). `gate_pass: false`. The candidate beats
-  every agent we have ever written and loses two games in three to the first opponent
-  that does not share our lineage. Do not read past this: the old pool could not
-  detect it.
+  93.8% (+10,290), vs **main_leader 33.3% (-2,400, CI90 [-4410, -549])**, V13 skipped
+  (file absent). `gate_pass: false`. The candidate beats every agent we have ever
+  written and loses to the first opponent that does not share our lineage.
+- **But 33.3% was seed-specific.** A second sample (12 seeds, base 96000000) gave
+  45.8%. Pooled over 72 games V14 wins **37.5% (95% CI 26.3-48.7%)**. main_leader is
+  better, but not by two-to-one, and 48 games does not resolve this to better than
+  about +/-13 points. Budget seeds accordingly.
+- **V15 search so far: no variant beats V14.** All six hand-picked configs have margin
+  intervals straddling zero, and the ones that raise win rate earn *less* cash (68-78k
+  vs V14's 83.9k). The three mechanics interact and are not independently good -- each
+  alone is worse than V14, and fertilizer-window without the planting cap scores 4.2%.
+  Finding V15 is a job for the Optuna search with main_leader in the pool, not hand
+  guesses.
 - `main_leader` has not yet been run through the gate **as a candidate**. That is the
   obvious next experiment.
 
