@@ -23,8 +23,13 @@ jobs:
       # Real per-episode results: our cash vs the opponent's, who they were, and
       # the rating delta. Unauthenticated endpoint, so it cannot fail on credentials.
       - run: python tools/pull_episodes.py --out analysis/feedback || true
+      # Public status page. Only standings and our own results go in docs/ --
+      # Pages is publicly readable even from a private repo on this plan.
+      - run: |
+          cd analysis/feedback && unzip -o -q *.zip -d lb_extract || true
+          cd "$GITHUB_WORKSPACE" && python tools/build_site.py
       - name: Commit feedback
         run: |
           git config user.name kaggle-bot; git config user.email bot@users.noreply.github.com
-          git add -f analysis/feedback && git commit -m "feedback $(date -u +%FT%TZ)" || echo "no changes"
+          git add -f analysis/feedback docs && git commit -m "feedback $(date -u +%FT%TZ)" || echo "no changes"
           git push || echo "nothing to push"
