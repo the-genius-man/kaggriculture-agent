@@ -29,7 +29,19 @@ self-play league with strict promotion gates.
 - **Explicit version numbering.** Every candidate policy and notebook carries its
   version. Do not reuse a version number for different code.
 - **Kaggle limits:** at most **5 submissions per day**. **Check the actual remaining
-  quota before any submission.** No submission automation is wired up here.
+  quota before any submission.** `tools/submit_guarded.py` enforces this
+  (`DAILY_SUBMISSION_CAP`) and is wired to the `submit-to-kaggle` PR label
+  (`.github/workflows/submit-on-label.yml`) — labeling a candidate PR submits it. That
+  label is the human approval gate on this plan (see "Gate status" below); do not add
+  it without having read the candidate's numbers first.
+- **Only your latest 2 submissions are "active."** Kaggle keeps matching new episodes
+  against your **2 most recent** submissions; older ones stop receiving new episodes
+  and their score is frozen at whatever it was when they aged out. As of 2026-09-18
+  that is `main_v14.py` (17:11) and `main_v12.py` (16:21) — every earlier submission
+  (`main_v13.py`, `main_v11.py`, `main_v9.py`, both `main.py` uploads, ...) is frozen
+  history, not a live comparison point. Submitting a new agent retires whichever of
+  the current two is older. Do not read a frozen submission's rating as if it were
+  still accumulating evidence.
 - **Kaggle CLI 2.x with token auth.** The stored credential is a new-style Kaggle API
   token, not a legacy 32-hex key: the 1.x `KAGGLE_USERNAME`+`KAGGLE_KEY` scheme 401s on
   every endpoint. Workflows install `kaggle>=2` and pass `KAGGLE_API_TOKEN` (sourced
@@ -151,38 +163,87 @@ measurements actually support:
 Do each as an explicit candidate with paired seeds, both seats, the same opponent
 pool, against V9 and V13. Do not change all settings at once.
 
-## Pipeline (GitHub Actions + kernel + MCP)
+## Pipeline (GitHub Actions + kernel + Pages)
 
 Two planes. **CI plane** = deterministic Kaggle-CLI scripts in `.github/workflows`:
-`train.yml` pushes `kernel/` to a Kaggle Kernel, which clones the repo, runs
-`experiments/validate.py` (renders `candidate.json`, plays the gate vs V9/V12/V13 on
-fresh seeds), and returns `main.py` + `validation.json`; the workflow opens a PR.
-`pull-feedback.yml` refreshes leaderboard + our submissions into `analysis/feedback/`.
-`submit.yml` is manual, needs the `production` environment approval AND passes
-`tools/submit_guarded.py` (same-day quota check vs `DAILY_SUBMISSION_CAP`).
 
-**Reasoning plane** = Claude Code + Kaggle MCP: reads the pulled replays/leaderboard,
-diagnoses the last 10-20 games, writes findings to `analysis/`, and opens a code PR.
+- `train.yml` — packs the repo source into `kernel/run.py` (`tools/pack_kernel.py`;
+  the repo is private and cloneless push carries only one file, so source is embedded
+  as a base64 tar.gz), pushes it to a Kaggle Kernel, which runs
+  `experiments/validate.py` (renders `candidate.json`, plays the gate vs
+  V9/V12/V13/`main_leader` on fresh seeds), and returns `main.py` + `validation.json`.
+  The workflow **assigns the resulting PR to the repo owner** — that is what sends the
+  email — states the gate verdict (PASS/FAIL) in the PR title and opens it as a draft
+  on FAIL, and opens an assigned issue instead if the kernel or PR step fails.
+- `search.yml` — same packaging, but runs the resumable Optuna league
+  (`league/league.py`) instead of the one-shot gate: a real TPE search over the
+  policy's parameters against the frozen opponent pool. Longer-running, manual
+  dispatch only (`minutes` input). Same PR/notify/failure handling as `train.yml`.
+  The checkpoint (`checkpoint.zip`, containing `study.db`) is uploaded as a workflow
+  artifact for continuing the search; **resuming across separate CI runs is not yet
+  automated** — download the artifact and feed it back manually.
+- `pull-feedback.yml` — refreshes leaderboard + our submissions + real episode results
+  (`tools/pull_episodes.py`) into `analysis/feedback/`, and rebuilds the public status
+  page (`tools/build_site.py` → `docs/`).
+- `submit-on-label.yml` — **the submit button.** Adding the `submit-to-kaggle` label
+  to a candidate PR submits that PR's agent: runs `tools/submit_guarded.py` (same-day
+  quota check vs `DAILY_SUBMISSION_CAP`), comments the result back on the PR, and
+  removes the label. This *is* the human approval gate on this plan (see "Gate status"
+  below) — only people who can label the repo can trigger a submission, and it fires
+  only after a human has read the assigned/emailed PR.
 
-**Two human gates, always:** merging a candidate PR, and approving a submission. The
-loop never merges its own code or spends a submission on its own.
+**Reasoning plane** = Claude Code (with Kaggle MCP, if connected): reads the pulled
+episodes/leaderboard, diagnoses losses, writes findings to `analysis/`, and opens a
+code PR.
+
+**Two human actions, always:** merging a candidate/search PR into the policy, and
+adding the `submit-to-kaggle` label. Nothing in CI merges its own code or labels its
+own PR.
 
 Repo config needed: secrets `KAGGLE_USERNAME`, `KAGGLE_KEY`; vars `KERNEL_SLUG`,
-`KAGGLE_COMPETITION`, `DAILY_SUBMISSION_CAP`; a `production` environment.
+`KAGGLE_COMPETITION`, `DAILY_SUBMISSION_CAP`; GitHub Pages source set to `/docs`
+(**never the repo root** — see below); Settings → Actions → General → "Allow GitHub
+Actions to create and approve pull requests" enabled (needed for `gh pr create`).
 
-**Gate status (2026-09-18): the `production` environment exists but is UNPROTECTED.**
-Required reviewers returned HTTP 422 — protection rules on a private repo need GitHub
-Pro/Team. Until the repo is public or the plan is upgraded, the only submission guards
-are the `SUBMIT` confirm string and the same-day quota check in `submit_guarded.py`.
-`submit.yml` also has no commit step, so the `analysis/submissions_log.csv` audit trail
-it writes is discarded with the runner. Note: a kernel cannot reliably self-submit an agent competition, so
-produce (auto) and submit (gated) are separate; and episode **results** are now fetched by
-`tools/pull_episodes.py` (verified 2026-09-19): Kaggle's `ListEpisodes` endpoint is
-unauthenticated and takes a `submissionId` (`teamId` is no longer accepted). It gives
-per game: our cash, the opponent's cash, their team, and the rating before/after.
-**Full replay download is still not available** — `GetEpisodeReplay` 404s at every
-method name and casing tried without a logged-in session. Games can only be *watched*
-locally, via `tools/watch_game.py`, between agents we hold.
+**Gate status (2026-09-19):** the `production` GitHub *environment* exists but is
+UNPROTECTED — required reviewers return HTTP 422 (protection rules on a private repo
+need GitHub Pro/Team) — so it enforces nothing and is not used by any workflow. The
+actual approval gate is the `submit-to-kaggle` **label**, combined with the PR
+assignment/email from `train.yml`/`search.yml`. `submit_guarded.py`'s quota check is
+still the only thing standing between a label click and a real submission.
+
+**GitHub Pages is publicly readable even on this private repo.** It was found
+pre-configured to serve the **repo root** (`agents/*.py`, `policy/policy_template.py`
+would have published on the first build) and has been repointed to `/docs`. Owner
+decision 2026-09-19: `analysis/*.md` reports ARE published to `/docs` — they are
+public and search-indexable while the competition runs. Agent source, the policy
+template, its parameter values, and the raw JSON evidence dumps are **not** published
+and must never be added to `docs/`; `tools/build_site.py`'s docstring states this
+boundary and `tools/build_site.py` itself must be the only writer of `docs/`.
+
+Episode **results** and **replays** are fetched by `tools/pull_episodes.py`, revised
+2026-09-20 on the documented `kaggle-cli` command surface (`kaggle-cli/docs/
+simulation_competitions.md`), not the raw internal API used at first:
+
+- `kaggle competitions episodes <submission_id>` lists a submission's games (falls
+  back to the unauthenticated internal `ListEpisodes` endpoint, kept working, if the
+  CLI/credentials are unavailable);
+- `kaggle competitions team-submissions <team_id>` is the **authoritative** source for
+  which submissions are still active — pass `--team-id` (ours is `16899024`); without
+  it, the tool assumes the 2 most recent by date and says so;
+- `kaggle competitions replay <episode_id>` **does** download the real replay JSON —
+  the earlier finding that replay download was unavailable was true only of the raw
+  internal `GetEpisodeReplay` endpoint called without a login, not of this documented,
+  authenticated command.
+- `--replays N` downloads the N worst real losses and renders them to playable HTML
+  locally (`kaggle_environments.make(steps=...)` round-trips a downloaded replay's
+  `configuration`/`steps`, verified). **These are not published** — a replay of a real
+  submission shows our policy's exact move-by-move behaviour, a bigger leak than the
+  written analysis — they stay a private CI workflow artifact
+  (`pull-feedback.yml` → `replays_html` artifact, collaborators only).
+
+Games between agents we hold (not real leaderboard opponents) can also be rendered
+and watched offline via `tools/watch_game.py`.
 
 ## Kaggle MCP (optional connection)
 

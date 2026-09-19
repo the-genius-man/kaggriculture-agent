@@ -14,22 +14,39 @@ jobs:
       # KAGGLE_KEY secret holds that token.
       KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_KEY }}
       COMPETITION: ${{ vars.KAGGLE_COMPETITION }}
+      TEAM_ID: ${{ vars.KAGGLE_TEAM_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
-      - run: pip install "kaggle>=2" requests
+      - run: pip install "kaggle>=2" requests "kaggle-environments==1.32.7"
       - run: python tools/pull_feedback.py --competition "$COMPETITION" --out analysis/feedback
-      # Real per-episode results: our cash vs the opponent's, who they were, and
-      # the rating delta. Unauthenticated endpoint, so it cannot fail on credentials.
-      - run: python tools/pull_episodes.py --out analysis/feedback || true
-      # Public status page. Only standings and our own results go in docs/ --
-      # Pages is publicly readable even from a private repo on this plan.
+      # Real per-episode results (which submissions are active per Kaggle's own
+      # team-submissions call, our cash vs the opponent's, who they were) plus 3
+      # real losses downloaded and rendered to local HTML. Never fails the job.
+      - run: |
+          python tools/pull_episodes.py --out analysis/feedback --team-id "$TEAM_ID" --replays 3 || true
+      # Public status page. Only standings and our own results go in docs/ -- Pages
+      # is publicly readable even from a private repo on this plan. Rendered replays
+      # (analysis/feedback/replays_html/) are NOT copied into docs/: see
+      # tools/build_site.py's docstring for why.
       - run: |
           cd analysis/feedback && unzip -o -q *.zip -d lb_extract || true
           cd "$GITHUB_WORKSPACE" && python tools/build_site.py
+      - name: Upload rendered replays (private artifact, not published)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: replays
+          path: analysis/feedback/replays_html
+          if-no-files-found: ignore
       - name: Commit feedback
         run: |
           git config user.name kaggle-bot; git config user.email bot@users.noreply.github.com
-          git add -f analysis/feedback docs && git commit -m "feedback $(date -u +%FT%TZ)" || echo "no changes"
+          # replays_html/ and replays/ (raw replay JSON) are deliberately excluded:
+          # they show our policy's exact move-by-move behaviour and are published
+          # only as the workflow artifact above, never committed.
+          git add -f analysis/feedback -- ':!analysis/feedback/replays_html' ':!analysis/feedback/replays'
+          git add -f docs
+          git commit -m "feedback $(date -u +%FT%TZ)" || echo "no changes"
           git push || echo "nothing to push"
