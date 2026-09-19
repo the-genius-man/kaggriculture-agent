@@ -30,7 +30,7 @@ jobs:
         with: { python-version: "3.11" }
       - run: pip install "kaggle>=2"
       - name: Pack self-contained kernel (source embedded; repo is private)
-        run: python tools/pack_kernel.py "${SEEDS:-24}" "$KERNEL_SLUG"
+        run: python tools/pack_kernel.py --mode validate --seeds "${SEEDS:-24}" --slug "$KERNEL_SLUG"
       - name: Push kernel and wait
         run: kaggle kernels push -p kernel && python tools/wait_kernel.py "$KERNEL_SLUG"
       - name: Download kernel output (and log, even on failure)

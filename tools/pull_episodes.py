@@ -42,7 +42,9 @@ def cli_json(args, timeout=120):
     try:
         return json.loads(r.stdout)
     except json.JSONDecodeError:
-        print("warn: kaggle %s did not return JSON" % " ".join(args), file=sys.stderr)
+        preview = (r.stdout or r.stderr or "<empty>").strip()[:200]
+        print("warn: kaggle %s did not return JSON; got: %s" % (" ".join(args), preview),
+              file=sys.stderr)
         return None
 
 
@@ -202,7 +204,8 @@ def main():
                 html_path = html_dir / f"episode_{r['episode']}.html"
                 html_dir.mkdir(parents=True, exist_ok=True)
                 cash = render_replay_html(raw, html_path)
-                print("rendered", html_path, "final cash", cash)
+                print("rendered", html_path, "(our %d, opponent %d)"
+                      % (r["our_cash"], r["opp_cash"]), "raw seat rewards:", cash)
             except Exception as e:
                 print("warn: could not render episode %s: %s" % (r["episode"], e), file=sys.stderr)
 
