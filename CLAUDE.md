@@ -101,8 +101,11 @@ See `analysis/REPORT_deployment_diagnosis.md` for the evidence behind all of thi
   plus ~480 of future yield, so survival watering is underpriced by roughly 10x.
 - **`agents/main_leader.py`** is a league opponent built to the leaders' measured
   behavioural profile (not a reconstruction of their policy). Its two mechanism fixes
-  work: melons at max yield 17% -> 86%, strawberry dry-out deaths 8.0 -> 4.0. It still
-  earns less cash than V14, so it is an **opponent, not a submission candidate**.
+  work: melons at max yield 17% -> 86%, strawberry dry-out deaths 8.0 -> 4.0. Paired
+  head-to-head (8 fresh seeds, both seats) it is **V14-class**: 62.5% vs V14 (margin
+  CI90 [-55, 2142], so not a confident win), 62.5% vs V12 ([261, 4081]), 100% vs V9.
+  It is an **opponent, not a submission candidate** — it fails the gate's positive
+  lower-bound requirement against V14, and 8 seeds is below the 24-seed holdout.
 
 ## What the leaderboard analysis says to work on next
 

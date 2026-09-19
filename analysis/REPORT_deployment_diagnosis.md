@@ -133,10 +133,24 @@ Measured effect (same 2 seeds vs V9):
 | Day-20 productive tiles | 51.5 | 45.0 |
 | Mean final cash | 84,101 | 72,263 |
 
-The mechanism changes work exactly as the engine predicts. **It still earns less cash
-than V14 on these seeds**, because it spends earlier on land and fertilizer without
-having solved the day-1–10 revenue problem. It is committed as a league *opponent*,
-not as a submission candidate.
+The mechanism changes work exactly as the engine predicts.
+
+### Head-to-head (8 fresh seeds, both seats, 16 games per opponent)
+
+| main_leader vs | win rate | mean margin | margin CI90 | its cash | rival cash |
+|---|---:|---:|---:|---:|---:|
+| V14 | 62.5% | +1,091 | **[-55, 2,142]** | 83,720 | 82,629 |
+| V12 | 62.5% | +2,030 | [261, 4,081] | 68,317 | 66,286 |
+| V9 | 100% | +9,798 | [7,021, 12,771] | 77,385 | 67,587 |
+
+Paired head-to-head puts it **at V14's level, not below it**. The table above compares
+each agent against V9 on two seeds, which is a much weaker comparison and gave the
+opposite impression.
+
+It is nonetheless **not a promotion candidate**: against V14 the margin's 90% interval
+includes zero, so the gate's positive-lower-bound requirement fails, and 8 seeds is
+below the 24-seed holdout the gate requires. It is committed as a league *opponent* —
+its value is being a play style that is not our own lineage.
 
 ## Honesty notes
 
