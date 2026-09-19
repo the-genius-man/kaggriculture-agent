@@ -1,4 +1,4 @@
-Next Page Token = CfDJ8OasvsPNS7VMiSwiBm2YVpO6KkG2S3NBNwFmNwHoLGt8F70qglzfMBhYmYVKUf_Z70EOYlNoJmLvU_nPE0BmVSw
+Next Page Token = CfDJ8OasvsPNS7VMiSwiBm2YVpMfh05RZDnZa29TQBGHJ48FR0_K2YxWunYKkchuM0GAM-Jd-CXSOTzEnT8ag0nMJ48
   teamId  teamName                   submissionDate              score   
 --------  -------------------------  --------------------------  ------  
 16718819  Majkel1337                 2026-09-18 14:06:33.633000  3282.9  
@@ -9,15 +9,15 @@ Next Page Token = CfDJ8OasvsPNS7VMiSwiBm2YVpO6KkG2S3NBNwFmNwHoLGt8F70qglzfMBhYmY
 16760569  Otter Vibe                 2026-09-19 08:48:39.596000  3042.4  
 16664246  Sida Zuo                   2026-09-15 22:42:16.943000  3036.8  
 16673205  Arda Ceylan                2026-09-18 12:41:28.670000  3033.2  
-16623716  tetsuya & yuanzhe & guoqi  2026-09-18 18:22:36.386000  3024.6  
 16817528  QQ                         2026-09-18 10:36:37.976000  3023.5  
+16623716  tetsuya & yuanzhe & guoqi  2026-09-18 18:22:36.386000  3019.0  
 16622198  THUNDER THUNDER            2026-09-18 14:58:42.836000  3016.0  
 16685556  binghua                    2026-09-17 15:39:53.396000  3009.5  
 16685950  Planned Economy            2026-09-17 00:10:44.486000  3006.1  
 16767215  keiz                       2026-09-18 00:00:43.490000  2980.7  
+16693904  DeeperNet                  2026-09-19 05:04:02.966000  2968.3  
 16739633  kwa                        2026-09-19 01:30:05.263000  2961.9  
 16758882  mtmr_s1                    2026-09-19 06:07:15.383000  2961.8  
-16693904  DeeperNet                  2026-09-19 05:04:02.966000  2959.2  
 16882725  Ebi                        2026-09-15 10:01:29.283000  2951.5  
 16706222  Xiangyu Liu                2026-09-15 09:31:18.180000  2949.9  
-16805699  feel the agi               2026-09-18 19:28:03.883000  2938.6  
+16805699  feel the agi               2026-09-18 19:28:03.883000  2935.3  
