@@ -66,10 +66,20 @@ jobs:
           git diff --cached --quiet && { echo "nothing staged - is candidates/ gitignored?"; exit 1; }
           git commit -m "candidate ${name}: gate ${tag}"
           git push -u origin "$br" --force-with-lease
+          # The candidate and its gate result are already pushed on $br, so the run has
+          # delivered regardless of what happens next. Opening the PR needs the repo
+          # setting "Allow GitHub Actions to create and approve pull requests", which is
+          # deliberately off: it would also let Actions approve PRs, and merging a
+          # candidate is meant to be a human gate. Without it we hand over the link.
+          if [ "$pass" = true ]; then draft=""; else draft="--draft"; fi
           if gh pr view "$br" >/dev/null 2>&1; then
             gh pr edit "$br" --title "Candidate ${name} - gate ${tag}" --body-file pr-body.md
-          elif [ "$pass" = true ]; then
-            gh pr create --title "Candidate ${name} - gate ${tag}" --body-file pr-body.md --base main --head "$br"
+          elif gh pr create --title "Candidate ${name} - gate ${tag}" --body-file pr-body.md                  --base main --head "$br" $draft; then
+            echo "PR opened."
           else
-            gh pr create --title "Candidate ${name} - gate ${tag}" --body-file pr-body.md --base main --head "$br" --draft
+            url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/compare/main...${br}?expand=1"
+            { echo; echo "### PR not opened automatically";
+              echo "Actions cannot create PRs in this repo. The candidate is pushed on \`${br}\`.";
+              echo "Open it here: ${url}"; } >> "$GITHUB_STEP_SUMMARY"
+            echo "::notice::candidate pushed on ${br} - open a PR at ${url}"
           fi
