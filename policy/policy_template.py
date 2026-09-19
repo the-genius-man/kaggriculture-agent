@@ -1,4 +1,8 @@
-"""Enhanced Game v14: phase-dependent policy; melon maturity fix + strawberry occupancy target. Std lib only."""
+"""Enhanced Game v15: v14 plus three searchable production mechanics -- survival-priced
+watering, fertilizer across the whole yield window, and planting capped by watering
+throughput. Each is off by default (survival_bias=0, fert_in_window=0, tiles_per_unit=0)
+and those defaults reproduce v14 exactly, so the search can always recover it.
+Motivation: analysis/REPORT_deployment_diagnosis.md. Std lib only."""
 import copy
 
 # A soft commitment, never an unconditional cached action. Reset every day/game.
@@ -123,13 +127,33 @@ def agent(obs):
             elif isinstance(t,dict) and t.get('kind')=='PLANT':
                 c=t['crop'];cost,first,peak,yld=CROPS[c];age=day-t['planted_day'];yield_units=t.get('yield_units',0)
                 fertile=t.get('fertilized_until_day',-1)>=day
-                needs_fert=(c in ('TOMATO','STRAWBERRY') and age>=first-2) or (c not in ('TOMATO','STRAWBERRY') and age>=max(0,first-1) and age<peak)
+                # One-time crops: fertilizer doubles each watered day's gain, so with
+                # fert_in_window it pays from the start of the window, not day first-1.
+                _fstart=((peak+1)//2-1) if CFG.get('fert_in_window',0) else max(0,first-1)
+                needs_fert=(c in ('TOMATO','STRAWBERRY') and age>=first-2) or (c not in ('TOMATO','STRAWBERRY') and age>=_fstart and age<peak)
                 if not fertile and needs_fert and inv.get('FERTILIZER',0) and day<29:
                     offer(min(200,prices[c]*1.4)*CFG['fert_bias'],target,['FERTILIZE'],key)
                 ready=yield_units>0 and age>=first and (c in ('TOMATO','STRAWBERRY') or age>=peak or yield_units>=6 or day==29)
                 if ready:offer(100+yield_units*prices[c]*.55+(200 if day==29 else 0),target,['HARVEST'],key)
-                if not t.get('watered_today') and not (day==29 and ready):offer(95+hour*4+120*t.get('consecutive_unwatered',0),target,['WATER'],key)
-            elif t is None and not carried and hour<22:
+                if not t.get('watered_today') and not (day==29 and ready):
+                    cu=t.get('consecutive_unwatered',0);_sb=CFG.get('survival_bias',0.)
+                    if _sb<=0:
+                        wv=95+hour*4+120*cu
+                    else:
+                        # Engine: two dry days destroy the tile, and one-time crops gain
+                        # yield ONLY from watering inside [(peak+1)//2, peak]. Price the
+                        # marginal unit and the replacement cost instead of a flat bonus.
+                        wv=60+hour*3
+                        if c in ('TOMATO','STRAWBERRY'):
+                            left=max(0,min(4,1+(remaining-2-max(0,first-age))//(1 if c=='TOMATO' else 2))-yield_units)
+                            replace=cost+left*prices[c]*.7
+                        else:
+                            if (peak+1)//2<=age<=peak and yield_units<yld:
+                                wv+=(2 if fertile else 1)*prices[c]*.9
+                            replace=cost+max(0,yld-yield_units)*prices[c]*.6
+                        if cu>=1:wv=max(wv,_sb*replace)
+                    offer(wv,target,['WATER'],key)
+            elif t is None and not carried and hour<22 and (not CFG.get('tiles_per_unit',0) or occupied<len(positions)*CFG['tiles_per_unit']):
                 available=[c for c in CROPS if seeds.get(c,0)>0 and crop_scores[c]>0]
                 if available:
                     c=max(available,key=lambda c:crop_scores[c]);offer(max(P['plant_floor'],crop_scores[c]),target,['PLANT',c],key)
@@ -196,9 +220,10 @@ def agent(obs):
     if nlive and hour<22 and (day<29 or not CFG['liquidate']):
         deficit=max(0,nlive*2-shed.get('WHEAT',0)-sum(v.get('WHEAT',0) for v in invs));qty=min(deficit,int(max(0,cash-50)//(prices['WHEAT']+2)))
         if qty:buy(['BUY_PRODUCT','WHEAT',qty],qty*(prices['WHEAT']+2))
+    _stock=CFG.get('seed_stock',2)
     for c in sorted(CROPS,key=lambda c:-crop_scores[c]):
-        if crop_scores[c]>0 and seeds.get(c,0)<2 and cash>100:
-            qty=2-seeds.get(c,0);buy(['BUY_SEED',c,qty],CROPS[c][0]*qty)
+        if crop_scores[c]>0 and seeds.get(c,0)<_stock and cash>100:
+            qty=_stock-seeds.get(c,0);buy(['BUY_SEED',c,qty],CROPS[c][0]*qty)
     landcount=len(me['unlocked_quadrants'])
     # Third/fourth quadrants require occupancy and staffing, not cash alone.
     staffed=(landcount<2 or len(positions)>=CFG.get('expansion_hands',9))
