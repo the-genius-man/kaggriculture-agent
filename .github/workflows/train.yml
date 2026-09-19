@@ -23,6 +23,7 @@ jobs:
       KERNEL_SLUG: ${{ vars.KERNEL_SLUG }}        # e.g. yourname/kaggriculture-train
       REF: ${{ github.event.inputs.ref || github.sha }}
       SEEDS: ${{ github.event.inputs.seeds || 24 }}
+      OWNER: ${{ github.repository_owner }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -74,8 +75,15 @@ jobs:
           if [ "$pass" = true ]; then draft=""; else draft="--draft"; fi
           if gh pr view "$br" >/dev/null 2>&1; then
             gh pr edit "$br" --title "Candidate ${name} - gate ${tag}" --body-file pr-body.md
-          elif gh pr create --title "Candidate ${name} - gate ${tag}" --body-file pr-body.md                  --base main --head "$br" $draft; then
-            echo "PR opened."
+          elif gh pr create --title "Candidate ${name} - gate ${tag}" --body-file pr-body.md                  --base main --head "$br" $draft --assignee "$OWNER"; then
+            # Assigning is what actually emails a human that training has finished.
+            { echo "Training finished. Gate **${tag}**.";
+              echo;
+              echo "To submit this agent to Kaggle, add the **submit-to-kaggle** label";
+              echo "to this PR. That runs the same-day quota check and submits.";
+              echo "Remove and re-add the label to retry."; } > comment.md
+            gh pr comment "$br" --body-file comment.md || true
+            echo "PR opened and assigned to $OWNER."
           else
             url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/compare/main...${br}?expand=1"
             { echo; echo "### PR not opened automatically";
@@ -83,3 +91,13 @@ jobs:
               echo "Open it here: ${url}"; } >> "$GITHUB_STEP_SUMMARY"
             echo "::notice::candidate pushed on ${br} - open a PR at ${url}"
           fi
+      - name: Tell a human if training failed
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          { echo "The training kernel or the candidate PR step failed.";
+            echo;
+            echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}";
+            echo "The Kaggle kernel log is printed in that run."; } > issue.md
+          gh issue create --title "Training run failed" --assignee "$OWNER" --body-file issue.md || true
