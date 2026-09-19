@@ -43,13 +43,33 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          test -f artifact/validation.json || { echo "no validation.json"; exit 1; }
-          python -c "import json,sys; v=json.load(open('artifact/validation.json')); print(json.dumps(v,indent=2)); sys.exit(0 if v.get('gate_pass') else 0)"
+          set -euo pipefail
+          test -f artifact/validation.json || { echo "kernel produced no validation.json"; exit 1; }
+          test -f artifact/main.py        || { echo "kernel produced no main.py"; exit 1; }
+          python -m json.tool artifact/validation.json
+          pass=$(python -c "import json;print('true' if json.load(open('artifact/validation.json')).get('gate_pass') else 'false')")
+          if [ "$pass" = true ]; then tag=PASS; else tag=FAIL; fi
+          name="${GITHUB_SHA:0:12}"
+          # The gate verdict is stated, never implied: a failing candidate still gets a
+          # PR (the numbers are the point) but it opens as a draft so it cannot be
+          # merged by reflex.
+          { echo "## Gate $tag (${SEEDS} fresh seeds, both seats)"; echo; echo '```json';
+            cat artifact/validation.json; echo '```'; } > pr-body.md
+          cat pr-body.md >> "$GITHUB_STEP_SUMMARY"
           mkdir -p candidates
-          cp artifact/main.py "candidates/${REF}.py"
-          cp artifact/validation.json "candidates/${REF}.validation.json"
-          br="candidate/${REF}"
+          cp artifact/main.py        "candidates/${name}.py"
+          cp artifact/validation.json "candidates/${name}.validation.json"
+          br="candidate/${name}"
           git config user.name  "kaggle-bot"; git config user.email "bot@users.noreply.github.com"
-          git checkout -b "$br"; git add candidates; git commit -m "candidate ${REF}: validation attached"
-          git push -u origin "$br"
-          gh pr create --title "Candidate ${REF}" --body-file artifact/validation.json --base main --head "$br" || true
+          git checkout -b "$br"
+          git add candidates
+          git diff --cached --quiet && { echo "nothing staged - is candidates/ gitignored?"; exit 1; }
+          git commit -m "candidate ${name}: gate ${tag}"
+          git push -u origin "$br" --force-with-lease
+          if gh pr view "$br" >/dev/null 2>&1; then
+            gh pr edit "$br" --title "Candidate ${name} - gate ${tag}" --body-file pr-body.md
+          elif [ "$pass" = true ]; then
+            gh pr create --title "Candidate ${name} - gate ${tag}" --body-file pr-body.md --base main --head "$br"
+          else
+            gh pr create --title "Candidate ${name} - gate ${tag}" --body-file pr-body.md --base main --head "$br" --draft
+          fi
