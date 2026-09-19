@@ -168,8 +168,13 @@ Pro/Team. Until the repo is public or the plan is upgraded, the only submission 
 are the `SUBMIT` confirm string and the same-day quota check in `submit_guarded.py`.
 `submit.yml` also has no commit step, so the `analysis/submissions_log.csv` audit trail
 it writes is discarded with the runner. Note: a kernel cannot reliably self-submit an agent competition, so
-produce (auto) and submit (gated) are separate; and episode/replay download is a
-competition-specific TODO in `tools/pull_feedback.py`.
+produce (auto) and submit (gated) are separate; and episode **results** are now fetched by
+`tools/pull_episodes.py` (verified 2026-09-19): Kaggle's `ListEpisodes` endpoint is
+unauthenticated and takes a `submissionId` (`teamId` is no longer accepted). It gives
+per game: our cash, the opponent's cash, their team, and the rating before/after.
+**Full replay download is still not available** — `GetEpisodeReplay` 404s at every
+method name and casing tried without a logged-in session. Games can only be *watched*
+locally, via `tools/watch_game.py`, between agents we hold.
 
 ## Kaggle MCP (optional connection)
 

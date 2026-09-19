@@ -20,6 +20,9 @@ jobs:
         with: { python-version: "3.11" }
       - run: pip install "kaggle>=2" requests
       - run: python tools/pull_feedback.py --competition "$COMPETITION" --out analysis/feedback
+      # Real per-episode results: our cash vs the opponent's, who they were, and
+      # the rating delta. Unauthenticated endpoint, so it cannot fail on credentials.
+      - run: python tools/pull_episodes.py --out analysis/feedback || true
       - name: Commit feedback
         run: |
           git config user.name kaggle-bot; git config user.email bot@users.noreply.github.com
