@@ -32,8 +32,16 @@ jobs:
         run: python tools/pack_kernel.py "${SEEDS:-24}" "$KERNEL_SLUG"
       - name: Push kernel and wait
         run: kaggle kernels push -p kernel && python tools/wait_kernel.py "$KERNEL_SLUG"
-      - name: Download kernel output
-        run: kaggle kernels output "$KERNEL_SLUG" -p artifact
+      - name: Download kernel output (and log, even on failure)
+        if: always()
+        run: |
+          kaggle kernels output "$KERNEL_SLUG" -p artifact || true
+          echo "===== kernel log ====="
+          for f in artifact/*.log; do [ -f "$f" ] && python -c "
+import json,sys
+for r in json.load(open(sys.argv[1])):
+    print(r.get('stream_name',''), r.get('data','').rstrip())
+" "$f"; done || cat artifact/*.log 2>/dev/null || echo "(no log)"
       - uses: actions/upload-artifact@v4
         with: { name: candidate, path: artifact }
       - name: Open PR with validated candidate

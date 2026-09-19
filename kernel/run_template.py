@@ -5,13 +5,18 @@
 import base64, io, os, subprocess, sys, tarfile
 
 WORK = "/kaggle/working"
+SRC = "/tmp/kaggriculture_src"          # /kaggle itself is not writable
 PAYLOAD = "__PAYLOAD__"
 
-os.makedirs("/kaggle/src", exist_ok=True)
+os.makedirs(SRC, exist_ok=True)
 with tarfile.open(fileobj=io.BytesIO(base64.b64decode(PAYLOAD)), mode="r:gz") as tar:
-    tar.extractall("/kaggle/src")
-os.chdir("/kaggle/src")
-print("unpacked:", sorted(os.listdir(".")))
+    try:
+        tar.extractall(SRC, filter="data")      # py>=3.12
+    except TypeError:
+        tar.extractall(SRC)
+os.chdir(SRC)
+print("python", sys.version)
+print("unpacked:", sorted(os.listdir(".")), flush=True)
 
 subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-r", "requirements.txt"],
                check=True)
