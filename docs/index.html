@@ -59,8 +59,8 @@ footer{max-width:900px;margin:1.5rem auto 0;color:var(--muted);font-size:.8rem;t
 </div>
 <main><section id="standing" class="panel">
 <h2>Standing</h2>
-<p class="big">Rank 5,702 of 9,548 &mdash; score 620.4</p>
-<p class="muted">Field median 780.6 &middot; leader 3282.8</p>
+<p class="big">Rank 5,512 of 9,548 &mdash; score 647.9</p>
+<p class="muted">Field median 781.1 &middot; leader 3282.8</p>
 <div class="callout">Ratings drift: the same unchanged agent has read 60 points apart
 within a single afternoon. Treat small differences as noise, not a verdict.</div></section><section id="submissions" class="panel">
 <h2>Submissions</h2>
@@ -68,9 +68,9 @@ within a single afternoon. Treat small differences as noise, not a verdict.</div
 recent</b> submissions; older ones are frozen &mdash; their score stops moving and
 they no longer count toward the final leaderboard.</p>
 <table><thead><tr><th></th><th>agent</th><th>submitted (UTC)</th><th>score</th></tr></thead>
-<tbody><tr><td><span class="badge frozen">frozen</span></td><td><code>main_v14.py</code></td><td>2026-09-19 14:43</td><td class="num">&amp;mdash;</td></tr>
-<tr><td><span class="badge active">active</span></td><td><code>cff15ce57d4b-search.py</code></td><td>2026-09-19 14:33</td><td class="num">528.5</td></tr>
-<tr><td><span class="badge active">active</span></td><td><code>main_v12_fill.py</code></td><td>2026-09-19 13:13</td><td class="num">620.4</td></tr>
+<tbody><tr><td><span class="badge active">active</span></td><td><code>main_v14.py</code></td><td>2026-09-19 14:43</td><td class="num">574.4</td></tr>
+<tr><td><span class="badge active">active</span></td><td><code>cff15ce57d4b-search.py</code></td><td>2026-09-19 14:33</td><td class="num">647.9</td></tr>
+<tr><td><span class="badge frozen">frozen</span></td><td><code>main_v12_fill.py</code></td><td>2026-09-19 13:13</td><td class="num">619.8</td></tr>
 <tr><td><span class="badge frozen">frozen</span></td><td><code>main_v14.py</code></td><td>2026-09-18 17:11</td><td class="num">640.9</td></tr>
 <tr><td><span class="badge frozen">frozen</span></td><td><code>main_v12.py</code></td><td>2026-09-18 16:21</td><td class="num">613.6</td></tr>
 <tr><td><span class="badge frozen">frozen</span></td><td><code>main.py</code></td><td>2026-09-18 15:23</td><td class="num">523.7</td></tr>
@@ -81,21 +81,21 @@ they no longer count toward the final leaderboard.</p>
 </tbody></table></section><section id="performance" class="panel">
 <h2>Performance</h2>
 
+<h3><code>main_v14.py</code></h3>
+<p>2 real games &middot; win rate 50.0% &middot; our cash 87,702 avg &middot; opponent cash 82,628 avg</p>
+<details><summary>Worst 5 losses</summary>
+<table><thead><tr><th>opponent</th><th>our cash</th><th>their cash</th></tr></thead>
+<tbody><tr><td>David Nana Kofi Ofosu-Arko</td><td class="num">66,993</td><td class="num">80,619</td></tr>
+<tr><td>Joseph Paris</td><td class="num">108,412</td><td class="num">84,637</td></tr>
+</tbody></table></details>
 <h3><code>cff15ce57d4b-search.py</code></h3>
-<p>1 real games &middot; win rate 0.0% &middot; our cash 70,409 avg &middot; opponent cash 90,527 avg</p>
+<p>4 real games &middot; win rate 50.0% &middot; our cash 85,194 avg &middot; opponent cash 84,307 avg</p>
 <details><summary>Worst 5 losses</summary>
 <table><thead><tr><th>opponent</th><th>our cash</th><th>their cash</th></tr></thead>
 <tbody><tr><td>Jon Snyder</td><td class="num">70,409</td><td class="num">90,527</td></tr>
-</tbody></table></details>
-<h3><code>main_v12_fill.py</code></h3>
-<p>22 real games &middot; win rate 45.5% &middot; our cash 77,968 avg &middot; opponent cash 82,467 avg</p>
-<details><summary>Worst 5 losses</summary>
-<table><thead><tr><th>opponent</th><th>our cash</th><th>their cash</th></tr></thead>
-<tbody><tr><td>Alan</td><td class="num">54,603</td><td class="num">130,355</td></tr>
-<tr><td>Saravana Rajan B</td><td class="num">75,225</td><td class="num">115,174</td></tr>
-<tr><td>lh123463</td><td class="num">53,916</td><td class="num">91,639</td></tr>
-<tr><td>Denis</td><td class="num">76,700</td><td class="num">114,208</td></tr>
-<tr><td>Rosastella</td><td class="num">81,629</td><td class="num">116,728</td></tr>
+<tr><td>Aashir Noman</td><td class="num">80,385</td><td class="num">83,594</td></tr>
+<tr><td>turneja</td><td class="num">93,681</td><td class="num">84,304</td></tr>
+<tr><td>Shirish Chinchanikar</td><td class="num">96,302</td><td class="num">78,804</td></tr>
 </tbody></table></details>
 <div class="callout">Full move-by-move replays of these games are rendered privately
 (they show our policy's exact behaviour) and kept as a CI workflow artifact, not
@@ -113,8 +113,8 @@ runs</a> (repo collaborators only).</div></section><section id="leaderboard" cla
 <tr><td>6</td><td>Sida Zuo</td><td class="num">3038.5</td></tr>
 <tr><td>7</td><td>Otter Vibe</td><td class="num">3035.0</td></tr>
 <tr><td>8</td><td>Planned Economy</td><td class="num">3030.1</td></tr>
-<tr><td>9</td><td>binghua</td><td class="num">3030.0</td></tr>
-<tr><td>10</td><td>Orbital Terraformer</td><td class="num">3025.7</td></tr>
+<tr><td>9</td><td>Orbital Terraformer</td><td class="num">3024.9</td></tr>
+<tr><td>10</td><td>binghua</td><td class="num">3024.4</td></tr>
 </tbody></table></details></section><section id="analysis" class="panel">
 <h2>Analysis</h2>
 <div class="subtabs"><button class="subtab" data-frame="rf0" onclick="showFrame(0)">Analysis of the four supplied leaderboard replays</button><button class="subtab" data-frame="rf1" onclick="showFrame(1)">Deployment diagnosis: where the agent actually stands, and why</button></div>

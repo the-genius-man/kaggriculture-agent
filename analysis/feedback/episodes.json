@@ -1,13 +1,54 @@
 {
  "56362365": {
   "file": "main_v14.py",
-  "active": false,
-  "episodes": []
+  "active": true,
+  "episodes": [
+   {
+    "episode": 110865033,
+    "end": "2026-09-19T14:55:01.206690200Z",
+    "our_cash": 66993,
+    "opp_cash": 80619,
+    "won": false,
+    "opponent": "David Nana Kofi Ofosu-Arko"
+   },
+   {
+    "episode": 110863967,
+    "end": "2026-09-19T14:51:12.383142200Z",
+    "our_cash": 108412,
+    "opp_cash": 84637,
+    "won": true,
+    "opponent": "Joseph Paris"
+   }
+  ]
  },
  "56362069": {
   "file": "cff15ce57d4b-search.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 110864025,
+    "end": "2026-09-19T14:53:38.559318300Z",
+    "our_cash": 96302,
+    "opp_cash": 78804,
+    "won": true,
+    "opponent": "Shirish Chinchanikar"
+   },
+   {
+    "episode": 110862902,
+    "end": "2026-09-19T14:47:30.060184200Z",
+    "our_cash": 80385,
+    "opp_cash": 83594,
+    "won": false,
+    "opponent": "Aashir Noman"
+   },
+   {
+    "episode": 110861828,
+    "end": "2026-09-19T14:45:01.874251900Z",
+    "our_cash": 93681,
+    "opp_cash": 84304,
+    "won": true,
+    "opponent": "turneja"
+   },
    {
     "episode": 110860702,
     "end": "2026-09-19T14:39:56.742799600Z",
@@ -20,8 +61,24 @@
  },
  "56359811": {
   "file": "main_v12_fill.py",
-  "active": true,
+  "active": false,
   "episodes": [
+   {
+    "episode": 110863303,
+    "end": "2026-09-19T14:48:17.682899800Z",
+    "our_cash": 92072,
+    "opp_cash": 28607,
+    "won": true,
+    "opponent": "026"
+   },
+   {
+    "episode": 110862153,
+    "end": "2026-09-19T14:45:36.104797Z",
+    "our_cash": 77710,
+    "opp_cash": 81554,
+    "won": false,
+    "opponent": "Abhi Kumar Agrawal"
+   },
    {
     "episode": 110861052,
     "end": "2026-09-19T14:42:54.305549400Z",
