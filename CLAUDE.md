@@ -30,6 +30,11 @@ self-play league with strict promotion gates.
   version. Do not reuse a version number for different code.
 - **Kaggle limits:** at most **5 submissions per day**. **Check the actual remaining
   quota before any submission.** No submission automation is wired up here.
+- **Kaggle CLI 2.x with token auth.** The stored credential is a new-style Kaggle API
+  token, not a legacy 32-hex key: the 1.x `KAGGLE_USERNAME`+`KAGGLE_KEY` scheme 401s on
+  every endpoint. Workflows install `kaggle>=2` and pass `KAGGLE_API_TOKEN` (sourced
+  from the `KAGGLE_KEY` secret); there is no `~/.kaggle/kaggle.json`. In 2.x the
+  competition is a **positional** argument — `-c` is gone.
 - **Kaggle access is via an optional MCP connection (see "Kaggle MCP" below), not
   assumed.** If it is connected: reads (leaderboard, submissions, remaining quota,
   competition/dataset/kernel files) may be used freely; **a submission is taken only
@@ -53,36 +58,65 @@ self-play league with strict promotion gates.
   feeding, inventory and market churn. Ablate market behaviour before copying it.
 - **A higher maximum cash in one game does not establish a stronger policy.** There
   is no income ceiling and none should be imposed.
+- **The Kaggle rating is noisier than the differences we tune on.** `main_v12.py`
+  read 626.5 / 679.0 / 656.8 / 617.7 in one afternoon, unchanged. That +/-60 swing is
+  wider than the whole spread across every version we have shipped. No single
+  submission establishes that a change helped.
+- **A fresh submission sits at its unplayed initial rating (600.0) for a while.**
+  V14 read 600.0 at 17:2x and 645.3 by 19:1x on 2026-09-18. Never compare a fresh
+  submission against a settled one; re-read both in the same pull.
 
-## Current status (as of V14 work)
+## Current status (measured 2026-09-18/19)
 
-- Confirmed champion / fallback: **V12 trial-23** (`agents/main_v12.py`).
-- Head-to-head measurement (single-CPU, small samples): V12's edge over V9 is small
-  and noisy. Beating V9 *decisively and repeatably* is the real bar.
-- **Enhanced Game v2** (`notebooks/`) adds phase-dependent policy params, a throughput
-  auto-benchmark (a GPU does not accelerate this CPU simulator; profiling showed the
-  time is Python deepcopy/struct/validation), and one widened bound (`plant_floor`).
-- **V14** (`policy/policy_template.py`, `league/`): two evidence-based changes from the
-  leaderboard-replay analysis:
-  1. **Melon maturity fix.** `MELON` peak corrected `10 -> 12` to match the engine's
-     growth window, so melons are harvested yield-aware (at 6 units or the window
-     end) instead of force-harvested at age 10 below max. Measured: premature sub-6
-     melon harvests dropped from ~90% to ~0-5%.
-  2. **Strawberry occupancy target** (`strawberry_target`, searchable): suppress the
-     per-plot saturation discount until a target strawberry count is established.
-     Measured: day-20 strawberries ~5 -> ~13-15 (wheat rebalanced down, not removed).
-- **Not yet closed:** productive **occupancy**. V13 fills ~45/75 tiles at day 20; the
-  strongest observed opponent (Boey) fills ~75/75. V14 is ~49-51. The biggest lever
-  from the analysis is still open.
+See `analysis/REPORT_deployment_diagnosis.md` for the evidence behind all of this.
+
+- **Standing: rank 5,499 of 9,462 teams, score 645.3.** Field median 780.5, leader
+  3,205.2. We are in the bottom 42% of the field, not near the front.
+- **Best deployed agent: V14 (645.3).** V12 617.7, V9 612.0, V13 599.6, V11 586.6 —
+  all inside the rating's own noise band, so treat them as indistinguishable.
+- Confirmed fallback: **V12 trial-23** (`agents/main_v12.py`, `sha256 dffae949e74e...`).
+  Note V12 is configured `'land': 2`, so it is hard-capped at 50 of 75 tiles.
+- `agents/main_v13.py` **does not exist in this repo**, so the `main_v13.py` arm of the
+  gate in `experiments/validate.py` silently skips. Either restore the file or stop
+  claiming V13 as a baseline.
+- **Two engine mechanics dominate production** (from `kaggriculture.py`; the env
+  README's crop table contradicts the code and is wrong):
+  - one-time crops gain yield **only** from `WATER`, inside age window
+    `[(max_yield_day+1)//2, max_yield_day]`, +1 per watered day, +2 if fertilized;
+  - **two consecutive unwatered days turn the tile into a WEED.** An unwatered plant
+    is not a slow plant, it is a dead plant in two days.
+- **Measured gaps.** Day-20 productive tiles: V12 45.5 of 50 owned, V14 51.5 of 75;
+  the leader profile is 74.75 of 75 **by day 10**. V14 loses 8 strawberries per game
+  to dry-out. Melons clear at 5 of 6 units in 19 of 23 cases (leaders: 43/43 at 6).
+  Production collapses after day 25.
+- **Ruled out:** the 1s `actTimeout` (we peak at 0.075-0.105s) and the worker ceiling
+  (V14 reaches 12 hands; leaders run 11-12).
+- **The early-game constraint is cash, not seeds or land.** At day 10 our agents hold
+  320-880 cash while the leader profile has spent ~6,000 from a 3,000 start. Raising
+  the seed stock from 2 to 6 *lowered* day-10 occupancy and cash — bulk seed buying
+  starves expansion.
+- **Known policy defect:** `policy_template.py` prices a watering job at
+  `95+hour*4+120*consecutive_unwatered` (~215 for a plant dying tonight) against a
+  harvest at ~364, then divides by distance. Losing a strawberry costs its 100 seed
+  plus ~480 of future yield, so survival watering is underpriced by roughly 10x.
+- **`agents/main_leader.py`** is a league opponent built to the leaders' measured
+  behavioural profile (not a reconstruction of their policy). Its two mechanism fixes
+  work: melons at max yield 17% -> 86%, strawberry dry-out deaths 8.0 -> 4.0. It still
+  earns less cash than V14, so it is an **opponent, not a submission candidate**.
 
 ## What the leaderboard analysis says to work on next
 
-See `analysis/REPORT_boey_leaders.md` (4 Boey wins) and the V13 loss diagnosis.
-Priorities, in order:
+See `analysis/REPORT_deployment_diagnosis.md` (measured, current) and
+`analysis/REPORT_boey_leaders.md` (4 Boey wins). Priorities, reordered by what the
+measurements actually support:
 
+0. **Early cash generation, days 1-10.** This is the binding constraint: occupancy
+   cannot exceed what the bank can fund, and everything else follows occupancy. The
+   leaders fund expansion out of early revenue (short-cycle wheat, day-4 eggs, market
+   churn). Our agents reach day 10 with an empty bank.
 1. **Productive occupancy / crop scheduling.** Fill owned, reachable tiles early;
    establish a large strawberry crop by ~day 10-15 the way Boey does, then rotate to
-   short-cycle crops late. This is the main gap.
+   short-cycle crops late. Gated by (0); do not tune it in isolation.
 2. **Routing / job allocation.** Boey used fewer move commands and more harvests at
    the same worker cap. Tune region homes, commitment and distance weighting; the
    worker ceiling is not the problem.
@@ -92,6 +126,11 @@ Priorities, in order:
    staffing, routing and time-to-recover. Do not force it (opponents beat V13 with
    three quadrants) and do not assume three is optimal.
 5. **Market-transaction ablation** before imitating heavy wheat/fertilizer churn.
+6. **Survival-priced watering and in-window fertilizer.** Already demonstrated in
+   `agents/main_leader.py`; port into the searchable policy as parameters
+   (`survival_bias`, `tiles_per_unit`, `seed_stock`) rather than hard-coding them.
+7. **Late-game collapse after day 25**, where we drop to ~20 productive tiles and the
+   leaders hold ~70.
 
 Do each as an explicit candidate with paired seeds, both seats, the same opponent
 pool, against V9 and V13. Do not change all settings at once.
@@ -113,8 +152,14 @@ diagnoses the last 10-20 games, writes findings to `analysis/`, and opens a code
 loop never merges its own code or spends a submission on its own.
 
 Repo config needed: secrets `KAGGLE_USERNAME`, `KAGGLE_KEY`; vars `KERNEL_SLUG`,
-`KAGGLE_COMPETITION`, `DAILY_SUBMISSION_CAP`; a `production` environment with a
-required reviewer. Note: a kernel cannot reliably self-submit an agent competition, so
+`KAGGLE_COMPETITION`, `DAILY_SUBMISSION_CAP`; a `production` environment.
+
+**Gate status (2026-09-18): the `production` environment exists but is UNPROTECTED.**
+Required reviewers returned HTTP 422 — protection rules on a private repo need GitHub
+Pro/Team. Until the repo is public or the plan is upgraded, the only submission guards
+are the `SUBMIT` confirm string and the same-day quota check in `submit_guarded.py`.
+`submit.yml` also has no commit step, so the `analysis/submissions_log.csv` audit trail
+it writes is discarded with the runner. Note: a kernel cannot reliably self-submit an agent competition, so
 produce (auto) and submit (gated) are separate; and episode/replay download is a
 competition-specific TODO in `tools/pull_feedback.py`.
 
