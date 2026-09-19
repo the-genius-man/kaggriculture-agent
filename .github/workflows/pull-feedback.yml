@@ -45,8 +45,13 @@ jobs:
           git config user.name kaggle-bot; git config user.email bot@users.noreply.github.com
           # replays_html/ and replays/ (raw replay JSON) are deliberately excluded:
           # they show our policy's exact move-by-move behaviour and are published
-          # only as the workflow artifact above, never committed.
-          git add -f analysis/feedback -- ':!analysis/feedback/replays_html' ':!analysis/feedback/replays'
+          # only as the workflow artifact above, never committed. lb_extract/ is also
+          # excluded: it's a disposable unzip of the already-committed .zip, and its
+          # csv filename carries a colon (Kaggle's export timestamp) that NTFS/Windows
+          # cannot check out -- a past commit that included it broke every Windows
+          # clone of this repo (fixed once already; never repeat it).
+          git add -f analysis/feedback -- ':!analysis/feedback/replays_html' \
+            ':!analysis/feedback/replays' ':!analysis/feedback/lb_extract'
           git add -f docs
           git commit -m "feedback $(date -u +%FT%TZ)" || echo "no changes"
           git push || echo "nothing to push"
