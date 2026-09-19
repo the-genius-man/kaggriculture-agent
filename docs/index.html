@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kaggriculture agent — status</title>
+<style>
+:root{--bg:#fafaf8;--panel:#fff;--text:#1a1a1a;--muted:#6b6b6b;--border:#e2e2df;
+--accent:#0b6b4f;--active:#0b6b4f;--frozen:#8a8a86;}
+@media (prefers-color-scheme: dark){
+:root{--bg:#15161a;--panel:#1d1e23;--text:#eceae6;--muted:#9a9a96;--border:#33343a;
+--accent:#3ecf8e;--active:#3ecf8e;--frozen:#7a7a76;}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 -apple-system,Segoe UI,Roboto,sans-serif;
+padding:1.25rem clamp(16px,4vw,16px) 3rem}
+h1{font-size:1.3rem;margin:0 0 .25rem}
+h2{font-size:1.1rem;border-bottom:1px solid var(--border);padding-bottom:.4rem;margin-top:0}
+h3{font-size:.95rem;margin:1.2rem 0 .3rem}
+.top{display:flex;flex-wrap:wrap;gap:.5rem 1rem;justify-content:space-between;align-items:flex-start;
+margin-bottom:1rem}
+.byline{color:var(--muted);font-size:.85rem;max-width:60ch}
+nav{display:flex;flex-wrap:wrap;gap:.35rem;justify-content:flex-end}
+.navlink{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:6px;
+padding:.4rem .7rem;font-size:.85rem;cursor:pointer}
+.navlink.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+main{max-width:900px;margin:0 auto}
+.panel{display:none;background:var(--panel);border:1px solid var(--border);border-radius:10px;
+padding:1.25rem 1.5rem;margin-bottom:1rem}
+.panel.active{display:block}
+.big{font-size:1.3rem;font-weight:600;margin:.3rem 0}
+.muted{color:var(--muted)}
+.callout{background:rgba(11,107,79,.08);border-left:3px solid var(--accent);padding:.6rem .9rem;
+border-radius:4px;font-size:.9rem;margin-top:.8rem}
+table{width:100%;border-collapse:collapse;font-size:.88rem;margin:.5rem 0}
+th,td{text-align:left;padding:.35rem .5rem;border-bottom:1px solid var(--border)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+code{background:rgba(127,127,127,.15);padding:.1rem .3rem;border-radius:4px;font-size:.85em}
+details{margin:.5rem 0}
+summary{cursor:pointer;color:var(--accent);font-weight:500}
+.badge{font-size:.72rem;padding:.15rem .5rem;border-radius:99px;color:#fff}
+.badge.active{background:var(--active)}
+.badge.frozen{background:var(--frozen)}
+.subtabs{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.75rem}
+.subtab{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:6px;
+padding:.35rem .65rem;font-size:.85rem;cursor:pointer}
+.subtab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.report-frame{width:100%;height:75vh;border:1px solid var(--border);border-radius:8px}
+footer{max-width:900px;margin:1.5rem auto 0;color:var(--muted);font-size:.8rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="top">
+  <div>
+    <h1>Kaggriculture agent</h1>
+    <p class="byline">Status dashboard, generated from the CI feedback pull. Agent
+    source and policy parameters are not published here.</p>
+  </div>
+  <nav><button class="navlink" data-tab="standing" onclick="showTab('standing')">Standing</button><button class="navlink" data-tab="submissions" onclick="showTab('submissions')">Submissions</button><button class="navlink" data-tab="performance" onclick="showTab('performance')">Performance</button><button class="navlink" data-tab="leaderboard" onclick="showTab('leaderboard')">Leaderboard</button><button class="navlink" data-tab="analysis" onclick="showTab('analysis')">Analysis</button></nav>
+</div>
+<main><section id="standing" class="panel">
+<h2>Standing</h2>
+<p class="big">Rank 5,476 of 9,517 &mdash; score 652.3</p>
+<p class="muted">Field median 779.1 &middot; leader 3282.9</p>
+<div class="callout">Ratings drift: the same unchanged agent has read 60 points apart
+within a single afternoon. Treat small differences as noise, not a verdict.</div></section><section id="submissions" class="panel">
+<h2>Submissions</h2>
+<p class="muted">Kaggle keeps matching new episodes against only your <b>2 most
+recent</b> submissions; older ones are frozen &mdash; their score stops moving and
+they no longer count toward the final leaderboard.</p>
+<table><thead><tr><th></th><th>agent</th><th>submitted (UTC)</th><th>score</th></tr></thead>
+<tbody><tr><td><span class="badge active">active</span></td><td><code>main_v14.py</code></td><td>2026-09-18 17:11</td><td class="num">652.3</td></tr>
+<tr><td><span class="badge active">active</span></td><td><code>main_v12.py</code></td><td>2026-09-18 16:21</td><td class="num">603.6</td></tr>
+<tr><td><span class="badge frozen">frozen</span></td><td><code>main.py</code></td><td>2026-09-18 15:23</td><td class="num">523.7</td></tr>
+<tr><td><span class="badge frozen">frozen</span></td><td><code>main.py</code></td><td>2026-09-18 11:17</td><td class="num">418.3</td></tr>
+<tr><td><span class="badge frozen">frozen</span></td><td><code>main_v13.py</code></td><td>2026-09-17 22:32</td><td class="num">599.6</td></tr>
+<tr><td><span class="badge frozen">frozen</span></td><td><code>main-v12.py</code></td><td>2026-09-17 05:53</td><td class="num">615.6</td></tr>
+<tr><td><span class="badge frozen">frozen</span></td><td><code>main_v11.py</code></td><td>2026-09-16 23:11</td><td class="num">586.6</td></tr>
+<tr><td><span class="badge frozen">frozen</span></td><td><code>main_v9.py</code></td><td>2026-09-16 21:16</td><td class="num">612.0</td></tr>
+<tr><td><span class="badge frozen">frozen</span></td><td><code>main.py</code></td><td>2026-09-16 14:37</td><td class="num">415.3</td></tr>
+<tr><td><span class="badge frozen">frozen</span></td><td><code>main (2).py</code></td><td>2026-09-16 12:03</td><td class="num">395.5</td></tr>
+</tbody></table></section><section id="performance" class="panel">
+<h2>Performance</h2>
+
+<h3><code>main_v14.py</code></h3>
+<p>37 real games &middot; win rate 54.1% &middot; our cash 86,864 avg &middot; opponent cash 80,220 avg</p>
+<details><summary>Worst 5 losses</summary>
+<table><thead><tr><th>opponent</th><th>our cash</th><th>their cash</th></tr></thead>
+<tbody><tr><td>yuya</td><td class="num">61,001</td><td class="num">159,232</td></tr>
+<tr><td>YKuma</td><td class="num">65,142</td><td class="num">137,861</td></tr>
+<tr><td>Klgv Klgv</td><td class="num">110,326</td><td class="num">157,634</td></tr>
+<tr><td>SoftRL</td><td class="num">52,888</td><td class="num">84,982</td></tr>
+<tr><td>DenisKoronchik</td><td class="num">56,399</td><td class="num">78,534</td></tr>
+</tbody></table></details>
+<h3><code>main_v12.py</code></h3>
+<p>32 real games &middot; win rate 46.9% &middot; our cash 72,401 avg &middot; opponent cash 75,679 avg</p>
+<details><summary>Worst 5 losses</summary>
+<table><thead><tr><th>opponent</th><th>our cash</th><th>their cash</th></tr></thead>
+<tbody><tr><td>42</td><td class="num">66,952</td><td class="num">116,635</td></tr>
+<tr><td>Lucas Ferreira</td><td class="num">81,100</td><td class="num">120,738</td></tr>
+<tr><td>Matthew B</td><td class="num">47,356</td><td class="num">86,462</td></tr>
+<tr><td>Goober</td><td class="num">45,539</td><td class="num">76,854</td></tr>
+<tr><td>gh</td><td class="num">78,455</td><td class="num">109,675</td></tr>
+</tbody></table></details>
+<div class="callout">Full move-by-move replays of these games are rendered privately
+(they show our policy's exact behaviour) and kept as a CI workflow artifact, not
+published here &mdash; see the
+<a href="https://github.com/the-genius-man/kaggriculture-agent/actions/workflows/pull-feedback.yml">pull-feedback
+runs</a> (repo collaborators only).</div></section><section id="leaderboard" class="panel">
+<h2>Leaderboard</h2>
+<details><summary>Top 10</summary>
+<table><thead><tr><th>#</th><th>team</th><th>score</th></tr></thead>
+<tbody><tr><td>1</td><td>Majkel1337</td><td class="num">3282.9</td></tr>
+<tr><td>2</td><td>Unknown Mother-Goose</td><td class="num">3084.9</td></tr>
+<tr><td>3</td><td>ymg_aq</td><td class="num">3057.7</td></tr>
+<tr><td>4</td><td>THIRD FARM CLUB</td><td class="num">3054.3</td></tr>
+<tr><td>5</td><td>Orbital Terraformer</td><td class="num">3042.6</td></tr>
+<tr><td>6</td><td>Otter Vibe</td><td class="num">3042.4</td></tr>
+<tr><td>7</td><td>Sida Zuo</td><td class="num">3036.8</td></tr>
+<tr><td>8</td><td>Arda Ceylan</td><td class="num">3033.2</td></tr>
+<tr><td>9</td><td>QQ</td><td class="num">3023.5</td></tr>
+<tr><td>10</td><td>tetsuya &amp; yuanzhe &amp; guoqi</td><td class="num">3019.0</td></tr>
+</tbody></table></details></section><section id="analysis" class="panel">
+<h2>Analysis</h2>
+<div class="subtabs"><button class="subtab" data-frame="rf0" onclick="showFrame(0)">Analysis of the four supplied leaderboard replays</button><button class="subtab" data-frame="rf1" onclick="showFrame(1)">Deployment diagnosis: where the agent actually stands, and why</button></div>
+<iframe id="rf0" class="report-frame" src="analysis/REPORT_boey_leaders.html" hidden></iframe><iframe id="rf1" class="report-frame" src="analysis/REPORT_deployment_diagnosis.html" hidden></iframe>
+<script>function showFrame(n){document.querySelectorAll('.report-frame').forEach((f,i)=>f.hidden=i!==n);
+document.querySelectorAll('.subtab').forEach((b,i)=>b.classList.toggle('active',i===n));}
+showFrame(0);</script></section></main>
+<footer>Generated by <code>tools/build_site.py</code>.</footer>
+<script>
+function showTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===id));
+  document.querySelectorAll('.navlink').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
+  try{localStorage.setItem('kag_tab',id);}catch(e){}
+}
+(function(){
+  var t='standing';
+  try{t=localStorage.getItem('kag_tab')||t;}catch(e){}
+  showTab(t);
+})();
+</script>
+</body>
+</html>

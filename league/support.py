@@ -16,6 +16,13 @@ BASE.update(liquidate=True,feed_fix=True,cash_release=True,plant_floor=40)
 # config reproduces v1 behavior; the league search moves the *_late variants.
 BASE.update(late_day=24,crop_bias_late=BASE['crop_bias'],plant_floor_late=BASE['plant_floor'],deposit_bias_late=BASE['deposit_bias'])
 BASE.update(strawberry_target=0)  # v14: 0 keeps v2 behavior; search establishes a large early strawberry crop
+# v15: leader-profile mechanics (analysis/REPORT_deployment_diagnosis.md), all off by
+# default so this reproduces v14 exactly. survival_bias>0 prices watering at a dying
+# plant's replacement cost; fert_in_window opens fertilizer from the start of the
+# yield window instead of one day before first yield; tiles_per_unit>0 caps planting
+# at what the hands can water. Hand-picked combinations of these hurt on their own
+# (see the report) -- they need the TPE search, not manual tuning.
+BASE.update(survival_bias=0.,fert_in_window=0,tiles_per_unit=0,seed_stock=2)
 ENV_VERSION = "1.32.7"
 CHECKPOINT_COPY = ''
 

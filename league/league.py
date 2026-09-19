@@ -45,6 +45,14 @@ SPACE={
     'deposit_bias_late':('float',.15,.65),
     # v14: how many strawberry plots to establish before applying the saturation discount.
     'strawberry_target':('int',0,40,4),
+    # v15: leader-profile mechanics, see support.BASE. 0/off reproduces v14; the
+    # hand-picked sweep in analysis/REPORT_deployment_diagnosis.md found each hurts
+    # ALONE but they interact, so this is a TPE search problem, not a manual one.
+    'survival_bias':('float',0.,2.5), 'fert_in_window':('cat',0,1),
+    'tiles_per_unit':('cat',0,4,5,6,7,8), 'seed_stock':('cat',2,3,4,6),
+    # Not previously searched (frozen at BASE's land_deadline=18); the diagnosis's
+    # top-priority gap is establishing occupancy earlier, so this is now a knob.
+    'land_deadline':('cat',10,12,15,18),
 }
 
 def sample(trial):
@@ -104,13 +112,25 @@ class League:
     def __init__(self,cfg,pool):
         self.cfg=cfg;self.root=Path(cfg['output_dir']).resolve();self.pool=pool
         self.source=Path(__file__).resolve().parent
+        # Repo layout keeps fixed agents in ../agents/ alongside league.py's own
+        # directory; the notebook's embedded-files flow writes everything flat next
+        # to league.py in one directory. Support both without duplicating agents.
+        self.agents_dir=(self.source.parent/'agents' if (self.source.parent/'agents'/'main_v9.py').exists()
+                         else self.source)
+        self.template_path=(self.source.parent/'policy'/'policy_template.py'
+                            if (self.source.parent/'policy'/'policy_template.py').exists()
+                            else self.source/'policy_template.py')
         self.root.mkdir(parents=True,exist_ok=True)
         for d in ['agents','candidates','reports','replays','sources']:(self.root/d).mkdir(exist_ok=True)
         self.started=time.monotonic();self.deadline=self.started+cfg['time_budget_minutes']*60
-        self.template=(self.source/'policy_template.py').read_text()
+        self.template=self.template_path.read_text()
         fixed=[]
-        for name in ['main_v9.py','main_v11.py','main_v12.py']:
-            shutil.copyfile(self.source/name,self.root/'agents'/name);fixed.append('agents/'+name)
+        # main_leader.py: a non-lineage opponent built to the strongest observed
+        # leaderboard player's measured behavioural profile (analysis/
+        # REPORT_deployment_diagnosis.md). Everything else here is our own lineage;
+        # V14 passed the old pool 93.8-100% and then lost most games to this one.
+        for name in ['main_v9.py','main_v11.py','main_v12.py','main_v14.py','main_leader.py']:
+            shutil.copyfile(self.agents_dir/name,self.root/'agents'/name);fixed.append('agents/'+name)
         for name,p in {
             'stress_crops.py':dict(BASE,animals=6,hands=12,land=4,crop_bias=2.,plant_floor=60,land_util=.35,crop_style='orchard'),
             'stress_livestock.py':dict(BASE,animals=20,hands=12,care_bias=1.8,animal_style='milk')}.items():
@@ -122,19 +142,25 @@ class League:
         contract={k:cfg[k] for k in ['train_seeds','selection_seeds','holdout_seeds','general_trials','exploiter_trials',
                   'finalists','history_size','selfplay_seeds','v9_win_rate','champion_win_rate','min_opponent_win_rate',
                   'max_decision_seconds','target_mean_cash','target_win_rate','target_80k_rate']}
-        contract['sources']={n:support.digest(self.source/n) for n in ['league.py','support.py','policy_template.py']}
+        contract['sources']={n:support.digest(self.source/n) for n in ['league.py','support.py']}
+        contract['sources']['policy_template.py']=support.digest(self.template_path)
         contract['fixed']={p:support.digest(self.root/p) for p in fixed}
         contract['environment']=support.ENV_VERSION
         manifest=self.root/'manifest.json'
         if manifest.exists() and json.loads(manifest.read_text())!=contract:
             raise ValueError('This checkpoint has different code, opponents or study settings. Start a new output folder.')
         support.write_json(manifest,contract)
-        for n in ['league.py','support.py','policy_template.py','main_v9.py','main_v11.py','main_v12.py']:
+        for n in ['league.py','support.py']:
             shutil.copyfile(self.source/n,self.root/'sources'/n)
+        shutil.copyfile(self.template_path,self.root/'sources'/'policy_template.py')
+        for n in ['main_v9.py','main_v11.py','main_v12.py','main_v14.py','main_leader.py']:
+            shutil.copyfile(self.agents_dir/n,self.root/'sources'/n)
         if (self.root/'state.json').exists():self.state=json.loads((self.root/'state.json').read_text())
         else:
-            self.state=dict(cycle=0,phase='new_cycle',champion='agents/main_v12.py',
-                            champion_sha=support.digest(self.root/'agents/main_v12.py'),
+            # V14 is the strongest agent measured so far (beats V9 100%, V12 93.8% on
+            # a 24-seed holdout); start the search from it, not the older V12.
+            self.state=dict(cycle=0,phase='new_cycle',champion='agents/main_v14.py',
+                            champion_sha=support.digest(self.root/'agents/main_v14.py'),
                             archives=[],tested_hashes=[],no_progress=0,promotions=0,
                             target_reached=False,restarts=0)
         for a in self.state['archives']:

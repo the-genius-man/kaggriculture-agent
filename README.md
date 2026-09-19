@@ -36,8 +36,27 @@ remaining daily submission quota before submitting anything.
 
 ## Status
 
-Fallback champion: V12 trial-23. V14 is a promising but unvalidated candidate; see
-`CHANGELOG.md` and `CLAUDE.md`.
+**Rank 5,499 of 9,462 teams, score 645.3** (field median 780.5, leader 3,205.2) as of
+2026-09-18. Best deployed agent is V14; V12 617.7, V9 612.0, V13 599.6, V11 586.6.
+
+Treat those differences as noise: `main_v12.py` read 626.5 / 679.0 / 656.8 / 617.7 in
+a single afternoon without changing. A freshly submitted agent also sits at its
+unplayed initial rating of 600.0 for a while, so never compare a fresh submission
+against a settled one.
+
+The measured reasons we are losing — cash-starved early game gating occupancy, crops
+dying of thirst, melons harvested a unit short, production collapsing after day 25 —
+are in `analysis/REPORT_deployment_diagnosis.md`. Read `CLAUDE.md` for the constraints.
+
+## Kaggle credentials
+
+The Kaggle CLI 2.x uses a single API token. Workflows install `kaggle>=2` and pass
+`KAGGLE_API_TOKEN` (from the `KAGGLE_KEY` repo secret); the old
+`KAGGLE_USERNAME`+`KAGGLE_KEY`/`kaggle.json` scheme returns 401 on every endpoint.
+In 2.x the competition is a positional argument, not `-c`.
+
+Run `kaggle-auth-check.yml` to diagnose credential problems; it prints the shape of
+the stored values (length, stray quotes) without revealing them.
 
 ## Kaggle MCP (optional)
 

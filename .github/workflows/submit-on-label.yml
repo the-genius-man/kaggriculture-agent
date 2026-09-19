@@ -1,0 +1,48 @@
+name: submit-on-label
+# The "submit button". Adding the `submit-to-kaggle` label to a candidate PR submits
+# that PR's agent to Kaggle. The label IS the human gate: this repo is private and on a
+# plan where environment protection rules are unavailable (HTTP 422), so only people who
+# can label the repo can trigger it. tools/submit_guarded.py still enforces the same-day
+# quota cap before anything is sent.
+on:
+  pull_request_target:
+    types: [labeled]
+permissions: { contents: read, pull-requests: write }
+jobs:
+  submit:
+    if: github.event.label.name == 'submit-to-kaggle'
+    runs-on: ubuntu-latest
+    env:
+      KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_KEY }}
+      COMPETITION: ${{ vars.KAGGLE_COMPETITION }}
+      DAILY_CAP: ${{ vars.DAILY_SUBMISSION_CAP }}
+      GH_TOKEN: ${{ github.token }}
+      PR: ${{ github.event.pull_request.number }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install "kaggle>=2"
+      - name: Find the candidate agent in this PR
+        run: |
+          file=$(git diff --name-only origin/main...HEAD -- 'candidates/*.py' | head -1)
+          test -n "$file" || { echo "no candidates/*.py in this PR"; exit 1; }
+          echo "AGENT=$file" >> "$GITHUB_ENV"
+          echo "picked $file"
+      - name: Guarded submit (quota + confirm)
+        run: |
+          python tools/submit_guarded.py --file "$AGENT" \
+            --message "PR #${PR} $(basename "$AGENT" .py) via submit-to-kaggle label" \
+            --confirm SUBMIT --cap "${DAILY_CAP:-5}" | tee submit.out
+      - name: Report back on the PR
+        if: always()
+        run: |
+          { echo "### Submission attempt";
+            echo '```';
+            cat submit.out 2>/dev/null || echo "failed before submitting - see the run log";
+            echo '```'; } > result.md
+          gh pr comment "$PR" --body-file result.md || true
+          gh pr edit "$PR" --remove-label submit-to-kaggle || true

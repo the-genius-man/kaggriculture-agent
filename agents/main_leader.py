@@ -1,14 +1,16 @@
-"""Enhanced Game v15: v14 plus three searchable production mechanics -- survival-priced
-watering, fertilizer across the whole yield window, and planting capped by watering
-throughput. Each is off by default (survival_bias=0, fert_in_window=0, tiles_per_unit=0)
-and those defaults reproduce v14 exactly, so the search can always recover it.
-Motivation: analysis/REPORT_deployment_diagnosis.md. Std lib only."""
+"""Leader-style opponent. Mimics the measured play profile of the strongest observed
+leaderboard player (analysis/REPORT_boey_leaders.md): three quadrants filled early,
+strawberry-dominant mid-game, wheat late, ~18 animals, 12 hands. Differs from the
+V14 policy in three ways -- survival-priced watering, fertilizer from the start of
+the yield window, and planting capped by watering throughput. This reproduces an
+observed behavioural profile; it is NOT a reconstruction of that opponent's policy,
+which is unknown. Std lib only."""
 import copy
 
 # A soft commitment, never an unconditional cached action. Reset every day/game.
 _MEMORY = {}
 
-CFG = {}  # replaced by the trainer
+CFG = {'animals': 18, 'hands': 12, 'land': 3, 'crop_bias': 1.5, 'care_bias': 1.3, 'fert_bias': 1.6, 'opponent_weight': 0.0, 'liquidate': True, 'drop_units': 5, 'drop_value': 1000000, 'cash_release': True, 'deposit_bias': 0.3, 'feed_fix': True, 'care_cap': 1.3, 'plant_floor': 40, 'hire_pace': 2, 'workload_hiring': False, 'work_per_hand': 8, 'keep_late_hands': True, 'land_util': 0.3, 'land_buffer': 400, 'commitment': 1.3, 'region_weight': 0.8, 'distance_weight': 0.65, 'dig_value': 60, 'animal_deadline': 16, 'land_deadline': 12, 'expansion_hands': 6, 'night_deposit': True, 'late_day': 24, 'crop_bias_late': 1.5, 'plant_floor_late': 40, 'deposit_bias_late': 0.3, 'strawberry_target': 34, 'survival_bias': 1.0, 'tiles_per_unit': 6, 'seed_stock': 2, 'fert_in_window': 1}
 CROPS={'WHEAT':(10,2,4,4),'CARROT':(20,2,3,3),'MELON':(80,10,12,6),'TOMATO':(50,8,11,4),'STRAWBERRY':(100,10,16,4)}
 ANIMALS={'COW':(400,'MILK',8,2),'SHEEP':(500,'WOOL',6,3),'GOOSE':(300,'EGG',4,1)}
 BASE={'WHEAT':25,'CARROT':35,'MELON':250,'TOMATO':60,'STRAWBERRY':120,'MILK':160,'WOOL':200,'EGG':50,'FERTILIZER':100}

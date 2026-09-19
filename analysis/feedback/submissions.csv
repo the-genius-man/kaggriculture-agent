@@ -1,0 +1,12 @@
+ref,fileName,date,description,status,publicScore,privateScore
+56335886,main_v14.py,2026-09-18 17:11:06.717000,V14: melon maturity 10->12 + strawberry_target=30 (rendered from candidate.json); first submission via CI pipeline,SubmissionStatus.COMPLETE,652.3,
+56334872,main_v12.py,2026-09-18 16:21:27.493000,Returning,SubmissionStatus.COMPLETE,603.6,
+56333679,main.py,2026-09-18 15:23:25.340000,"v5: replay-derived playbook (3 quadrants, one-shot melon block, strawberry core, grown wheat). Beats v4 39/40 head-to-head, +$9.9k.",SubmissionStatus.COMPLETE,523.7,
+56328708,main.py,2026-09-18 11:17:10.070000,"Zoned v4: value-per-action mix (melon + animals), bought wheat feed, reserve-price selling",SubmissionStatus.COMPLETE,418.3,
+56314667,main_v13.py,2026-09-17 22:32:49.697000,,SubmissionStatus.COMPLETE,599.6,
+56296427,main-v12.py,2026-09-17 05:53:26.053000,,SubmissionStatus.COMPLETE,615.6,
+56288625,main_v11.py,2026-09-16 23:11:30.907000,,SubmissionStatus.COMPLETE,586.6,
+56287498,main_v9.py,2026-09-16 21:16:31.720000,,SubmissionStatus.COMPLETE,612.0,
+56281086,main.py,2026-09-16 14:37:07.877000,,SubmissionStatus.COMPLETE,415.3,
+56278048,main (2).py,2026-09-16 12:03:18.573000,,SubmissionStatus.COMPLETE,395.5,
+56262854,main.py,2026-09-15 21:28:58.997000,,SubmissionStatus.COMPLETE,183.1,

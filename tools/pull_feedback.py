@@ -8,14 +8,22 @@ from pathlib import Path
 def run(cmd, outfile):
     r = subprocess.run(cmd, capture_output=True, text=True)
     Path(outfile).write_text(r.stdout or r.stderr)
-    print(("ok  " if r.returncode==0 else "warn")+" "+" ".join(cmd)+" -> "+outfile)
+    print(f"{'ok  ' if r.returncode==0 else 'warn'} {' '.join(cmd)} -> {outfile}")
+    if r.returncode != 0:                      # say WHY, or the pull is undiagnosable
+        for line in (r.stderr or r.stdout or "<no output>").strip().splitlines()[:8]:
+            print("      " + line)
+    return r.returncode == 0
 
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--competition", required=True); p.add_argument("--out", required=True)
     a = p.parse_args(); out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
-    run(["kaggle","competitions","leaderboard","-c",a.competition,"--show"], out/"leaderboard.txt")
-    run(["kaggle","competitions","submissions","-c",a.competition,"-v"], out/"submissions.csv")
+    run(["kaggle","competitions","leaderboard",a.competition,"--show"], out/"leaderboard.txt")
+    run(["kaggle","competitions","submissions",a.competition,"-v"], out/"submissions.csv")
+    # full leaderboard: the --show view is only the top slice, so our own rank
+    # and the score distribution are invisible without the download.
+    run(["kaggle","competitions","leaderboard",a.competition,"-d","-p",str(out)],
+        out/"leaderboard_download.log")
     # TODO(episodes): our earlier replay analysis used kaggle-environments 1.32.7 replays.
     # Wire the ListEpisodes endpoint here to fetch the last 10-20 of OUR games for the
     # Claude Code + MCP diagnosis step. Left as a stub: competition-specific, unverified.

@@ -10,7 +10,11 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "league"))
 import support  # noqa
 
-GATES = {"main_v9.py": 0.80, "main_v12.py": 0.60, "main_v13.py": 0.55}  # opponent -> min win rate
+# opponent -> min win rate. main_leader.py is a leader-style opponent (see
+# analysis/REPORT_deployment_diagnosis.md): the league is otherwise all our own
+# lineage, which has not predicted leaderboard placement.
+GATES = {"main_v9.py": 0.80, "main_v12.py": 0.60, "main_v13.py": 0.55,
+         "main_leader.py": 0.55}
 
 def evaluate(cand, opp, seeds):
     rows = []

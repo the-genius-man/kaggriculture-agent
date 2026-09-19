@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       ref: { description: "git ref to train", required: false, default: "main" }
+      seeds: { description: "holdout seeds per opponent", required: false, default: "24" }
   push:
     branches: [main]
     paths: ["policy/**", "league/**", "agents/**", "experiments/validate.py", "kernel/**"]
@@ -16,40 +17,87 @@ jobs:
     runs-on: ubuntu-latest
     env:
       KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
-      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      # kaggle 2.x authenticates with a single API token; the stored
+      # KAGGLE_KEY secret holds that token.
+      KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_KEY }}
       KERNEL_SLUG: ${{ vars.KERNEL_SLUG }}        # e.g. yourname/kaggriculture-train
       REF: ${{ github.event.inputs.ref || github.sha }}
+      SEEDS: ${{ github.event.inputs.seeds || 24 }}
+      OWNER: ${{ github.repository_owner }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
-      - run: pip install kaggle
-      - name: Configure Kaggle credentials
-        run: |
-          mkdir -p ~/.kaggle
-          printf '{"username":"%s","key":"%s"}' "$KAGGLE_USERNAME" "$KAGGLE_KEY" > ~/.kaggle/kaggle.json
-          chmod 600 ~/.kaggle/kaggle.json
-      - name: Template kernel (repo ref + slug)
-        run: |
-          sed -i "s|__REF__|${REF}|g;s|__REPO__|${{ github.repository }}|g" kernel/run.py
-          sed -i "s|__KERNEL_SLUG__|${KERNEL_SLUG}|g" kernel/kernel-metadata.json
+      - run: pip install "kaggle>=2"
+      - name: Pack self-contained kernel (source embedded; repo is private)
+        run: python tools/pack_kernel.py --mode validate --seeds "${SEEDS:-24}" --slug "$KERNEL_SLUG"
       - name: Push kernel and wait
         run: kaggle kernels push -p kernel && python tools/wait_kernel.py "$KERNEL_SLUG"
-      - name: Download kernel output
-        run: kaggle kernels output "$KERNEL_SLUG" -p artifact
+      - name: Download kernel output (and log, even on failure)
+        if: always()
+        run: |
+          kaggle kernels output "$KERNEL_SLUG" -p artifact || true
+          python tools/print_kernel_log.py artifact
       - uses: actions/upload-artifact@v4
         with: { name: candidate, path: artifact }
       - name: Open PR with validated candidate
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          test -f artifact/validation.json || { echo "no validation.json"; exit 1; }
-          python -c "import json,sys; v=json.load(open('artifact/validation.json')); print(json.dumps(v,indent=2)); sys.exit(0 if v.get('gate_pass') else 0)"
+          set -euo pipefail
+          test -f artifact/validation.json || { echo "kernel produced no validation.json"; exit 1; }
+          test -f artifact/main.py        || { echo "kernel produced no main.py"; exit 1; }
+          python -m json.tool artifact/validation.json
+          pass=$(python -c "import json;print('true' if json.load(open('artifact/validation.json')).get('gate_pass') else 'false')")
+          if [ "$pass" = true ]; then tag=PASS; else tag=FAIL; fi
+          name="${GITHUB_SHA:0:12}"
+          # The gate verdict is stated, never implied: a failing candidate still gets a
+          # PR (the numbers are the point) but it opens as a draft so it cannot be
+          # merged by reflex.
+          { echo "## Gate $tag (${SEEDS} fresh seeds, both seats)"; echo; echo '```json';
+            cat artifact/validation.json; echo '```'; } > pr-body.md
+          cat pr-body.md >> "$GITHUB_STEP_SUMMARY"
           mkdir -p candidates
-          cp artifact/main.py "candidates/${REF}.py"
-          cp artifact/validation.json "candidates/${REF}.validation.json"
-          br="candidate/${REF}"
+          cp artifact/main.py        "candidates/${name}.py"
+          cp artifact/validation.json "candidates/${name}.validation.json"
+          br="candidate/${name}"
           git config user.name  "kaggle-bot"; git config user.email "bot@users.noreply.github.com"
-          git checkout -b "$br"; git add candidates; git commit -m "candidate ${REF}: validation attached"
-          git push -u origin "$br"
-          gh pr create --title "Candidate ${REF}" --body-file artifact/validation.json --base main --head "$br" || true
+          git checkout -b "$br"
+          git add candidates
+          git diff --cached --quiet && { echo "nothing staged - is candidates/ gitignored?"; exit 1; }
+          git commit -m "candidate ${name}: gate ${tag}"
+          git push -u origin "$br" --force-with-lease
+          # The candidate and its gate result are already pushed on $br, so the run has
+          # delivered regardless of what happens next. Opening the PR needs the repo
+          # setting "Allow GitHub Actions to create and approve pull requests", which is
+          # deliberately off: it would also let Actions approve PRs, and merging a
+          # candidate is meant to be a human gate. Without it we hand over the link.
+          if [ "$pass" = true ]; then draft=""; else draft="--draft"; fi
+          if gh pr view "$br" >/dev/null 2>&1; then
+            gh pr edit "$br" --title "Candidate ${name} - gate ${tag}" --body-file pr-body.md
+          elif gh pr create --title "Candidate ${name} - gate ${tag}" --body-file pr-body.md                  --base main --head "$br" $draft --assignee "$OWNER"; then
+            # Assigning is what actually emails a human that training has finished.
+            { echo "Training finished. Gate **${tag}**.";
+              echo;
+              echo "To submit this agent to Kaggle, add the **submit-to-kaggle** label";
+              echo "to this PR. That runs the same-day quota check and submits.";
+              echo "Remove and re-add the label to retry."; } > comment.md
+            gh pr comment "$br" --body-file comment.md || true
+            echo "PR opened and assigned to $OWNER."
+          else
+            url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/compare/main...${br}?expand=1"
+            { echo; echo "### PR not opened automatically";
+              echo "Actions cannot create PRs in this repo. The candidate is pushed on \`${br}\`.";
+              echo "Open it here: ${url}"; } >> "$GITHUB_STEP_SUMMARY"
+            echo "::notice::candidate pushed on ${br} - open a PR at ${url}"
+          fi
+      - name: Tell a human if training failed
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          { echo "The training kernel or the candidate PR step failed.";
+            echo;
+            echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}";
+            echo "The Kaggle kernel log is printed in that run."; } > issue.md
+          gh issue create --title "Training run failed" --assignee "$OWNER" --body-file issue.md || true

@@ -1,0 +1,113 @@
+name: search-v15
+# Plane 1, manual only. Runs the resumable Optuna league (league/league.py) on a
+# Kaggle kernel for a bounded time budget, against the full opponent pool
+# (V9/V11/V12/V14 + main_leader, a non-lineage opponent) over the v15 parameter
+# space (survival_bias, fert_in_window, tiles_per_unit, seed_stock, land_deadline).
+# This is a real TPE search, not the one-shot validation gate train.yml runs.
+#
+# Resuming a search across separate CI runs is NOT automated: the checkpoint
+# (containing study.db) is uploaded as a workflow artifact only. To continue a run,
+# download it, feed it to the notebook or a manual kernel run, or ask for that
+# automation to be built if this becomes a repeated need.
+on:
+  workflow_dispatch:
+    inputs:
+      ref: { description: "git ref to search from", required: false, default: "main" }
+      minutes: { description: "time budget for this run", required: false, default: "150" }
+concurrency: { group: kaggle-kernel-search, cancel-in-progress: false }
+permissions: { contents: write, pull-requests: write }
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_KEY }}
+      KERNEL_SLUG: ${{ vars.KERNEL_SLUG }}-search   # distinct kernel from train.yml's
+      REF: ${{ github.event.inputs.ref || github.sha }}
+      MINUTES: ${{ github.event.inputs.minutes || 150 }}
+      OWNER: ${{ github.repository_owner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install "kaggle>=2"
+      - name: Pack self-contained search kernel (source embedded; repo is private)
+        run: python tools/pack_kernel.py --mode search --minutes "$MINUTES" --slug "$KERNEL_SLUG"
+      - name: Push kernel and wait
+        run: |
+          kaggle kernels push -p kernel
+          # Deadline = requested minutes + 45 min buffer for queueing/startup.
+          hours=$(python -c "print(($MINUTES + 45) / 60)")
+          python tools/wait_kernel.py "$KERNEL_SLUG" "$hours"
+      - name: Download kernel output (and log, even on failure)
+        if: always()
+        run: |
+          kaggle kernels output "$KERNEL_SLUG" -p artifact || true
+          python tools/print_kernel_log.py artifact
+      - uses: actions/upload-artifact@v4
+        with: { name: search-output, path: artifact }
+      - name: Upload the resumable checkpoint separately (it can be large)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: search-checkpoint
+          path: artifact/checkpoint.zip
+          if-no-files-found: warn
+      - name: Open PR with the search result
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test -f artifact/decision.json || { echo "kernel produced no decision.json"; exit 1; }
+          test -f artifact/main.py       || { echo "kernel produced no main.py"; exit 1; }
+          python -m json.tool artifact/decision.json
+          promoted=$(python -c "import json;print('true' if json.load(open('artifact/decision.json')).get('promoted') else 'false')")
+          if [ "$promoted" = true ]; then tag="PROMOTED"; else tag="no promotion"; fi
+          name="${GITHUB_SHA:0:12}-search"
+          { echo "## Search result: $tag"; echo;
+            echo "Time budget: ${MINUTES} minutes. Full trial history and the resumable"
+            echo "checkpoint are in this run's **search-output**/**search-checkpoint**"
+            echo "artifacts (Actions run page), not in this PR.";
+            echo; echo '```json'; cat artifact/decision.json; echo '```'; } > pr-body.md
+          cat pr-body.md >> "$GITHUB_STEP_SUMMARY"
+          mkdir -p candidates
+          cp artifact/main.py        "candidates/${name}.py"
+          cp artifact/decision.json  "candidates/${name}.decision.json"
+          br="search/${name}"
+          git config user.name  "kaggle-bot"; git config user.email "bot@users.noreply.github.com"
+          git checkout -b "$br"
+          git add candidates
+          git diff --cached --quiet && { echo "nothing staged - is candidates/ gitignored?"; exit 1; }
+          git commit -m "search ${name}: ${tag}"
+          git push -u origin "$br" --force-with-lease
+          if [ "$promoted" = true ]; then draft=""; else draft="--draft"; fi
+          if gh pr view "$br" >/dev/null 2>&1; then
+            gh pr edit "$br" --title "Search ${name} - ${tag}" --body-file pr-body.md
+          elif gh pr create --title "Search ${name} - ${tag}" --body-file pr-body.md \
+                 --base main --head "$br" $draft --assignee "$OWNER"; then
+            if [ "$promoted" = true ]; then
+              { echo "Search finished and PROMOTED a new champion through the league's own gate.";
+                echo "To submit it to Kaggle, add the **submit-to-kaggle** label to this PR."; } > comment.md
+            else
+              { echo "Search finished without promoting a new champion this run (this is";
+                echo "normal -- TPE search over 6 new parameters needs more than one bounded run).";
+                echo "The resumable checkpoint is this run's search-checkpoint artifact if you";
+                echo "want to continue it (manual for now, see this workflow's header comment)."; } > comment.md
+            fi
+            gh pr comment "$br" --body-file comment.md || true
+            echo "PR opened and assigned to $OWNER."
+          else
+            url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/compare/main...${br}?expand=1"
+            { echo; echo "### PR not opened automatically"; echo "Open it here: ${url}"; } >> "$GITHUB_STEP_SUMMARY"
+            echo "::notice::search result pushed on ${br} - open a PR at ${url}"
+          fi
+      - name: Tell a human if the search run failed
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          { echo "The search kernel or the result PR step failed.";
+            echo;
+            echo "Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}";
+            echo "The Kaggle kernel log is printed in that run."; } > issue.md
+          gh issue create --title "Search run failed" --assignee "$OWNER" --body-file issue.md || true
