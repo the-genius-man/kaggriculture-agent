@@ -147,6 +147,30 @@ Paired head-to-head puts it **at V14's level, not below it**. The table above co
 each agent against V9 on two seeds, which is a much weaker comparison and gave the
 opposite impression.
 
+### Kaggle-kernel holdout: 24 fresh seeds, both seats (48 games per opponent)
+
+Run on the Kaggle kernel 2026-09-19, candidate = V14 rendered from `candidate.json`:
+
+| V14 candidate vs | win rate | required | mean margin | margin CI90 | verdict |
+|---|---:|---:|---:|---:|---|
+| V9 | 100% | >= 80% | +11,167 | — | pass |
+| V12 | 93.8% | >= 60% | +10,290 | [7,954, 12,798] | pass |
+| V13 | — | >= 55% | — | — | **skipped, file absent** |
+| **main_leader** | **33.3%** | >= 55% | **-2,400** | **[-4,410, -549]** | **fail** |
+
+`gate_pass: false`. This supersedes the 8-seed table above: on a proper holdout
+`main_leader` is **confidently better than V14**, not merely V14-class — V14's margin
+interval sits entirely below zero.
+
+That is the whole point of adding a non-lineage opponent. The V14 candidate beats
+every agent we have ever written (93.8-100%) and loses two games in three to the
+first opponent that plays like the leaderboard does. The league was previously
+passing candidates on a pool that could not detect this.
+
+`main_leader` has **not** been run through the gate as a *candidate*, which is the
+next step: it would need >= 80% vs V9, >= 60% vs V12 and >= 55% vs every league
+opponent on its own 24-seed holdout.
+
 It is nonetheless **not a promotion candidate**: against V14 the margin's 90% interval
 includes zero, so the gate's positive-lower-bound requirement fails, and 8 seeds is
 below the 24-seed holdout the gate requires. It is committed as a league *opponent* —

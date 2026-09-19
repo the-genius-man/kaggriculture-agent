@@ -100,12 +100,17 @@ See `analysis/REPORT_deployment_diagnosis.md` for the evidence behind all of thi
   harvest at ~364, then divides by distance. Losing a strawberry costs its 100 seed
   plus ~480 of future yield, so survival watering is underpriced by roughly 10x.
 - **`agents/main_leader.py`** is a league opponent built to the leaders' measured
-  behavioural profile (not a reconstruction of their policy). Its two mechanism fixes
-  work: melons at max yield 17% -> 86%, strawberry dry-out deaths 8.0 -> 4.0. Paired
-  head-to-head (8 fresh seeds, both seats) it is **V14-class**: 62.5% vs V14 (margin
-  CI90 [-55, 2142], so not a confident win), 62.5% vs V12 ([261, 4081]), 100% vs V9.
-  It is an **opponent, not a submission candidate** — it fails the gate's positive
-  lower-bound requirement against V14, and 8 seeds is below the 24-seed holdout.
+  behavioural profile (not a reconstruction of their policy). Its mechanism fixes
+  work: melons at max yield 17% -> 86%, strawberry dry-out deaths 8.0 -> 4.0.
+- **The V14 candidate FAILS the gate, and only because of `main_leader`.** Kaggle
+  kernel holdout 2026-09-19, 24 fresh seeds both seats: vs V9 100% (+11,167), vs V12
+  93.8% (+10,290, CI90 [7954, 12798]), vs **main_leader 33.3% (-2,400, CI90
+  [-4410, -549])**, V13 skipped (file absent). `gate_pass: false`. The candidate beats
+  every agent we have ever written and loses two games in three to the first opponent
+  that does not share our lineage. Do not read past this: the old pool could not
+  detect it.
+- `main_leader` has not yet been run through the gate **as a candidate**. That is the
+  obvious next experiment.
 
 ## What the leaderboard analysis says to work on next
 
