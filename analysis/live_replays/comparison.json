@@ -1,0 +1,44 @@
+{
+  "note": "Compact occupancy comparison. Full replays live in analysis/live_replays/*.json and are gitignored.",
+  "v5_is_tape": "first 60 farmer+market actions identical across both v5 games",
+  "v5_live_score_at_analysis": 414.1,
+  "games": [
+    {
+      "episode": 110493454,
+      "result": "v5 LOSS 52881 vs Krupa Vardhan 77947",
+      "v5_day5": {"productive": 16, "strawberry": 0, "melon": 6, "hands": 4, "quadrants": 1},
+      "v5_day10": {"productive": 19, "strawberry": 12, "empty": 31, "quadrants": 2},
+      "v5_day15": {"productive": 65, "strawberry": 40, "wheat": 15, "animals": 8, "weeds": 1},
+      "v5_day20": {"productive": 66, "strawberry": 40, "wheat": 18, "animals": 8, "weeds": 1, "cash": 11098},
+      "opp_day15": {"productive": 75, "strawberry": 43, "melon": 12, "animals": 13},
+      "opp_day20": {"productive": 70, "strawberry": 42, "melon": 11, "animals": 14, "cash": 19325}
+    },
+    {
+      "episode": 110491264,
+      "result": "v5 WIN 61826 vs Kaushik 59560",
+      "note": "Opponent never left 1 quadrant; 17 melons forever; 1888 PASS. v5 was behind in cash until the last days.",
+      "v5_day10": {"productive": 20, "strawberry": 13},
+      "v5_day15": {"productive": 67, "strawberry": 36},
+      "v5_day20": {"productive": 57, "strawberry": 36, "weeds": 5, "cash": 8878},
+      "opp_day20": {"productive": 23, "melon": 17, "quadrants": 1, "cash": 34557}
+    },
+    {
+      "episode": 110315401,
+      "result": "Majkel LOSS 103272 vs Boey 116143",
+      "majkel_day5": {"productive": 25, "strawberry": 8, "melon": 12, "animals": 5},
+      "majkel_day10": {"productive": 73, "strawberry": 26, "wheat": 23, "melon": 6, "animals": 18, "quadrants": 3},
+      "majkel_day20": {"productive": 72, "strawberry": 29, "wheat": 23, "animals": 18},
+      "boey_day10": {"productive": 75, "strawberry": 31, "wheat": 21, "animals": 20},
+      "boey_day20": {"productive": 75, "strawberry": 36, "wheat": 19, "animals": 20}
+    },
+    {
+      "episode": 110488468,
+      "result": "current #1 Majkel LOSS 115863 vs #2 SpaTaro 120269 (18m before analysis)",
+      "majkel_day5": {"productive": 25, "strawberry": 8, "melon": 12},
+      "majkel_day10": {"productive": 67, "strawberry": 19, "wheat": 23, "animals": 19, "quadrants": 3},
+      "majkel_day20": {"productive": 73, "strawberry": 17, "wheat": 29, "animals": 19},
+      "spataro_day10": {"productive": 50, "strawberry": 15, "animals": 21, "cash": 12211},
+      "spataro_day20": {"productive": 74, "strawberry": 25, "wheat": 22, "animals": 26}
+    }
+  ]
+}

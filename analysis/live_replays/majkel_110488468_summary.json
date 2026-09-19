@@ -1,0 +1,276 @@
+{
+  "episode": "110488468",
+  "teams": [
+    "Majkel1337",
+    "SpaTaro"
+  ],
+  "focus_seat": 0,
+  "focus_name": "Majkel1337",
+  "opponent_name": "SpaTaro",
+  "rewards": [
+    115863.0,
+    120269.0
+  ],
+  "won": false,
+  "margin": -4406.0,
+  "n_steps": 720,
+  "seed": 89076498,
+  "snapshots": {
+    "5": {
+      "focus": {
+        "productive": 25,
+        "animals": 5,
+        "weeds": 0,
+        "empty": 0,
+        "locked": 75,
+        "crops": {
+          "WHEAT": 0,
+          "CARROT": 0,
+          "MELON": 12,
+          "TOMATO": 0,
+          "STRAWBERRY": 8
+        },
+        "cash": 707.0,
+        "hands": 6,
+        "quadrants": 1
+      },
+      "opp": {
+        "productive": 25,
+        "animals": 7,
+        "weeds": 0,
+        "empty": 0,
+        "locked": 75,
+        "crops": {
+          "WHEAT": 1,
+          "CARROT": 0,
+          "MELON": 11,
+          "TOMATO": 0,
+          "STRAWBERRY": 6
+        },
+        "cash": 22.0,
+        "hands": 7,
+        "quadrants": 1
+      }
+    },
+    "10": {
+      "focus": {
+        "productive": 67,
+        "animals": 19,
+        "weeds": 1,
+        "empty": 7,
+        "locked": 25,
+        "crops": {
+          "WHEAT": 23,
+          "CARROT": 0,
+          "MELON": 6,
+          "TOMATO": 0,
+          "STRAWBERRY": 19
+        },
+        "cash": 5820.0,
+        "hands": 11,
+        "quadrants": 3
+      },
+      "opp": {
+        "productive": 50,
+        "animals": 21,
+        "weeds": 0,
+        "empty": 25,
+        "locked": 25,
+        "crops": {
+          "WHEAT": 13,
+          "CARROT": 1,
+          "MELON": 0,
+          "TOMATO": 0,
+          "STRAWBERRY": 15
+        },
+        "cash": 12211.0,
+        "hands": 11,
+        "quadrants": 3
+      }
+    },
+    "15": {
+      "focus": {
+        "productive": 72,
+        "animals": 19,
+        "weeds": 0,
+        "empty": 3,
+        "locked": 25,
+        "crops": {
+          "WHEAT": 26,
+          "CARROT": 0,
+          "MELON": 0,
+          "TOMATO": 3,
+          "STRAWBERRY": 24
+        },
+        "cash": 33415.0,
+        "hands": 11,
+        "quadrants": 3
+      },
+      "opp": {
+        "productive": 73,
+        "animals": 27,
+        "weeds": 0,
+        "empty": 2,
+        "locked": 25,
+        "crops": {
+          "WHEAT": 24,
+          "CARROT": 0,
+          "MELON": 0,
+          "TOMATO": 0,
+          "STRAWBERRY": 22
+        },
+        "cash": 37819.0,
+        "hands": 12,
+        "quadrants": 3
+      }
+    },
+    "20": {
+      "focus": {
+        "productive": 73,
+        "animals": 19,
+        "weeds": 0,
+        "empty": 2,
+        "locked": 25,
+        "crops": {
+          "WHEAT": 29,
+          "CARROT": 0,
+          "MELON": 0,
+          "TOMATO": 8,
+          "STRAWBERRY": 17
+        },
+        "cash": 70625.0,
+        "hands": 11,
+        "quadrants": 3
+      },
+      "opp": {
+        "productive": 74,
+        "animals": 26,
+        "weeds": 1,
+        "empty": 0,
+        "locked": 25,
+        "crops": {
+          "WHEAT": 22,
+          "CARROT": 0,
+          "MELON": 0,
+          "TOMATO": 0,
+          "STRAWBERRY": 25
+        },
+        "cash": 75648.0,
+        "hands": 12,
+        "quadrants": 3
+      }
+    },
+    "25": {
+      "focus": {
+        "productive": 71,
+        "animals": 13,
+        "weeds": 1,
+        "empty": 3,
+        "locked": 25,
+        "crops": {
+          "WHEAT": 21,
+          "CARROT": 20,
+          "MELON": 0,
+          "TOMATO": 5,
+          "STRAWBERRY": 8
+        },
+        "cash": 90328.0,
+        "hands": 11,
+        "quadrants": 3
+      },
+      "opp": {
+        "productive": 71,
+        "animals": 22,
+        "weeds": 1,
+        "empty": 3,
+        "locked": 25,
+        "crops": {
+          "WHEAT": 29,
+          "CARROT": 0,
+          "MELON": 0,
+          "TOMATO": 0,
+          "STRAWBERRY": 20
+        },
+        "cash": 101784.0,
+        "hands": 11,
+        "quadrants": 3
+      }
+    },
+    "29": {
+      "focus": {
+        "productive": 22,
+        "animals": 5,
+        "weeds": 9,
+        "empty": 44,
+        "locked": 25,
+        "crops": {
+          "WHEAT": 0,
+          "CARROT": 1,
+          "MELON": 0,
+          "TOMATO": 2,
+          "STRAWBERRY": 2
+        },
+        "cash": 115863.0,
+        "hands": 10,
+        "quadrants": 3
+      },
+      "opp": {
+        "productive": 30,
+        "animals": 13,
+        "weeds": 12,
+        "empty": 33,
+        "locked": 25,
+        "crops": {
+          "WHEAT": 0,
+          "CARROT": 0,
+          "MELON": 0,
+          "TOMATO": 0,
+          "STRAWBERRY": 8
+        },
+        "cash": 120269.0,
+        "hands": 9,
+        "quadrants": 3
+      }
+    }
+  },
+  "actions": {
+    "focus": {
+      "PASS": 47,
+      "PICKUP": 209,
+      "BUILD_PASTURE": 22,
+      "PLACE": 122,
+      "NORTH": 1180,
+      "WEST": 887,
+      "FEED": 365,
+      "CARE": 373,
+      "SOUTH": 681,
+      "PLANT": 257,
+      "WATER": 1245,
+      "EAST": 699,
+      "COLLECT_FERTILIZER": 406,
+      "HARVEST": 459,
+      "DROP": 64,
+      "FERTILIZE": 151,
+      "DIG": 31
+    },
+    "opp": {
+      "PASS": 879,
+      "PICKUP": 204,
+      "NORTH": 910,
+      "BUILD_PASTURE": 29,
+      "WEST": 862,
+      "PLANT": 212,
+      "PLACE": 39,
+      "WATER": 1013,
+      "FEED": 463,
+      "CARE": 473,
+      "SOUTH": 496,
+      "EAST": 561,
+      "COLLECT_FERTILIZER": 491,
+      "HARVEST": 413,
+      "DROP": 82,
+      "DIG": 16,
+      "FERTILIZE": 139
+    }
+  }
+}

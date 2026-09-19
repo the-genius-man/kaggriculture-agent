@@ -15,6 +15,8 @@ _cand.py
 _v14.py
 _baseline.py
 _prefix.py
+_tmp_policy001/
+experiments/_tmp_v12delta/
 main.py
 
 # Kaggle MCP credentials / local config (never commit)
@@ -26,4 +28,7 @@ kaggle.json
 # CI scratch
 artifact/
 analysis/feedback/
+analysis/live_replays/*.json
+!analysis/live_replays/comparison.json
+!analysis/live_replays/*_summary.json
 candidates/*.validation.json
