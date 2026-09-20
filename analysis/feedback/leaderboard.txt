@@ -1,4 +1,4 @@
-Next Page Token = CfDJ8OasvsPNS7VMiSwiBm2YVpN8pWNHvg9qAyFYa6EZs8cyrAIeb0L1Tx5H36d7P-Xfo_25iEK2WAxyUFwUWdK1t5w
+Next Page Token = CfDJ8OasvsPNS7VMiSwiBm2YVpNRAiW5JKn3S_0HrunlKQe5EdiSsLnv6uuyQysuT11D4kJPvToeW3aZH5AODmXaQnI
   teamId  teamName              submissionDate              score   
 --------  --------------------  --------------------------  ------  
 16718819  Majkel1337            2026-09-18 14:06:33.633000  3285.2  
@@ -14,10 +14,10 @@ Next Page Token = CfDJ8OasvsPNS7VMiSwiBm2YVpN8pWNHvg9qAyFYa6EZs8cyrAIeb0L1Tx5H36
 16760701  Yannik Schiffner      2026-09-20 04:12:37.993000  3013.5  
 16621799  Artem The Farmer 🍅    2026-09-18 22:18:55.703000  3013.4  
 16681125  M & M & P & Q         2026-09-20 03:06:02.790000  2996.4  
-16633132  Kaggledew Valley 🏆    2026-09-19 02:58:46.963000  2984.2  
 16673205  Arda Ceylan           2026-09-19 16:05:35.760000  2983.7  
 16854176  吃白饭的大肥鱼               2026-09-19 16:24:38.303000  2983.6  
-16671741  Excluding             2026-09-20 04:01:42.806000  2971.8  
+16633132  Kaggledew Valley 🏆    2026-09-19 02:58:46.963000  2979.5  
+16671741  Excluding             2026-09-20 04:01:42.806000  2976.5  
 16685556  binghua               2026-09-17 15:39:53.396000  2961.8  
 16685950  Planned Economy       2026-09-17 00:10:44.486000  2953.6  
 16622198  THUNDER THUNDER       2026-09-18 14:58:42.836000  2949.8  
