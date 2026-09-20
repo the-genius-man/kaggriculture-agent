@@ -4,6 +4,38 @@
   "active": true,
   "episodes": [
    {
+    "episode": 111008731,
+    "end": "2026-09-19T23:41:32.059973200Z",
+    "our_cash": 74541,
+    "opp_cash": 81179,
+    "won": false,
+    "opponent": "Aidan Edward Lawson"
+   },
+   {
+    "episode": 110956851,
+    "end": "2026-09-19T20:32:04.887291600Z",
+    "our_cash": 56264,
+    "opp_cash": 115396,
+    "won": false,
+    "opponent": "tq1d"
+   },
+   {
+    "episode": 110955768,
+    "end": "2026-09-19T20:29:40.933802700Z",
+    "our_cash": 42387,
+    "opp_cash": 88247,
+    "won": false,
+    "opponent": "pizzahut"
+   },
+   {
+    "episode": 110950697,
+    "end": "2026-09-19T20:10:21.502715600Z",
+    "our_cash": 106071,
+    "opp_cash": 100760,
+    "won": true,
+    "opponent": "Anatoliy_Fomin"
+   },
+   {
     "episode": 110931170,
     "end": "2026-09-19T18:58:17.150826800Z",
     "our_cash": 79958,
@@ -249,6 +281,30 @@
   "file": "cff15ce57d4b-search.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 111004388,
+    "end": "2026-09-19T23:24:39.862219700Z",
+    "our_cash": 48712,
+    "opp_cash": 62090,
+    "won": false,
+    "opponent": "Bruno Romero Garc\u00eda"
+   },
+   {
+    "episode": 110975496,
+    "end": "2026-09-19T21:39:17.662643100Z",
+    "our_cash": 52559,
+    "opp_cash": 116834,
+    "won": false,
+    "opponent": "Nathael"
+   },
+   {
+    "episode": 110944878,
+    "end": "2026-09-19T19:49:53.147665Z",
+    "our_cash": 51264,
+    "opp_cash": 110741,
+    "won": false,
+    "opponent": "yuiop!"
+   },
    {
     "episode": 110935054,
     "end": "2026-09-19T19:14:04.224521300Z",
