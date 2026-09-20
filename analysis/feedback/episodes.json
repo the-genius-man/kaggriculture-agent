@@ -4,6 +4,22 @@
   "active": true,
   "episodes": [
    {
+    "episode": 111282267,
+    "end": "2026-09-20T16:14:06.997446100Z",
+    "our_cash": 48492,
+    "opp_cash": 102821,
+    "won": false,
+    "opponent": "Amedeo Biolatti"
+   },
+   {
+    "episode": 111270541,
+    "end": "2026-09-20T15:31:43.283573400Z",
+    "our_cash": 56961,
+    "opp_cash": 127083,
+    "won": false,
+    "opponent": "mxt1022"
+   },
+   {
     "episode": 111228581,
     "end": "2026-09-20T13:01:44.842214400Z",
     "our_cash": 34499,
@@ -345,6 +361,22 @@
   "file": "cff15ce57d4b-search.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 111300922,
+    "end": "2026-09-20T17:21:15.892757900Z",
+    "our_cash": 69680,
+    "opp_cash": 81177,
+    "won": false,
+    "opponent": "taipen"
+   },
+   {
+    "episode": 111287919,
+    "end": "2026-09-20T16:33:22.475901500Z",
+    "our_cash": 73842,
+    "opp_cash": 103156,
+    "won": false,
+    "opponent": "Yusuke Sato"
+   },
    {
     "episode": 111230211,
     "end": "2026-09-20T13:06:46.721262900Z",
@@ -789,7 +821,7 @@
     "our_cash": 53916,
     "opp_cash": 91639,
     "won": false,
-    "opponent": "lh123463"
+    "opponent": "Guanchao Sun"
    },
    {
     "episode": 110845379,
