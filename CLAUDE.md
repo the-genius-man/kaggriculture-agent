@@ -123,14 +123,27 @@ See `analysis/REPORT_deployment_diagnosis.md` for the evidence behind all of thi
   45.8%. Pooled over 72 games V14 wins **37.5% (95% CI 26.3-48.7%)**. main_leader is
   better, but not by two-to-one, and 48 games does not resolve this to better than
   about +/-13 points. Budget seeds accordingly.
-- **V15 search so far: no variant beats V14.** All six hand-picked configs have margin
-  intervals straddling zero, and the ones that raise win rate earn *less* cash (68-78k
-  vs V14's 83.9k). The three mechanics interact and are not independently good -- each
-  alone is worse than V14, and fertilizer-window without the planting cap scores 4.2%.
-  Finding V15 is a job for the Optuna search with main_leader in the pool, not hand
-  guesses.
-- `main_leader` has not yet been run through the gate **as a candidate**. That is the
-  obvious next experiment.
+- **V15 promoted and submitted (2026-09-19/20).** The Optuna search (`search.yml`,
+  main_leader in the pool) found `survival_bias=0.45` -- much gentler than the 1.0/2.0
+  this repo's own hand sweep tried, which is why the hand sweep missed it. Passed the
+  gate: 81.2% vs main_leader (margin +3,393, CI90 entirely positive), 66.7% vs V14.
+  Settled Kaggle rating 673.0, currently our best submission. **But real win rate is
+  only 52.8%** (36 games) -- the gate result does not mean "beats the leaderboard,"
+  it means "beats main_leader specifically, on 48 games."
+- **V15 still has the two original problems, unfixed.** Real replays of its worst
+  losses (downloaded via `kaggle competitions replay`) and 12 local games vs
+  main_leader agree: day-10 cash ~$1,700 (opponents ~10x higher), and **0 games where
+  V15 reached a 4th quadrant** -- its promoted config is `land: 3`, a hard ceiling
+  regardless of cash on hand. The "unwatered tile count" signal from the earlier
+  diagnosis turned out to be a false lead: the engine only kills a tile after **two
+  consecutive** dry days, and a maxed ongoing crop gains nothing from daily
+  rewatering, so a high "not watered today" snapshot count is not itself dangerous --
+  only a rising weed count is. Full write-up: `analysis/REPORT_deployment_diagnosis.md`.
+- **The 55%/60%/80% gate is a floor, not a target.** Clearing it against main_leader
+  on one opponent's 48 games does not mean the candidate is strong against the field.
+  The next search should explicitly weight toward `land=4` + earlier `land_deadline`
+  (the space already allows this; the promoted trial just didn't land there) and
+  raise its own `target_win_rate` rather than stopping once "good enough to pass."
 
 ## What the leaderboard analysis says to work on next
 

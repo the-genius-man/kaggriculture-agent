@@ -220,3 +220,63 @@ its value is being a play style that is not our own lineage.
   mechanically explained, but they are not a 24-seed holdout.
 - The leader-profile column comes from four selected replays of one player
   (`REPORT_boey_leaders.md`), not from a rank-verified sample.
+
+## V15 diagnosis: why the promoted candidate is only middling (2026-09-20)
+
+The Optuna search (`search.yml`, 150 min) promoted a candidate through the internal
+gate: 81.2% vs `main_leader` (margin +3,393, CI90 entirely positive), 66.7% vs V14.
+Submitted and settled at Kaggle rating 673.0 -- currently our best submission -- but
+**real per-episode win rate is only 52.8%** (36 games), close to a coin flip, with
+high variance (mean cash 82,161 vs opponent 78,567, wins and losses both large).
+
+### Real replay evidence (3 worst losses, downloaded via `kaggle competitions replay`)
+
+Day-by-day cash and occupancy for us vs the winning opponent, averaged where
+patterns agreed across all three real losses:
+
+| day | our cash | opponent cash | our productive tiles | opponent productive tiles |
+|---:|---:|---:|---:|---:|
+| 10 | ~1,700 | ~17,700 | 32-48 | 32-48 |
+| 15 | ~22,700 | ~30,000 | 40-75 | 39-75 |
+| 20 | ~44,300 | ~55,000 | 47-75 | 49-85 |
+| 29 (final) | 52,559-92,712 | 116,834-159,310 | 17-27 | 17-27 |
+
+**The gap opens by day 10 and never closes -- it is not a late collapse.** In the
+worst loss, the opponent bought a **4th quadrant** (100 tiles owned, 85 productive at
+day 20-25) while we structurally cannot: the promoted candidate's config is
+`'land': 3`, a hard ceiling at 75 tiles regardless of how much cash is available.
+
+**The "unwatered tile count" metric from the earlier diagnosis was misleading.**
+Re-checked here: the winning opponent's farms often show 25-36 tiles reading
+"not watered today" at a single snapshot, yet weed counts (actual crop deaths) stay
+near zero for most of the game on both sides. The engine only destroys a tile after
+**two consecutive** dry days (`consecutive_unwatered>=2`), and an already-maxed
+ongoing crop (strawberry/tomato at its yield cap) gains nothing from being watered
+every day. A strong opponent evidently rotates watering across the farm rather than
+re-watering everything daily, which is efficient, not defective. Snapshot-count of
+"not watered today" is not itself a signal of risk; only a rising `weeds` count is.
+
+### Local corroboration (12 games, V15 vs main_leader)
+
+| day | cash | owned | productive | hands |
+|---:|---:|---:|---:|---:|
+| 10 | 1,654 | 58.3 | 33.4 | 9.0 |
+| 20 | 36,874 | 75.0 | 47.2 | 11.0 |
+| 29 | 62,187 | 75.0 | 22.2 | 11.0 |
+
+**V15 reached a 4th quadrant in 0 of 12 local games.** Day-10 cash (1,654) matches
+the real replays almost exactly. Both the early-cash problem and the land-3 ceiling
+identified in the original diagnosis (section 7) are **still unsolved in V15** --
+`survival_bias` alone did not touch either.
+
+### What this means for "beat main_leader at 90%, not 55%"
+
+The 81.2%-vs-`main_leader` gate result was real but was measured against **one**
+fixed opponent on 48 games; the leaderboard mixes many opponents, several of which
+evidently play a decisively stronger early game (day-10 cash 10x ours) and are
+willing to take a 4th quadrant. Clearing the 55% gate floor is necessary but not
+sufficient for "aim higher" -- the floor exists to stop regressions, not to define
+success. Next search should explicitly test `land=4` with an earlier `land_deadline`
+and higher `expansion_hands` (config space already supports this; the promoted trial
+simply didn't land there) and should raise the search's own internal target
+(`target_win_rate`) rather than stopping at "good enough to pass the gate."
