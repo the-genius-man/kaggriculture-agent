@@ -225,9 +225,15 @@ def agent(obs):
         if crop_scores[c]>0 and seeds.get(c,0)<_stock and cash>100:
             qty=_stock-seeds.get(c,0);buy(['BUY_SEED',c,qty],CROPS[c][0]*qty)
     landcount=len(me['unlocked_quadrants'])
-    # Third/fourth quadrants require occupancy and staffing, not cash alone.
+    # Third/fourth quadrants require occupancy and staffing, not cash alone. The 4th
+    # quadrant gets its own, later deadline: a single land_deadline covering every
+    # purchase makes an early value structurally unreachable for landcount 3->4 (you
+    # cannot own 75 tiles at land_util occupancy AND buy a 4th before the same cutoff
+    # that governs the 2nd/3rd). Defaults to land_deadline, so omitting it reproduces
+    # the single-deadline behavior exactly.
     staffed=(landcount<2 or len(positions)>=CFG.get('expansion_hands',9))
-    if landcount<CFG['land'] and day<CFG.get('land_deadline',18) and staffed and occupied/max(1,len(coords))>=CFG['land_util']:
+    deadline=CFG.get('land4_deadline',CFG.get('land_deadline',18)) if landcount>=3 else CFG.get('land_deadline',18)
+    if landcount<CFG['land'] and day<deadline and staffed and occupied/max(1,len(coords))>=CFG['land_util']:
         cost=[1000,2000,4000][landcount-1]
         if cash>cost+CFG['land_buffer']:buy(['BUY_LAND'],cost)
     _MEMORY={'tick':tick,'player':player,'jobs':jobs}

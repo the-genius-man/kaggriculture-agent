@@ -23,6 +23,10 @@ BASE.update(strawberry_target=0)  # v14: 0 keeps v2 behavior; search establishes
 # at what the hands can water. Hand-picked combinations of these hurt on their own
 # (see the report) -- they need the TPE search, not manual tuning.
 BASE.update(survival_bias=0.,fert_in_window=0,tiles_per_unit=0,seed_stock=2)
+# The 4th quadrant's own deadline (see policy_template.py). Defaults to
+# land_deadline's own default (18), so an unset value reproduces the old
+# single-deadline behavior exactly.
+BASE.update(land4_deadline=18)
 ENV_VERSION = "1.32.7"
 CHECKPOINT_COPY = ''
 

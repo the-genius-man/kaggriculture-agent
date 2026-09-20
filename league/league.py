@@ -53,6 +53,11 @@ SPACE={
     # Not previously searched (frozen at BASE's land_deadline=18); the diagnosis's
     # top-priority gap is establishing occupancy earlier, so this is now a knob.
     'land_deadline':('cat',10,12,15,18),
+    # The 4th quadrant's own, later deadline (bug found 2026-09-20: a single
+    # land_deadline made landcount 3->4 structurally unreachable whenever it was set
+    # early enough to matter for the 2nd/3rd -- both a hand test and a seeded search
+    # trial "testing land=4" never actually bought one).
+    'land4_deadline':('cat',15,18,22,26),
 }
 
 def sample(trial):
