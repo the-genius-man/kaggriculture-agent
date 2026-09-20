@@ -4,6 +4,14 @@
   "active": true,
   "episodes": [
    {
+    "episode": 111228581,
+    "end": "2026-09-20T13:01:44.842214400Z",
+    "our_cash": 34499,
+    "opp_cash": 97419,
+    "won": false,
+    "opponent": "Malyshev Danil"
+   },
+   {
     "episode": 111168196,
     "end": "2026-09-20T09:22:08.219236200Z",
     "our_cash": 89918,
@@ -209,7 +217,7 @@
     "our_cash": 83514,
     "opp_cash": 127916,
     "won": false,
-    "opponent": "Kanny912"
+    "opponent": "zhaorui chen"
    },
    {
     "episode": 110879472,
@@ -337,6 +345,14 @@
   "file": "cff15ce57d4b-search.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 111230211,
+    "end": "2026-09-20T13:06:46.721262900Z",
+    "our_cash": 74127,
+    "opp_cash": 52006,
+    "won": true,
+    "opponent": "jeon hyeon woo"
+   },
    {
     "episode": 111173122,
     "end": "2026-09-20T09:38:15.523261100Z",
@@ -757,7 +773,7 @@
     "our_cash": 54533,
     "opp_cash": 79267,
     "won": false,
-    "opponent": "Kanny912"
+    "opponent": "zhaorui chen"
    },
    {
     "episode": 110848378,
