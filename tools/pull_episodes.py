@@ -151,6 +151,8 @@ def main():
     p.add_argument("--limit", type=int, default=6, help="how many recent submissions to check")
     p.add_argument("--replays", type=int, default=0,
                     help="download + render this many worst losses as local HTML (needs auth)")
+    p.add_argument("--replay-submission", default=None,
+                    help="restrict --replays to this submission id (default: worst across all pulled)")
     a = p.parse_args()
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -192,6 +194,8 @@ def main():
     (out / "episodes_summary.txt").write_text("\n".join(report) + "\n", encoding="utf-8")
     print("->", out / "episodes.json")
 
+    if a.replay_submission:
+        worst_overall = [r for r in worst_overall if r["submission"] == a.replay_submission]
     if a.replays and worst_overall:
         worst = sorted(worst_overall, key=lambda r: r["our_cash"] - r["opp_cash"])[:a.replays]
         replay_dir = out / "replays"

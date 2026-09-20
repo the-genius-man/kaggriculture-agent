@@ -3,7 +3,9 @@ name: pull-feedback
 # analysis/, and commit. The DIAGNOSIS is done separately by Claude Code + Kaggle MCP.
 on:
   schedule: [{ cron: "0 */6 * * *" }]   # every 6h; adjust
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      replay_submission: { description: "restrict --replays to this submission id", required: false, default: "" }
 permissions: { contents: write }
 jobs:
   pull:
@@ -25,7 +27,8 @@ jobs:
       # team-submissions call, our cash vs the opponent's, who they were) plus 3
       # real losses downloaded and rendered to local HTML. Never fails the job.
       - run: |
-          python tools/pull_episodes.py --out analysis/feedback --team-id "$TEAM_ID" --replays 3 || true
+          python tools/pull_episodes.py --out analysis/feedback --team-id "$TEAM_ID" --replays 3 \
+            --replay-submission "${{ github.event.inputs.replay_submission }}" || true
       # Public status page. Only standings and our own results go in docs/ -- Pages
       # is publicly readable even from a private repo on this plan. Rendered replays
       # (analysis/feedback/replays_html/) are NOT copied into docs/: see
