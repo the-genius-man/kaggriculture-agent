@@ -43,6 +43,13 @@ jobs:
           name: replays
           path: analysis/feedback/replays_html
           if-no-files-found: ignore
+      - name: Upload raw replay JSON (for local instrumented analysis)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: replays-raw
+          path: analysis/feedback/replays
+          if-no-files-found: ignore
       - name: Commit feedback
         run: |
           git config user.name kaggle-bot; git config user.email bot@users.noreply.github.com
