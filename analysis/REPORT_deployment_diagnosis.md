@@ -280,3 +280,25 @@ success. Next search should explicitly test `land=4` with an earlier `land_deadl
 and higher `expansion_hands` (config space already supports this; the promoted trial
 simply didn't land there) and should raise the search's own internal target
 (`target_win_rate`) rather than stopping at "good enough to pass the gate."
+
+## Land=4, retested clean (2026-09-20): still negative
+
+`land_deadline` gated every quadrant purchase, including the 4th, which made both
+earlier land=4 attempts today unable to actually reach one (fixed: `land4_deadline`
+is now a separate, later-defaulting knob; see the commit for detail). Retested with
+V14's own working `land_deadline=18` untouched and `land4_deadline=22`:
+
+| | reached 4th quadrant | win vs main_leader | mean cash |
+|---|---:|---:|---:|
+| fixed land=4 config | **16/16** | **6.2%** (1/16) | 76,227 |
+| V15 (land=3), earlier tests | 0/16 | 75-81% | 69-83k |
+
+The purchase now genuinely happens every game. Comparable cash, drastically worse win
+rate. **Buying a 4th quadrant, correctly implemented, is a net negative in isolation**
+against this opponent -- the extra land cost and production spread over 100 tiles
+isn't paid back without deeper retuning of everything else (staffing, fertilizer,
+watering capacity) that only a joint search could plausibly find, not a hand-picked
+config. Closing this as a standalone lever; it is not worth another blind search cycle
+chasing it alone. The day-10 cash gap (section "V15 diagnosis" above) remains
+unexplained and untested in isolation from land count -- that is the next thing to
+isolate, not land=4.
