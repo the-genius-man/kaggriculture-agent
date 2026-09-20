@@ -4,6 +4,14 @@
   "active": true,
   "episodes": [
    {
+    "episode": 111136246,
+    "end": "2026-09-20T07:25:30.282570800Z",
+    "our_cash": 113990,
+    "opp_cash": 69743,
+    "won": true,
+    "opponent": "Yiman Gao"
+   },
+   {
     "episode": 111119888,
     "end": "2026-09-20T06:25:31.307700300Z",
     "our_cash": 63213,
