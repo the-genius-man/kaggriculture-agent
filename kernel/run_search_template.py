@@ -40,7 +40,11 @@ def main():
         general_trials=14, exploiter_trials=6,
         workers=min(4, os.cpu_count() or 2),
         train_seeds=3, selection_seeds=4, holdout_seeds=24, finalists=2, selfplay_seeds=2,
-        history_size=4, target_mean_cash=100_000, target_win_rate=.75, target_80k_rate=.50,
+        # Raised 2026-09-20: the promoted V15 candidate cleared the 55% gate floor
+        # against main_leader (81.2%) and still only wins 52.8% of real games -- the
+        # gate is a floor against regression, not a target. stop_on_target should not
+        # fire on "good enough to pass the gate."
+        history_size=4, target_mean_cash=140_000, target_win_rate=.90, target_80k_rate=.70,
         stop_on_target=True, stagnation_cycles=6, v9_win_rate=.80, champion_win_rate=.60,
         min_opponent_win_rate=.55, max_decision_seconds=.80, extra_opponents=[],
         checkpoint_copy="",
@@ -62,6 +66,16 @@ def main():
     with concurrent.futures.ProcessPoolExecutor(
             max_workers=config["workers"], mp_context=multiprocessing.get_context("spawn")) as pool:
         engine = league.League(config, pool)
+        if engine.state["cycle"] == 0 and not engine.state.get("warm_starts"):
+            # Real-replay diagnosis (2026-09-20, analysis/REPORT_deployment_diagnosis.md):
+            # the promoted V15 candidate never buys a 4th quadrant (land=3 hard ceiling)
+            # and is 10x behind on day-10 cash. Seed the search with that hypothesis
+            # instead of waiting for TPE to rediscover it by chance.
+            import support
+            hypothesis = league.warm_params(dict(support.BASE, land=4, land_deadline=10,
+                expansion_hands=6, land_util=0.30, survival_bias=0.45, hire_pace=1))
+            engine.state["warm_starts"] = [hypothesis]
+            print("seeded warm-start hypothesis (land=4, early expansion):", hypothesis, flush=True)
         try:
             engine.run()
         except (TimeoutError, KeyboardInterrupt):
