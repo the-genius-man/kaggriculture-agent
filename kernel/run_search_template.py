@@ -66,16 +66,13 @@ def main():
     with concurrent.futures.ProcessPoolExecutor(
             max_workers=config["workers"], mp_context=multiprocessing.get_context("spawn")) as pool:
         engine = league.League(config, pool)
-        if engine.state["cycle"] == 0 and not engine.state.get("warm_starts"):
-            # Real-replay diagnosis (2026-09-20, analysis/REPORT_deployment_diagnosis.md):
-            # the promoted V15 candidate never buys a 4th quadrant (land=3 hard ceiling)
-            # and is 10x behind on day-10 cash. Seed the search with that hypothesis
-            # instead of waiting for TPE to rediscover it by chance.
-            import support
-            hypothesis = league.warm_params(dict(support.BASE, land=4, land_deadline=10,
-                expansion_hands=6, land_util=0.30, survival_bias=0.45, hire_pace=1))
-            engine.state["warm_starts"] = [hypothesis]
-            print("seeded warm-start hypothesis (land=4, early expansion):", hypothesis, flush=True)
+        # No hand-picked warm-start seed this run. The land=4 hypothesis seeded last
+        # time was itself broken (land_deadline=10 stranded the config at 2
+        # quadrants) and, retested clean with land4_deadline fixed, land=4 alone is a
+        # net negative vs main_leader (6.2% win, 16/16 reached it) -- see
+        # analysis/REPORT_deployment_diagnosis.md. Two hand-picked guesses in a row
+        # were wrong; better to let TPE explore the now-corrected space (land_deadline
+        # and land4_deadline properly decoupled) than add a third guess.
         try:
             engine.run()
         except (TimeoutError, KeyboardInterrupt):
