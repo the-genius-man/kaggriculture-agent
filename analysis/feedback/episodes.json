@@ -4,6 +4,30 @@
   "active": true,
   "episodes": [
    {
+    "episode": 111573113,
+    "end": "2026-09-21T09:47:39.630952300Z",
+    "our_cash": 75894,
+    "opp_cash": 143223,
+    "won": false,
+    "opponent": "edward1503"
+   },
+   {
+    "episode": 111513056,
+    "end": "2026-09-21T06:10:33.412812200Z",
+    "our_cash": 45980,
+    "opp_cash": 114605,
+    "won": false,
+    "opponent": "Himanshu Kumar"
+   },
+   {
+    "episode": 111488595,
+    "end": "2026-09-21T04:40:24.594732800Z",
+    "our_cash": 111292,
+    "opp_cash": 98679,
+    "won": true,
+    "opponent": "Engineer Lisa"
+   },
+   {
     "episode": 111441744,
     "end": "2026-09-21T01:48:27.150764400Z",
     "our_cash": 102911,
@@ -393,6 +417,46 @@
   "file": "cff15ce57d4b-search.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 111593359,
+    "end": "2026-09-21T10:58:04.127342900Z",
+    "our_cash": 99344,
+    "opp_cash": 96737,
+    "won": true,
+    "opponent": "sou yamaguchi"
+   },
+   {
+    "episode": 111564722,
+    "end": "2026-09-21T09:15:15.843000100Z",
+    "our_cash": 94719,
+    "opp_cash": 61895,
+    "won": true,
+    "opponent": "valgrinderror"
+   },
+   {
+    "episode": 111492059,
+    "end": "2026-09-21T04:54:27.387630600Z",
+    "our_cash": 52083,
+    "opp_cash": 91830,
+    "won": false,
+    "opponent": "MAHESH ISHRAN"
+   },
+   {
+    "episode": 111448665,
+    "end": "2026-09-21T02:19:06.862116200Z",
+    "our_cash": 60028,
+    "opp_cash": 132429,
+    "won": false,
+    "opponent": "henriquejsza"
+   },
+   {
+    "episode": 111444246,
+    "end": "2026-09-21T02:02:14.857260900Z",
+    "our_cash": 64573,
+    "opp_cash": 102422,
+    "won": false,
+    "opponent": "Khalid"
+   },
    {
     "episode": 111425477,
     "end": "2026-09-21T00:52:11.423243100Z",
