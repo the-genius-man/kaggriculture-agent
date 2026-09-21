@@ -1,5 +1,5 @@
 ref,fileName,date,description,status,publicScore,privateScore
-56362365,main_v14.py,2026-09-19 14:43:03.533000,"Rollback: V15 search candidate underperforming, reverting to V14",SubmissionStatus.COMPLETE,625.5,
+56362365,main_v14.py,2026-09-19 14:43:03.533000,"Rollback: V15 search candidate underperforming, reverting to V14",SubmissionStatus.COMPLETE,631.9,
 56362069,cff15ce57d4b-search.py,2026-09-19 14:33:19.720000,PR #2 cff15ce57d4b-search via submit-to-kaggle label,SubmissionStatus.COMPLETE,643.2,
 56359811,main_v12_fill.py,2026-09-19 13:13:03.387000,"plant quota + melon peak 12; fill Q2 with strawberries, meter premium sells (4/turn), buy Q3 only after ~88% occupancy. Internal 43/48 vs V12, 14/16 vs V9. Replaces V12 slot; V14 stays live.",SubmissionStatus.COMPLETE,619.8,
 56335886,main_v14.py,2026-09-18 17:11:06.717000,V14: melon maturity 10->12 + strawberry_target=30 (rendered from candidate.json); first submission via CI pipeline,SubmissionStatus.COMPLETE,640.9,

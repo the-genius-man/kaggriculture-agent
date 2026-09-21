@@ -4,6 +4,14 @@
   "active": true,
   "episodes": [
    {
+    "episode": 111754211,
+    "end": "2026-09-21T20:45:41.024150900Z",
+    "our_cash": 82899,
+    "opp_cash": 72358,
+    "won": true,
+    "opponent": "Yakouu"
+   },
+   {
     "episode": 111684455,
     "end": "2026-09-21T16:29:05.829751300Z",
     "our_cash": 61302,
