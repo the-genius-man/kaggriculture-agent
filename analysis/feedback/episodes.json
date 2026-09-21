@@ -4,6 +4,30 @@
   "active": true,
   "episodes": [
    {
+    "episode": 111684455,
+    "end": "2026-09-21T16:29:05.829751300Z",
+    "our_cash": 61302,
+    "opp_cash": 40335,
+    "won": true,
+    "opponent": "Chris Kang"
+   },
+   {
+    "episode": 111650051,
+    "end": "2026-09-21T14:23:40.412875300Z",
+    "our_cash": 82212,
+    "opp_cash": 157654,
+    "won": false,
+    "opponent": "Stepan Ivanov"
+   },
+   {
+    "episode": 111648295,
+    "end": "2026-09-21T14:17:21.102098800Z",
+    "our_cash": 64352,
+    "opp_cash": 107491,
+    "won": false,
+    "opponent": "Rohan Jain"
+   },
+   {
     "episode": 111573113,
     "end": "2026-09-21T09:47:39.630952300Z",
     "our_cash": 75894,
@@ -417,6 +441,30 @@
   "file": "cff15ce57d4b-search.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 111693086,
+    "end": "2026-09-21T16:59:24.294351Z",
+    "our_cash": 105587,
+    "opp_cash": 99803,
+    "won": true,
+    "opponent": "AgriMind"
+   },
+   {
+    "episode": 111681383,
+    "end": "2026-09-21T16:29:02.545807900Z",
+    "our_cash": 75456,
+    "opp_cash": 94105,
+    "won": false,
+    "opponent": "zhongtian"
+   },
+   {
+    "episode": 111666150,
+    "end": "2026-09-21T15:19:50.301505800Z",
+    "our_cash": 47671,
+    "opp_cash": 57332,
+    "won": false,
+    "opponent": "SIDHAARTH SHREE"
+   },
    {
     "episode": 111593359,
     "end": "2026-09-21T10:58:04.127342900Z",
