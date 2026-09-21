@@ -4,6 +4,38 @@
   "active": true,
   "episodes": [
    {
+    "episode": 111441744,
+    "end": "2026-09-21T01:48:27.150764400Z",
+    "our_cash": 102911,
+    "opp_cash": 85088,
+    "won": true,
+    "opponent": "Denis Chernyshov"
+   },
+   {
+    "episode": 111434626,
+    "end": "2026-09-21T01:24:37.541082500Z",
+    "our_cash": 115247,
+    "opp_cash": 47884,
+    "won": true,
+    "opponent": "\u9f50\u4e50"
+   },
+   {
+    "episode": 111398682,
+    "end": "2026-09-20T23:16:17.371956300Z",
+    "our_cash": 60020,
+    "opp_cash": 131368,
+    "won": false,
+    "opponent": "hidsaito"
+   },
+   {
+    "episode": 111351941,
+    "end": "2026-09-20T20:23:44.960604100Z",
+    "our_cash": 91593,
+    "opp_cash": 87570,
+    "won": true,
+    "opponent": "maniginam"
+   },
+   {
     "episode": 111282267,
     "end": "2026-09-20T16:14:06.997446100Z",
     "our_cash": 48492,
@@ -361,6 +393,30 @@
   "file": "cff15ce57d4b-search.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 111425477,
+    "end": "2026-09-21T00:52:11.423243100Z",
+    "our_cash": 64579,
+    "opp_cash": 87648,
+    "won": false,
+    "opponent": "Akira Imae"
+   },
+   {
+    "episode": 111416886,
+    "end": "2026-09-21T00:21:25.182361500Z",
+    "our_cash": 93652,
+    "opp_cash": 123232,
+    "won": false,
+    "opponent": "Agola_dasacic"
+   },
+   {
+    "episode": 111352741,
+    "end": "2026-09-20T20:28:18.355979600Z",
+    "our_cash": 54571,
+    "opp_cash": 62406,
+    "won": false,
+    "opponent": "IWA_setu"
+   },
    {
     "episode": 111300922,
     "end": "2026-09-20T17:21:15.892757900Z",
