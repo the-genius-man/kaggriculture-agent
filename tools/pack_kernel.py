@@ -10,14 +10,17 @@ Two modes:
     main.py + validation.json. What train.yml runs.
   search -- kernel/run_search_template.py: runs the resumable Optuna league
     (league/league.py) for a bounded time budget against the full opponent pool.
-    What search.yml runs. Pass --checkpoint to resume a prior run's checkpoint.zip
-    (downloaded from that run's `search-checkpoint` artifact) instead of starting a
-    fresh League from cycle 0 -- it's embedded as a second base64 payload alongside
-    the source, and run_search_template.py unpacks it into /kaggle/working before
-    League() is constructed. League's own manifest check (league.py's __init__)
-    still guards this: if league.py/support.py/policy_template.py/the fixed agents
-    changed since the checkpoint was made, the resume is refused, not silently
-    corrupted.
+    What search.yml runs. Pass --checkpoint-dataset <owner/slug> to resume a prior
+    run's checkpoint.zip instead of starting a fresh League from cycle 0. It can't be
+    embedded like the source payload -- checkpoint.zip runs ~2MB and Kaggle caps
+    kernel *script* source at 1MB (a real 400 from SaveKernel, confirmed 2026-09-22)
+    -- so search.yml uploads it as a private Kaggle Dataset first and this just wires
+    that dataset into kernel-metadata.json's dataset_sources. Kaggle mounts it at
+    /kaggle/input/<slug>/checkpoint.zip, and run_search_template.py unpacks it into
+    /kaggle/working before League() is constructed. League's own manifest check
+    (league.py's __init__) still guards this: if league.py/support.py/
+    policy_template.py/the fixed agents changed since the checkpoint was made, the
+    resume is refused, not silently corrupted.
 """
 import argparse, base64, io, json, sys, tarfile
 from pathlib import Path
@@ -46,13 +49,7 @@ def build_payload():
     return base64.b64encode(buf.getvalue()).decode()
 
 
-def build_checkpoint_payload(path):
-    data = Path(path).read_bytes()
-    print("  checkpoint: %s (%.1f KB)" % (path, len(data) / 1024))
-    return base64.b64encode(data).decode()
-
-
-def write_metadata(slug):
+def write_metadata(slug, checkpoint_dataset=None):
     meta = ROOT / "kernel" / "kernel-metadata.json"
     m = json.loads(meta.read_text())
     m["id"] = slug
@@ -60,8 +57,12 @@ def write_metadata(slug):
     # always be derived from `slug`, not a separate name. search.yml passes its own
     # distinct slug (KERNEL_SLUG-search) so the two kernels never collide.
     m["title"] = slug.split("/")[-1]
+    # Always set explicitly (not just when resuming) so a stale dataset_sources from
+    # a previous resume run doesn't leak into this file's checked-in state.
+    m["dataset_sources"] = [checkpoint_dataset] if checkpoint_dataset else []
     meta.write_text(json.dumps(m, indent=2) + "\n")
-    print("metadata id/title ->", m["id"], "/", m["title"])
+    print("metadata id/title ->", m["id"], "/", m["title"],
+          "dataset_sources ->", m["dataset_sources"])
 
 
 def main():
@@ -70,8 +71,8 @@ def main():
     p.add_argument("--seeds", default="24", help="validate mode: holdout seeds per opponent")
     p.add_argument("--minutes", default="150", help="search mode: time budget for this run")
     p.add_argument("--slug", default=None, help="Kaggle kernel slug, e.g. user/kaggriculture-agent")
-    p.add_argument("--checkpoint", default=None,
-                    help="search mode: path to a checkpoint.zip to resume from (optional)")
+    p.add_argument("--checkpoint-dataset", default=None,
+                    help="search mode: owner/slug of a Kaggle Dataset holding checkpoint.zip to resume from")
     a = p.parse_args()
     print("packing kernel payload (mode=%s):" % a.mode)
     payload = build_payload()
@@ -81,9 +82,7 @@ def main():
         substitutions = {"__PAYLOAD__": payload, "__SEEDS__": a.seeds}
     else:
         template_name = "run_search_template.py"
-        checkpoint_payload = build_checkpoint_payload(a.checkpoint) if a.checkpoint else ""
-        substitutions = {"__PAYLOAD__": payload, "__MINUTES__": a.minutes,
-                          "__CHECKPOINT_PAYLOAD__": checkpoint_payload}
+        substitutions = {"__PAYLOAD__": payload, "__MINUTES__": a.minutes}
 
     template = (ROOT / "kernel" / template_name).read_text(encoding="utf-8")
     for k, v in substitutions.items():
@@ -92,7 +91,7 @@ def main():
     print("kernel/run.py written: %.1f KB (payload %.1f KB)"
           % (len(template) / 1024, len(payload) / 1024))
     if a.slug:
-        write_metadata(a.slug)
+        write_metadata(a.slug, a.checkpoint_dataset)
 
 
 if __name__ == "__main__":

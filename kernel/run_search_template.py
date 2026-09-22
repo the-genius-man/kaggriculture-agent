@@ -12,19 +12,13 @@
 # file's top level in every worker process. Everything with a side effect (the
 # tarfile extract, the actual search) MUST stay under the __main__ guard below, or
 # each spawned worker re-extracts and re-launches the whole search recursively.
-import base64, contextlib, io, json, os, subprocess, sys, tarfile, zipfile
+import base64, contextlib, glob, io, json, os, subprocess, sys, tarfile, zipfile
 from pathlib import Path
 
 WORK = "/kaggle/working"
 SRC = "/tmp/kaggriculture_src"          # /kaggle itself is not writable
 PAYLOAD = "__PAYLOAD__"
 MINUTES = __MINUTES__
-# Set by tools/pack_kernel.py --checkpoint <path/to/checkpoint.zip>; empty for a
-# fresh run. When non-empty it's unpacked into WORK before League() is built, so
-# League resumes state.json/study.db/agents/candidates/reports instead of starting
-# cycle 0. League's own manifest check still refuses a mismatched checkpoint (stale
-# league.py/support.py/policy_template.py/fixed-agent hashes) rather than corrupting it.
-CHECKPOINT_PAYLOAD = "__CHECKPOINT_PAYLOAD__"
 
 
 def main():
@@ -56,10 +50,19 @@ def main():
         checkpoint_copy="",
     )
     Path(WORK).mkdir(parents=True, exist_ok=True)
-    if CHECKPOINT_PAYLOAD:
-        with zipfile.ZipFile(io.BytesIO(base64.b64decode(CHECKPOINT_PAYLOAD))) as z:
+    # tools/pack_kernel.py --checkpoint-dataset attaches a Kaggle Dataset holding a
+    # prior run's checkpoint.zip (kernel-metadata.json dataset_sources); Kaggle mounts
+    # it read-only under /kaggle/input/<dataset-slug>/. Unpack it into WORK before
+    # League() is built so it resumes state.json/study.db/agents/candidates/reports
+    # instead of starting cycle 0. Absent for a fresh run -- nothing to find, proceed
+    # as before. League's own manifest check still refuses a mismatched checkpoint
+    # (stale league.py/support.py/policy_template.py/fixed-agent hashes) rather than
+    # silently corrupting it.
+    checkpoints = glob.glob("/kaggle/input/*/checkpoint.zip")
+    if checkpoints:
+        with zipfile.ZipFile(checkpoints[0]) as z:
             z.extractall(WORK)
-        print("resumed from checkpoint:", sorted(os.listdir(WORK)), flush=True)
+        print("resumed from checkpoint dataset:", checkpoints[0], sorted(os.listdir(WORK)), flush=True)
     (Path(WORK) / "search_config.json").write_text(json.dumps(config, indent=2))
     print("search config:", json.dumps(config, indent=2), flush=True)
 

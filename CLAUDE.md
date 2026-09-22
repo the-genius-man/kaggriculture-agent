@@ -220,11 +220,16 @@ Two planes. **CI plane** = deterministic Kaggle-CLI scripts in `.github/workflow
   The checkpoint (`checkpoint.zip`, containing `study.db`) is uploaded as a workflow
   artifact for continuing the search. **Resuming is automated** via the
   `resume_run_id` dispatch input (a prior `search-v15` run's ID): the workflow
-  downloads that run's `search-checkpoint` artifact and feeds it to
-  `tools/pack_kernel.py --checkpoint`, which embeds it in the kernel alongside the
-  source payload; `league.py`'s own manifest check still refuses the resume (rather
-  than silently restarting from cycle 0) if `league.py`/`support.py`/
-  `policy_template.py`/the fixed agents changed since the checkpoint was made.
+  downloads that run's `search-checkpoint` artifact and publishes it as a private
+  Kaggle Dataset (`<KAGGLE_USERNAME>/kaggriculture-search-checkpoint`, versioned in
+  place on each resume), which `tools/pack_kernel.py --checkpoint-dataset` wires into
+  `kernel-metadata.json`'s `dataset_sources`. It can't be embedded in the kernel
+  script like the source payload is — Kaggle caps kernel *source* at 1MB and
+  `checkpoint.zip` runs ~2MB, confirmed by a real `400` from `SaveKernel` on
+  2026-09-22 before this was fixed. `league.py`'s own manifest check still refuses
+  the resume (rather than silently restarting from cycle 0) if `league.py`/
+  `support.py`/`policy_template.py`/the fixed agents changed since the checkpoint was
+  made.
 - `pull-feedback.yml` — refreshes leaderboard + our submissions + real episode results
   (`tools/pull_episodes.py`) into `analysis/feedback/`, and rebuilds the public status
   page (`tools/build_site.py` → `docs/`).

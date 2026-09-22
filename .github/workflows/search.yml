@@ -44,7 +44,28 @@ jobs:
           set -euo pipefail
           gh run download "${{ github.event.inputs.resume_run_id }}" -n search-checkpoint -D resume_checkpoint
           test -f resume_checkpoint/checkpoint.zip
-          echo "CHECKPOINT_ARG=--checkpoint resume_checkpoint/checkpoint.zip" >> "$GITHUB_ENV"
+      - name: Publish checkpoint as a Kaggle Dataset, if resuming
+        # checkpoint.zip (~2MB) can't go in the kernel script itself: Kaggle caps
+        # kernel *source* at 1MB (confirmed by a real 400 from SaveKernel,
+        # 2026-09-22), so it travels as a private Dataset instead, which Kaggle
+        # mounts read-only into the kernel. Same dataset slug every time -- `version`
+        # updates it in place once it exists, `create` makes it the first time.
+        if: ${{ github.event.inputs.resume_run_id != '' }}
+        run: |
+          set -euo pipefail
+          DS_ID="${KAGGLE_USERNAME}/kaggriculture-search-checkpoint"
+          mkdir -p checkpoint_dataset
+          cp resume_checkpoint/checkpoint.zip checkpoint_dataset/checkpoint.zip
+          cat > checkpoint_dataset/dataset-metadata.json <<JSON
+          {"title": "kaggriculture-search-checkpoint", "id": "${DS_ID}", "licenses": [{"name": "CC0-1.0"}]}
+          JSON
+          if kaggle datasets status "$DS_ID" >/dev/null 2>&1; then
+            kaggle datasets version -p checkpoint_dataset -m "resume from run ${{ github.event.inputs.resume_run_id }}" -q
+          else
+            kaggle datasets create -p checkpoint_dataset -q
+          fi
+          sleep 20   # let Kaggle finish processing the (tiny) dataset before the kernel references it
+          echo "CHECKPOINT_ARG=--checkpoint-dataset $DS_ID" >> "$GITHUB_ENV"
       - name: Pack self-contained search kernel (source embedded; repo is private)
         run: python tools/pack_kernel.py --mode search --minutes "$MINUTES" --slug "$KERNEL_SLUG" $CHECKPOINT_ARG
       - name: Push kernel and wait
