@@ -7,6 +7,7 @@ on:
     inputs:
       ref: { description: "git ref to train", required: false, default: "main" }
       seeds: { description: "holdout seeds per opponent", required: false, default: "24" }
+      seed_base: { description: "first seed (pass a different base for a genuinely independent second sample)", required: false, default: "40000000" }
   push:
     branches: [main]
     paths: ["policy/**", "league/**", "agents/**", "experiments/validate.py", "kernel/**"]
@@ -23,6 +24,7 @@ jobs:
       KERNEL_SLUG: ${{ vars.KERNEL_SLUG }}        # e.g. yourname/kaggriculture-train
       REF: ${{ github.event.inputs.ref || github.sha }}
       SEEDS: ${{ github.event.inputs.seeds || 24 }}
+      SEED_BASE: ${{ github.event.inputs.seed_base || 40000000 }}
       OWNER: ${{ github.repository_owner }}
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +32,7 @@ jobs:
         with: { python-version: "3.11" }
       - run: pip install "kaggle>=2"
       - name: Pack self-contained kernel (source embedded; repo is private)
-        run: python tools/pack_kernel.py --mode validate --seeds "${SEEDS:-24}" --slug "$KERNEL_SLUG"
+        run: python tools/pack_kernel.py --mode validate --seeds "${SEEDS:-24}" --seed-base "${SEED_BASE:-40000000}" --slug "$KERNEL_SLUG"
       - name: Push kernel and wait
         run: kaggle kernels push -p kernel && python tools/wait_kernel.py "$KERNEL_SLUG"
       - name: Download kernel output (and log, even on failure)

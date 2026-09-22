@@ -23,5 +23,5 @@ subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-r", "requirement
 # Bounded validation: current candidate vs the league on fresh holdout seeds; exports
 # main.py and validation.json. (Full Optuna search is a separate, longer kernel.)
 subprocess.run([sys.executable, "experiments/validate.py", "--out", WORK,
-                "--seeds", "__SEEDS__"], check=True)
+                "--seeds", "__SEEDS__", "--seed-base", "__SEED_BASE__"], check=True)
 print("kernel done ->", sorted(os.listdir(WORK)))

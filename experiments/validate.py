@@ -36,7 +36,8 @@ def main():
     agent_src = support.render((ROOT / "policy" / "policy_template.py").read_text(), params)
     cand_path = out / "main.py"; cand_path.write_text(agent_src)
     seeds = [a.seed_base + i for i in range(a.seeds)]
-    report = {"candidate_params": params, "seeds": len(seeds), "opponents": {}, "gate_pass": True}
+    report = {"candidate_params": params, "seeds": len(seeds), "seed_base": a.seed_base,
+              "opponents": {}, "gate_pass": True}
     for opp_name, min_wr in GATES.items():
         opp = ROOT / "agents" / opp_name
         if not opp.exists():

@@ -69,6 +69,9 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--mode", choices=["validate", "search"], default="validate")
     p.add_argument("--seeds", default="24", help="validate mode: holdout seeds per opponent")
+    p.add_argument("--seed-base", default="40000000",
+                    help="validate mode: first seed (validate.py's own default); pass a different"
+                         " base for a genuinely independent second sample, not just a bigger one")
     p.add_argument("--minutes", default="150", help="search mode: time budget for this run")
     p.add_argument("--slug", default=None, help="Kaggle kernel slug, e.g. user/kaggriculture-agent")
     p.add_argument("--checkpoint-dataset", default=None,
@@ -79,7 +82,7 @@ def main():
 
     if a.mode == "validate":
         template_name = "run_template.py"
-        substitutions = {"__PAYLOAD__": payload, "__SEEDS__": a.seeds}
+        substitutions = {"__PAYLOAD__": payload, "__SEEDS__": a.seeds, "__SEED_BASE__": a.seed_base}
     else:
         template_name = "run_search_template.py"
         substitutions = {"__PAYLOAD__": payload, "__MINUTES__": a.minutes}
