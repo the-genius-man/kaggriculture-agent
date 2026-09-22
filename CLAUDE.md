@@ -78,14 +78,19 @@ self-play league with strict promotion gates.
   V14 read 600.0 at 17:2x and 645.3 by 19:1x on 2026-09-18. Never compare a fresh
   submission against a settled one; re-read both in the same pull.
 
-## Current status (measured 2026-09-18/19)
+## Current status (measured through 2026-09-22)
 
 See `analysis/REPORT_deployment_diagnosis.md` for the evidence behind all of this.
 
-- **Standing: rank 5,499 of 9,462 teams, score 645.3.** Field median 780.5, leader
-  3,205.2. We are in the bottom 42% of the field, not near the front.
-- **Best deployed agent: V14 (645.3).** V12 617.7, V9 612.0, V13 599.6, V11 586.6 —
-  all inside the rating's own noise band, so treat them as indistinguishable.
+- **Standing: rank 5,676 of 9,792 teams, score 641.2** (`main_v14.py`, resubmitted
+  2026-09-19 14:43; pulled 2026-09-22). The field grew from 9,462 teams on 2026-09-18,
+  so rank drift alone doesn't mean the agent got weaker — score is flat.
+- **Best deployed agent: V14 (641.2), currently one of the two active submissions.**
+  The other active slot is the V15 search candidate `cff15ce57d4b-search.py` (632.0) —
+  active only because it's one of the last two by submission date, not because it's
+  winning; see the V15 rollback bullet below. V12 617.7, V9 612.0, V13 599.6,
+  V11 586.6 — all inside the rating's own noise band, so treat them as
+  indistinguishable from each other and from V14.
 - Confirmed fallback: **V12 trial-23** (`agents/main_v12.py`, `sha256 dffae949e74e...`).
   Note V12 is configured `'land': 2`, so it is hard-capped at 50 of 75 tiles.
 - `agents/main_v13.py` **does not exist in this repo**, so the `main_v13.py` arm of the
@@ -123,13 +128,16 @@ See `analysis/REPORT_deployment_diagnosis.md` for the evidence behind all of thi
   45.8%. Pooled over 72 games V14 wins **37.5% (95% CI 26.3-48.7%)**. main_leader is
   better, but not by two-to-one, and 48 games does not resolve this to better than
   about +/-13 points. Budget seeds accordingly.
-- **V15 promoted and submitted (2026-09-19/20).** The Optuna search (`search.yml`,
-  main_leader in the pool) found `survival_bias=0.45` -- much gentler than the 1.0/2.0
-  this repo's own hand sweep tried, which is why the hand sweep missed it. Passed the
-  gate: 81.2% vs main_leader (margin +3,393, CI90 entirely positive), 66.7% vs V14.
-  Settled Kaggle rating 673.0, currently our best submission. **But real win rate is
-  only 52.8%** (36 games) -- the gate result does not mean "beats the leaderboard,"
-  it means "beats main_leader specifically, on 48 games."
+- **V15 passed the gate, was submitted, and was rolled back the same day
+  (2026-09-19).** The Optuna search (`search.yml`, main_leader in the pool) found
+  `survival_bias=0.45` -- much gentler than the 1.0/2.0 this repo's own hand sweep
+  tried, which is why the hand sweep missed it. Gate result: 81.2% vs main_leader
+  (margin +3,393, CI90 entirely positive), 66.7% vs V14. Submitted 14:33, and its
+  **real win rate was diagnosed at only 52.8%** (36 games, near a coin flip) -- the
+  gate result meant "beats main_leader on 48 games," not "beats the leaderboard."
+  `main_v14.py` was resubmitted 14:43 the same day to revert the slot. V15 is
+  technically still one of the two "active" submissions (632.0) only because nothing
+  has been submitted since, **not** because it's ahead of V14 (641.2).
 - **V15 still has the two original problems, unfixed.** Real replays of its worst
   losses (downloaded via `kaggle competitions replay`) and 12 local games vs
   main_leader agree: day-10 cash ~$1,700 (opponents ~10x higher), and **0 games where
@@ -139,11 +147,25 @@ See `analysis/REPORT_deployment_diagnosis.md` for the evidence behind all of thi
   consecutive** dry days, and a maxed ongoing crop gains nothing from daily
   rewatering, so a high "not watered today" snapshot count is not itself dangerous --
   only a rising weed count is. Full write-up: `analysis/REPORT_deployment_diagnosis.md`.
+- **`land=4` was tested as a standalone lever and closed negative (2026-09-20).** The
+  first two attempts couldn't even reach a 4th quadrant: `land_deadline` gated every
+  quadrant purchase including the 4th, so both were silently capped at land=3 despite
+  the config. Fixed by splitting out a separate `land4_deadline`; retested clean:
+  16/16 games actually reached the 4th quadrant, but win rate vs main_leader collapsed
+  to **6.2%** (comparable mean cash to land=3, ~76-83k). Buying a 4th quadrant,
+  correctly implemented, is a net negative in isolation — the extra land cost and
+  production spread over 100 tiles isn't paid back without deeper joint retuning of
+  staffing/fertilizer/watering. Closed as a standalone lever; not worth another blind
+  search cycle chasing it alone.
 - **The 55%/60%/80% gate is a floor, not a target.** Clearing it against main_leader
   on one opponent's 48 games does not mean the candidate is strong against the field.
-  The next search should explicitly weight toward `land=4` + earlier `land_deadline`
-  (the space already allows this; the promoted trial just didn't land there) and
-  raise its own `target_win_rate` rather than stopping once "good enough to pass."
+  The day-10 cash gap remains the next thing to isolate, independent of land count —
+  not land=4 again.
+- **Search relaunched 2026-09-22** (`search-v15` workflow, 150 min budget, ref `main`)
+  on the space with the `land4_deadline` fix and no hand-picked warm-start seed,
+  letting TPE explore fresh rather than chasing a third hand-picked guess. Result
+  lands as a draft PR when it finishes (~2h33m historically, i.e. around 2026-09-22
+  11:15 UTC).
 
 ## What the leaderboard analysis says to work on next
 
@@ -163,9 +185,12 @@ measurements actually support:
    worker ceiling is not the problem.
 3. **Season-aware crop replacement** (early melon -> dense strawberry -> late wheat/
    short crops), driven by remaining game horizon.
-4. **Fourth quadrant as a *tested* option**, evaluated together with planting,
-   staffing, routing and time-to-recover. Do not force it (opponents beat V13 with
-   three quadrants) and do not assume three is optimal.
+4. **Fourth quadrant, jointly with staffing/routing/watering capacity — not alone.**
+   Tested standalone on 2026-09-20 and closed negative (6.2% win rate vs main_leader,
+   correctly implemented, comparable cash to land=3) — the extra land only pays off if
+   staffing, fertilizer and watering scale with it, which needs a joint search, not a
+   hand-picked config. Do not force it (opponents beat V13 with three quadrants) and
+   do not assume three is optimal either.
 5. **Market-transaction ablation** before imitating heavy wheat/fertilizer churn.
 6. **Survival-priced watering and in-window fertilizer.** Already demonstrated in
    `agents/main_leader.py`; port into the searchable policy as parameters
