@@ -4,6 +4,14 @@
   "active": true,
   "episodes": [
    {
+    "episode": 112032744,
+    "end": "2026-09-22T13:23:30.972105300Z",
+    "our_cash": 62401,
+    "opp_cash": 84498,
+    "won": false,
+    "opponent": "Goller"
+   },
+   {
     "episode": 111974368,
     "end": "2026-09-22T09:55:00.509993700Z",
     "our_cash": 54214,
@@ -481,6 +489,22 @@
   "file": "cff15ce57d4b-search.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 112069612,
+    "end": "2026-09-22T15:35:12.104737600Z",
+    "our_cash": 43913,
+    "opp_cash": 82277,
+    "won": false,
+    "opponent": "juisajdiasd"
+   },
+   {
+    "episode": 112056498,
+    "end": "2026-09-22T14:50:34.122404200Z",
+    "our_cash": 86811,
+    "opp_cash": 82442,
+    "won": true,
+    "opponent": "Abhimanyu Singh"
+   },
    {
     "episode": 111975752,
     "end": "2026-09-22T09:59:19.451130100Z",
