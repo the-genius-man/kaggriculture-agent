@@ -1,0 +1,45 @@
+{
+  "candidate_params": {
+    "strawberry_target": 30
+  },
+  "seeds": 24,
+  "opponents": {
+    "main_v9.py": {
+      "win_rate": 1,
+      "min_required": 0.8,
+      "mean_margin": 11167,
+      "margin_ci90": [
+        8962,
+        13515
+      ],
+      "mean_cash": 76539,
+      "pass": true
+    },
+    "main_v12.py": {
+      "win_rate": 0.938,
+      "min_required": 0.6,
+      "mean_margin": 10290,
+      "margin_ci90": [
+        7954,
+        12798
+      ],
+      "mean_cash": 85177,
+      "pass": true
+    },
+    "main_v13.py": {
+      "skipped": "agent file absent"
+    },
+    "main_leader.py": {
+      "win_rate": 0.333,
+      "min_required": 0.55,
+      "mean_margin": -2400,
+      "margin_ci90": [
+        -4410,
+        -549
+      ],
+      "mean_cash": 73248,
+      "pass": false
+    }
+  },
+  "gate_pass": false
+}
