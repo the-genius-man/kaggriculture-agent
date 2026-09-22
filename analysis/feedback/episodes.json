@@ -4,6 +4,22 @@
   "active": true,
   "episodes": [
    {
+    "episode": 111816616,
+    "end": "2026-09-22T00:30:37.262107600Z",
+    "our_cash": 76200,
+    "opp_cash": 70096,
+    "won": true,
+    "opponent": "Blips and Chitz"
+   },
+   {
+    "episode": 111816846,
+    "end": "2026-09-22T00:29:32.215539600Z",
+    "our_cash": 109000,
+    "opp_cash": 86153,
+    "won": true,
+    "opponent": "suzu10"
+   },
+   {
     "episode": 111754211,
     "end": "2026-09-21T20:45:41.024150900Z",
     "our_cash": 82899,
@@ -449,6 +465,22 @@
   "file": "cff15ce57d4b-search.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 111843212,
+    "end": "2026-09-22T02:04:34.992433Z",
+    "our_cash": 60001,
+    "opp_cash": 80683,
+    "won": false,
+    "opponent": "Gopal Krishna Gundumalla"
+   },
+   {
+    "episode": 111766677,
+    "end": "2026-09-21T21:30:35.093248900Z",
+    "our_cash": 125815,
+    "opp_cash": 129119,
+    "won": false,
+    "opponent": "Vikas1306"
+   },
    {
     "episode": 111693086,
     "end": "2026-09-21T16:59:24.294351Z",
