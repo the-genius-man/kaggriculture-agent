@@ -52,7 +52,14 @@ jobs:
           python -m json.tool artifact/validation.json
           pass=$(python -c "import json;print('true' if json.load(open('artifact/validation.json')).get('gate_pass') else 'false')")
           if [ "$pass" = true ]; then tag=PASS; else tag=FAIL; fi
+          # Branch/PR name is per-commit so two runs on the same code share one PR --
+          # except a manual re-dispatch at a non-default seed_base is a genuinely
+          # different sample of the SAME commit, and sharing that name raced two runs
+          # over one branch (git push --force-with-lease rejected as stale, 2026-09-22:
+          # https://github.com/the-genius-man/kaggriculture-agent/actions/runs/35786843061).
+          # Suffix the name so a non-default seed_base always gets its own branch/PR.
           name="${GITHUB_SHA:0:12}"
+          if [ "${SEED_BASE:-40000000}" != "40000000" ]; then name="${name}-seedbase${SEED_BASE}"; fi
           # The gate verdict is stated, never implied: a failing candidate still gets a
           # PR (the numbers are the point) but it opens as a draft so it cannot be
           # merged by reflex.
