@@ -4,6 +4,22 @@
   "active": true,
   "episodes": [
    {
+    "episode": 111974368,
+    "end": "2026-09-22T09:55:00.509993700Z",
+    "our_cash": 54214,
+    "opp_cash": 63165,
+    "won": false,
+    "opponent": "BeyondAnalytics"
+   },
+   {
+    "episode": 111894470,
+    "end": "2026-09-22T05:07:19.368427300Z",
+    "our_cash": 64256,
+    "opp_cash": 68428,
+    "won": false,
+    "opponent": "Aloise Mutune"
+   },
+   {
     "episode": 111816616,
     "end": "2026-09-22T00:30:37.262107600Z",
     "our_cash": 76200,
@@ -466,6 +482,30 @@
   "active": true,
   "episodes": [
    {
+    "episode": 111975752,
+    "end": "2026-09-22T09:59:19.451130100Z",
+    "our_cash": 120687,
+    "opp_cash": 101627,
+    "won": true,
+    "opponent": "Sooriya Senthilkumar"
+   },
+   {
+    "episode": 111894869,
+    "end": "2026-09-22T05:08:23.163861500Z",
+    "our_cash": 97537,
+    "opp_cash": 100568,
+    "won": false,
+    "opponent": "hansama.qht"
+   },
+   {
+    "episode": 111853547,
+    "end": "2026-09-22T02:43:23.103275500Z",
+    "our_cash": 42135,
+    "opp_cash": 115216,
+    "won": false,
+    "opponent": "MaybeIcanShow"
+   },
+   {
     "episode": 111843212,
     "end": "2026-09-22T02:04:34.992433Z",
     "our_cash": 60001,
@@ -567,7 +607,7 @@
     "our_cash": 54571,
     "opp_cash": 62406,
     "won": false,
-    "opponent": "IWA_setu"
+    "opponent": "iwa_hueai"
    },
    {
     "episode": 111300922,
