@@ -4,6 +4,22 @@
   "active": true,
   "episodes": [
    {
+    "episode": 112135857,
+    "end": "2026-09-22T19:37:04.578130700Z",
+    "our_cash": 54067,
+    "opp_cash": 72678,
+    "won": false,
+    "opponent": "Niloofar Y."
+   },
+   {
+    "episode": 112114296,
+    "end": "2026-09-22T18:15:49.014477400Z",
+    "our_cash": 109029,
+    "opp_cash": 113697,
+    "won": false,
+    "opponent": "kingofeverything"
+   },
+   {
     "episode": 112032744,
     "end": "2026-09-22T13:23:30.972105300Z",
     "our_cash": 62401,
@@ -489,6 +505,30 @@
   "file": "cff15ce57d4b-search.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 112138529,
+    "end": "2026-09-22T19:43:17.664807Z",
+    "our_cash": 95441,
+    "opp_cash": 67537,
+    "won": true,
+    "opponent": "Artem Zenkevich"
+   },
+   {
+    "episode": 112132697,
+    "end": "2026-09-22T19:24:57.086119Z",
+    "our_cash": 109340,
+    "opp_cash": 79144,
+    "won": true,
+    "opponent": "RiLi"
+   },
+   {
+    "episode": 112107075,
+    "end": "2026-09-22T17:50:29.723728800Z",
+    "our_cash": 93936,
+    "opp_cash": 75672,
+    "won": true,
+    "opponent": "shikigami yao"
+   },
    {
     "episode": 112069612,
     "end": "2026-09-22T15:35:12.104737600Z",
