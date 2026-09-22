@@ -10,7 +10,14 @@ Two modes:
     main.py + validation.json. What train.yml runs.
   search -- kernel/run_search_template.py: runs the resumable Optuna league
     (league/league.py) for a bounded time budget against the full opponent pool.
-    What search.yml runs.
+    What search.yml runs. Pass --checkpoint to resume a prior run's checkpoint.zip
+    (downloaded from that run's `search-checkpoint` artifact) instead of starting a
+    fresh League from cycle 0 -- it's embedded as a second base64 payload alongside
+    the source, and run_search_template.py unpacks it into /kaggle/working before
+    League() is constructed. League's own manifest check (league.py's __init__)
+    still guards this: if league.py/support.py/policy_template.py/the fixed agents
+    changed since the checkpoint was made, the resume is refused, not silently
+    corrupted.
 """
 import argparse, base64, io, json, sys, tarfile
 from pathlib import Path
@@ -39,6 +46,12 @@ def build_payload():
     return base64.b64encode(buf.getvalue()).decode()
 
 
+def build_checkpoint_payload(path):
+    data = Path(path).read_bytes()
+    print("  checkpoint: %s (%.1f KB)" % (path, len(data) / 1024))
+    return base64.b64encode(data).decode()
+
+
 def write_metadata(slug):
     meta = ROOT / "kernel" / "kernel-metadata.json"
     m = json.loads(meta.read_text())
@@ -57,6 +70,8 @@ def main():
     p.add_argument("--seeds", default="24", help="validate mode: holdout seeds per opponent")
     p.add_argument("--minutes", default="150", help="search mode: time budget for this run")
     p.add_argument("--slug", default=None, help="Kaggle kernel slug, e.g. user/kaggriculture-agent")
+    p.add_argument("--checkpoint", default=None,
+                    help="search mode: path to a checkpoint.zip to resume from (optional)")
     a = p.parse_args()
     print("packing kernel payload (mode=%s):" % a.mode)
     payload = build_payload()
@@ -66,7 +81,9 @@ def main():
         substitutions = {"__PAYLOAD__": payload, "__SEEDS__": a.seeds}
     else:
         template_name = "run_search_template.py"
-        substitutions = {"__PAYLOAD__": payload, "__MINUTES__": a.minutes}
+        checkpoint_payload = build_checkpoint_payload(a.checkpoint) if a.checkpoint else ""
+        substitutions = {"__PAYLOAD__": payload, "__MINUTES__": a.minutes,
+                          "__CHECKPOINT_PAYLOAD__": checkpoint_payload}
 
     template = (ROOT / "kernel" / template_name).read_text(encoding="utf-8")
     for k, v in substitutions.items():

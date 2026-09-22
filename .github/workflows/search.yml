@@ -5,15 +5,19 @@ name: search-v15
 # space (survival_bias, fert_in_window, tiles_per_unit, seed_stock, land_deadline).
 # This is a real TPE search, not the one-shot validation gate train.yml runs.
 #
-# Resuming a search across separate CI runs is NOT automated: the checkpoint
-# (containing study.db) is uploaded as a workflow artifact only. To continue a run,
-# download it, feed it to the notebook or a manual kernel run, or ask for that
-# automation to be built if this becomes a repeated need.
+# Resuming a search across separate CI runs: pass `resume_run_id` (a prior
+# search-v15 run's ID) and this workflow downloads that run's search-checkpoint
+# artifact and feeds it to tools/pack_kernel.py --checkpoint, which embeds it in the
+# kernel alongside the source payload. league.py's own manifest check still refuses
+# the resume (rather than silently restarting from cycle 0) if league.py/support.py/
+# policy_template.py/the fixed agents changed since the checkpoint was made. Leave
+# `resume_run_id` blank to start a fresh League from cycle 0 as before.
 on:
   workflow_dispatch:
     inputs:
       ref: { description: "git ref to search from", required: false, default: "main" }
       minutes: { description: "time budget for this run", required: false, default: "150" }
+      resume_run_id: { description: "prior search-v15 run ID to resume its checkpoint from (blank = fresh)", required: false, default: "" }
 concurrency: { group: kaggle-kernel-search, cancel-in-progress: false }
 permissions: { contents: write, pull-requests: write }
 jobs:
@@ -26,13 +30,23 @@ jobs:
       REF: ${{ github.event.inputs.ref || github.sha }}
       MINUTES: ${{ github.event.inputs.minutes || 150 }}
       OWNER: ${{ github.repository_owner }}
+      CHECKPOINT_ARG: ""
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
       - run: pip install "kaggle>=2"
+      - name: Download checkpoint to resume, if requested
+        if: ${{ github.event.inputs.resume_run_id != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh run download "${{ github.event.inputs.resume_run_id }}" -n search-checkpoint -D resume_checkpoint
+          test -f resume_checkpoint/checkpoint.zip
+          echo "CHECKPOINT_ARG=--checkpoint resume_checkpoint/checkpoint.zip" >> "$GITHUB_ENV"
       - name: Pack self-contained search kernel (source embedded; repo is private)
-        run: python tools/pack_kernel.py --mode search --minutes "$MINUTES" --slug "$KERNEL_SLUG"
+        run: python tools/pack_kernel.py --mode search --minutes "$MINUTES" --slug "$KERNEL_SLUG" $CHECKPOINT_ARG
       - name: Push kernel and wait
         run: |
           kaggle kernels push -p kernel
@@ -91,8 +105,8 @@ jobs:
             else
               { echo "Search finished without promoting a new champion this run (this is";
                 echo "normal -- TPE search over 6 new parameters needs more than one bounded run).";
-                echo "The resumable checkpoint is this run's search-checkpoint artifact if you";
-                echo "want to continue it (manual for now, see this workflow's header comment)."; } > comment.md
+                echo "The resumable checkpoint is this run's search-checkpoint artifact. To";
+                echo "continue it, dispatch search-v15 again with resume_run_id=${GITHUB_RUN_ID}."; } > comment.md
             fi
             gh pr comment "$br" --body-file comment.md || true
             echo "PR opened and assigned to $OWNER."

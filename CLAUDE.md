@@ -218,8 +218,13 @@ Two planes. **CI plane** = deterministic Kaggle-CLI scripts in `.github/workflow
   policy's parameters against the frozen opponent pool. Longer-running, manual
   dispatch only (`minutes` input). Same PR/notify/failure handling as `train.yml`.
   The checkpoint (`checkpoint.zip`, containing `study.db`) is uploaded as a workflow
-  artifact for continuing the search; **resuming across separate CI runs is not yet
-  automated** — download the artifact and feed it back manually.
+  artifact for continuing the search. **Resuming is automated** via the
+  `resume_run_id` dispatch input (a prior `search-v15` run's ID): the workflow
+  downloads that run's `search-checkpoint` artifact and feeds it to
+  `tools/pack_kernel.py --checkpoint`, which embeds it in the kernel alongside the
+  source payload; `league.py`'s own manifest check still refuses the resume (rather
+  than silently restarting from cycle 0) if `league.py`/`support.py`/
+  `policy_template.py`/the fixed agents changed since the checkpoint was made.
 - `pull-feedback.yml` — refreshes leaderboard + our submissions + real episode results
   (`tools/pull_episodes.py`) into `analysis/feedback/`, and rebuilds the public status
   page (`tools/build_site.py` → `docs/`).
