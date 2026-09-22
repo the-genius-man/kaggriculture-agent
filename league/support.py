@@ -27,6 +27,10 @@ BASE.update(survival_bias=0.,fert_in_window=0,tiles_per_unit=0,seed_stock=2)
 # land_deadline's own default (18), so an unset value reproduces the old
 # single-deadline behavior exactly.
 BASE.update(land4_deadline=18)
+# Early-liquidity crop bias (see policy_template.py's crop_value). 0 reproduces v15
+# exactly; the diagnosis's top-priority gap is day-10 cash, not yet touched by any
+# existing parameter.
+BASE.update(early_cash_bias=0.)
 ENV_VERSION = "1.32.7"
 CHECKPOINT_COPY = ''
 

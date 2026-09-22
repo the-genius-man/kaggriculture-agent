@@ -66,7 +66,18 @@ def agent(obs):
         style_weight=1.0
         if style=='quick':style_weight=1.5 if c in ('WHEAT','CARROT') else .75
         if style=='orchard':style_weight=1.5 if c in ('TOMATO','STRAWBERRY') else .75
-        return (yld*price-cost)/(lifespan+4)*P['crop_bias']*style_weight
+        value=(yld*price-cost)/(lifespan+4)*P['crop_bias']*style_weight
+        # Diagnosis (analysis/REPORT_deployment_diagnosis.md): this value-per-turn
+        # score has no notion of cash urgency, so it can rate a slow-payback crop
+        # (STRAWBERRY, first yield ~day 10) above a fast one (WHEAT, ~day 2) even
+        # while cash-starved and unable to hire or expand -- exactly when speed to
+        # first sale matters most. Off by default (0 reproduces v15 exactly); >0
+        # reweights toward low `first` the more cash-starved (money below 2000,
+        # roughly the starting bank) we are, tapering to no effect above that.
+        _ecb=CFG.get('early_cash_bias',0.)
+        if _ecb>0 and me['money']<2000:
+            value*=1+_ecb*(1-me['money']/2000)/first
+        return value
     crop_scores={c:crop_value(c) for c in CROPS}
     for idx,pos0 in enumerate(positions):
         pos=tuple(pos0);inv=invs[idx];best=(-1,None,None);carried=next((a for a in ANIMALS if inv.get(a,0)),None)

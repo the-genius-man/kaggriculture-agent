@@ -58,6 +58,10 @@ SPACE={
     # early enough to matter for the 2nd/3rd -- both a hand test and a seeded search
     # trial "testing land=4" never actually bought one).
     'land4_deadline':('cat',15,18,22,26),
+    # Reweights crop choice toward fast first-harvest (WHEAT/CARROT) over slow
+    # high-value (STRAWBERRY) while cash-starved (money<2000); see policy_template.py
+    # crop_value. New 2026-09-22, direct response to the day-10 cash gap.
+    'early_cash_bias':('float',0.,3.),
 }
 
 def sample(trial):
