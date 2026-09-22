@@ -19,7 +19,7 @@ on:
       minutes: { description: "time budget for this run", required: false, default: "150" }
       resume_run_id: { description: "prior search-v15 run ID to resume its checkpoint from (blank = fresh)", required: false, default: "" }
 concurrency: { group: kaggle-kernel-search, cancel-in-progress: false }
-permissions: { contents: write, pull-requests: write }
+permissions: { contents: write, pull-requests: write, actions: read }
 jobs:
   search:
     runs-on: ubuntu-latest
