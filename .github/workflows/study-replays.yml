@@ -36,15 +36,7 @@ jobs:
           set -euo pipefail
           if [ -z "${TOP_SUB}" ]; then
             python tools/find_top_submissions.py --out top_players.json || true
-            TOP_SUB=$(python -c "
-import json
-try:
-    d=json.load(open('top_players.json'))
-    hits=d.get('leaderboard_hits') or []
-    print(hits[0]['submission'] if hits else (d.get('strongest_seen') or [{}])[0].get('submission',''))
-except Exception:
-    print('')
-")
+            TOP_SUB=$(python tools/find_top_submissions.py --print-submission || true)
             echo "discovered leader submission: ${TOP_SUB}"
           fi
           echo "TOP_SUB=${TOP_SUB}" >> "$GITHUB_ENV"

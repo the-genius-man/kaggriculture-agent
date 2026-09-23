@@ -103,6 +103,8 @@ def main():
     p.add_argument("--out", default="analysis/feedback/top_players.json")
     p.add_argument("--episodes-for", default=None,
                     help="skip the crawl and just list this submission's episodes")
+    p.add_argument("--print-submission", action="store_true",
+                    help="print only the best leader submission id (for shell capture)")
     a = p.parse_args()
 
     if a.episodes_for:
@@ -111,7 +113,8 @@ def main():
         return
 
     targets = leaderboard_team_ids(a.leaderboard)
-    print("leaderboard targets:", len(targets))
+    if not a.print_submission:
+        print("leaderboard targets:", len(targets))
     hits, ranked, calls = crawl(a.seed, set(targets), a.max_calls)
     result = {"calls": calls, "leaderboard_hits": [], "strongest_seen": ranked[:15]}
     for tid, h in hits.items():
@@ -119,6 +122,16 @@ def main():
         result["leaderboard_hits"].append({"team_id": tid, "team": name,
                                             "leaderboard_score": score,
                                             "submission": h["submission"]})
+    # Prefer the highest-scoring confirmed leaderboard team; fall back to the
+    # strongest agent the crawl saw at all.
+    result["leaderboard_hits"].sort(key=lambda h: -(h["leaderboard_score"] or 0))
+    chosen = (result["leaderboard_hits"] or result["strongest_seen"] or [{}])[0]
+    result["chosen"] = chosen
+
+    if a.print_submission:
+        print(chosen.get("submission", ""))
+        return
+
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     Path(a.out).write_text(json.dumps(result, indent=1), encoding="utf-8")
     print(json.dumps(result, indent=1)[:2000])
