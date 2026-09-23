@@ -31,6 +31,11 @@ BASE.update(land4_deadline=18)
 # exactly; the diagnosis's top-priority gap is day-10 cash, not yet touched by any
 # existing parameter.
 BASE.update(early_cash_bias=0.)
+# v16 land-utilisation pair, from the 2026-09-23 replay study of a rank-2 leader
+# (analysis/REPORT_leader_gap.md). plant_urgency=1 and seed_fill=0 reproduce v15.
+# Together they target the one difference that dominates every other: the leader ends
+# every day with zero bare owned tiles; we carry 20-40 while our hands idle.
+BASE.update(plant_urgency=1., seed_fill=0)
 ENV_VERSION = "1.32.7"
 CHECKPOINT_COPY = ''
 
@@ -84,7 +89,10 @@ def worker(job):
         animals=sum(isinstance(t,dict) and bool(t.get('animal')) for t in tiles)
         active_regions=set((x//5,y//5) for y,row in enumerate(f.tiles) for x,t in enumerate(row)
                            if isinstance(t,dict) and (t.get('crop') or t.get('animal')))
-        snapshots[str(day)]=dict(cash=f.money,crops=crops,animals=animals,hands=len(f.hands),
+        # bare = owned but empty. The 2026-09-23 replay study made this the metric of
+        # record: a rank-2 leader holds 0 bare tiles every day, we carry 20-40.
+        bare=sum(t is None for t in tiles)
+        snapshots[str(day)]=dict(cash=f.money,crops=crops,animals=animals,bare=bare,hands=len(f.hands),
                                 quadrants=len(f.unlocked_quadrants),productive_quadrants=len(active_regions),
                                 unwatered=sum(isinstance(t,dict) and bool(t.get('crop')) and not t.get('watered_today') for t in tiles),
                                 unfed=sum(isinstance(t,dict) and bool(t.get('animal')) and not t.get('fed_today') for t in tiles),

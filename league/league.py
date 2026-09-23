@@ -62,6 +62,10 @@ SPACE={
     # high-value (STRAWBERRY) while cash-starved (money<2000); see policy_template.py
     # crop_value. New 2026-09-22, direct response to the day-10 cash gap.
     'early_cash_bias':('float',0.,3.),
+    # v16, from the real-replay study of a rank-2 leader (2026-09-23): filling owned
+    # land is the dominant gap. plant_urgency lets a bare tile outbid maintenance;
+    # seed_fill stocks seed against bare tiles instead of a flat per-crop cap.
+    'plant_urgency':('float',1.,6.), 'seed_fill':('cat',0,4,8,12,20),
 }
 
 def sample(trial):

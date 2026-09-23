@@ -13,8 +13,31 @@ import support  # noqa
 # opponent -> min win rate. main_leader.py is a leader-style opponent (see
 # analysis/REPORT_deployment_diagnosis.md): the league is otherwise all our own
 # lineage, which has not predicted leaderboard placement.
+# main_leader2.py is the reference opponent that matters: it is profile-matched to a
+# rank-2 leaderboard team from real replays (2026-09-23), whereas main_leader.py was
+# built from ~600-rated opponents in our own games and so never represented the top of
+# the table. Kept at the same 0.55 floor, but read its number first.
 GATES = {"main_v9.py": 0.80, "main_v12.py": 0.60, "main_v13.py": 0.55,
-         "main_leader.py": 0.55}
+         "main_leader.py": 0.55, "main_leader2.py": 0.55}
+
+def occupancy(rows, days=("10", "20")):
+    """Mean cash / productive tiles / bare owned tiles at a couple of checkpoints."""
+    import statistics
+    out = {}
+    for d in days:
+        snaps = [r["snapshots"][d] for r in rows if d in r.get("snapshots", {})]
+        if not snaps:
+            continue
+        def m(key):
+            vals = [s[key] for s in snaps if isinstance(s.get(key), (int, float))]
+            return round(statistics.mean(vals), 1) if vals else None
+        out["day" + d] = {"cash": m("cash"), "productive": None, "bare": m("bare"),
+                          "crops": m("crops"), "animals": m("animals"), "hands": m("hands"),
+                          "quadrants": m("quadrants")}
+        if out["day" + d]["crops"] is not None and out["day" + d]["animals"] is not None:
+            out["day" + d]["productive"] = round(out["day" + d]["crops"] + out["day" + d]["animals"], 1)
+    return out
+
 
 def evaluate(cand, opp, seeds):
     rows = []
@@ -42,12 +65,15 @@ def main():
         opp = ROOT / "agents" / opp_name
         if not opp.exists():
             report["opponents"][opp_name] = {"skipped": "agent file absent"}; continue
-        su, (lo, hi), _ = evaluate(str(cand_path), str(opp), seeds)
+        su, (lo, hi), rows = evaluate(str(cand_path), str(opp), seeds)
         ok = su["win_rate"] >= min_wr and lo > 0
         report["opponents"][opp_name] = {
             "win_rate": round(su["win_rate"], 3), "min_required": min_wr,
             "mean_margin": round(su["mean_margin"]), "margin_ci90": [round(lo), round(hi)],
-            "mean_cash": round(su["mean_cash"]), "pass": ok}
+            "mean_cash": round(su["mean_cash"]), "pass": ok,
+            # Occupancy, not just the verdict: the replay study showed win rate alone
+            # hid the actual defect (bare owned land) for weeks.
+            "occupancy": occupancy(rows)}
         report["gate_pass"] &= ok
     (out / "validation.json").write_text(json.dumps(report, indent=2))
     print(json.dumps(report, indent=2))
