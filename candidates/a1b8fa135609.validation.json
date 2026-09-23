@@ -1,0 +1,162 @@
+{
+  "candidate_params": {
+    "strawberry_target": 30,
+    "tiles_per_unit": 7,
+    "hire_pace": 1,
+    "plant_urgency": 6.0,
+    "seed_fill": 12,
+    "survival_bias": 1.0
+  },
+  "seeds": 24,
+  "seed_base": 40000000,
+  "opponents": {
+    "main_v9.py": {
+      "win_rate": 0,
+      "min_required": 0.8,
+      "mean_margin": -18259,
+      "margin_ci90": [
+        -20442,
+        -16019
+      ],
+      "mean_cash": 67209,
+      "pass": false,
+      "occupancy": {
+        "day10": {
+          "cash": 51.8,
+          "productive": 10.0,
+          "bare": 4.9,
+          "crops": 10.0,
+          "animals": 0,
+          "hands": 0,
+          "quadrants": 1,
+          "weeds": 7.1,
+          "unwatered": 5.0
+        },
+        "day20": {
+          "cash": 7415.9,
+          "productive": 61.5,
+          "bare": 0.5,
+          "crops": 47.8,
+          "animals": 13.7,
+          "hands": 12,
+          "quadrants": 2.6,
+          "weeds": 2.9,
+          "unwatered": 7.3,
+          "per_hand": 5.12
+        }
+      }
+    },
+    "main_v12.py": {
+      "win_rate": 0,
+      "min_required": 0.6,
+      "mean_margin": -20378,
+      "margin_ci90": [
+        -23892,
+        -17328
+      ],
+      "mean_cash": 70172,
+      "pass": false,
+      "occupancy": {
+        "day10": {
+          "cash": 3.9,
+          "productive": 10,
+          "bare": 4.9,
+          "crops": 10,
+          "animals": 0,
+          "hands": 0,
+          "quadrants": 1,
+          "weeds": 7.1,
+          "unwatered": 5
+        },
+        "day20": {
+          "cash": 9164.6,
+          "productive": 55.4,
+          "bare": 0.7,
+          "crops": 40.9,
+          "animals": 14.5,
+          "hands": 12.0,
+          "quadrants": 2.4,
+          "weeds": 2.0,
+          "unwatered": 5.1,
+          "per_hand": 4.62
+        }
+      }
+    },
+    "main_v13.py": {
+      "skipped": "agent file absent"
+    },
+    "main_leader.py": {
+      "win_rate": 0,
+      "min_required": 0.55,
+      "mean_margin": -35696,
+      "margin_ci90": [
+        -38628,
+        -32971
+      ],
+      "mean_cash": 65983,
+      "pass": false,
+      "occupancy": {
+        "day10": {
+          "cash": 2.7,
+          "productive": 10,
+          "bare": 4.9,
+          "crops": 10,
+          "animals": 0,
+          "hands": 0,
+          "quadrants": 1,
+          "weeds": 7.1,
+          "unwatered": 5
+        },
+        "day20": {
+          "cash": 9200.2,
+          "productive": 57.2,
+          "bare": 0.4,
+          "crops": 42.6,
+          "animals": 14.6,
+          "hands": 12,
+          "quadrants": 2.4,
+          "weeds": 2.2,
+          "unwatered": 5.6,
+          "per_hand": 4.77
+        }
+      }
+    },
+    "main_leader2.py": {
+      "win_rate": 0.979,
+      "min_required": 0.55,
+      "mean_margin": 16711,
+      "margin_ci90": [
+        13568,
+        20020
+      ],
+      "mean_cash": 78966,
+      "pass": true,
+      "occupancy": {
+        "day10": {
+          "cash": 21.2,
+          "productive": 10,
+          "bare": 4.1,
+          "crops": 10,
+          "animals": 0,
+          "hands": 0,
+          "quadrants": 1,
+          "weeds": 7.9,
+          "unwatered": 5
+        },
+        "day20": {
+          "cash": 12817.8,
+          "productive": 52.9,
+          "bare": 0.3,
+          "crops": 37.4,
+          "animals": 15.5,
+          "hands": 12,
+          "quadrants": 2.3,
+          "weeds": 3.8,
+          "unwatered": 4.4,
+          "per_hand": 4.41
+        }
+      }
+    }
+  },
+  "gate_pass": false
+}
