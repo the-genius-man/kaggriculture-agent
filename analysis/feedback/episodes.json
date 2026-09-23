@@ -4,6 +4,62 @@
   "active": true,
   "episodes": [
    {
+    "episode": 112364727,
+    "end": "2026-09-23T07:52:36.992825300Z",
+    "our_cash": 124167,
+    "opp_cash": 94305,
+    "won": true,
+    "opponent": "Debasish Gorai"
+   },
+   {
+    "episode": 112363514,
+    "end": "2026-09-23T07:49:31.078664500Z",
+    "our_cash": 43338,
+    "opp_cash": 78183,
+    "won": false,
+    "opponent": "Tariq Alyami"
+   },
+   {
+    "episode": 112362281,
+    "end": "2026-09-23T07:45:15.803563900Z",
+    "our_cash": 89687,
+    "opp_cash": 158358,
+    "won": false,
+    "opponent": "Tariq Alyami"
+   },
+   {
+    "episode": 112353348,
+    "end": "2026-09-23T07:12:59.795337600Z",
+    "our_cash": 75923,
+    "opp_cash": 85885,
+    "won": false,
+    "opponent": "kkKaan"
+   },
+   {
+    "episode": 112352597,
+    "end": "2026-09-23T07:11:02.548077600Z",
+    "our_cash": 82488,
+    "opp_cash": 140385,
+    "won": false,
+    "opponent": "Krizs\u00f3 Gergely"
+   },
+   {
+    "episode": 112312397,
+    "end": "2026-09-23T04:57:35.128459200Z",
+    "our_cash": 54726,
+    "opp_cash": 33746,
+    "won": true,
+    "opponent": "Thales Augusto Leite de Souza"
+   },
+   {
+    "episode": 112274568,
+    "end": "2026-09-23T02:50:50.181342600Z",
+    "our_cash": 85108,
+    "opp_cash": 100670,
+    "won": false,
+    "opponent": "yoho kumedayo"
+   },
+   {
     "episode": 112250236,
     "end": "2026-09-23T01:32:23.740141600Z",
     "our_cash": 80046,
@@ -217,6 +273,14 @@
   "file": "main_v14.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 112330313,
+    "end": "2026-09-23T05:55:37.519614Z",
+    "our_cash": 39138,
+    "opp_cash": 49457,
+    "won": false,
+    "opponent": "Bruno Romero Garc\u00eda"
+   },
    {
     "episode": 112247190,
     "end": "2026-09-23T01:23:40.868204500Z",
