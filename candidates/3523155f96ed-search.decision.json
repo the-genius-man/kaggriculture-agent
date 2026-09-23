@@ -1,0 +1,12 @@
+{
+  "status": "paused_resume_available",
+  "export": "agents/main_v14.py",
+  "sha256": "2d2a9df840d5168ec693251accb546e469834da56516614ed1ecd88209df3d58",
+  "promoted": false,
+  "promotions": 0,
+  "cycle": 1,
+  "phase": "general",
+  "target_reached": false,
+  "latest_report": "reports/holdout_c000.json",
+  "note": "Local league results; no leaderboard rank guarantee. No Kaggle submission was made."
+}
