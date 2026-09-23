@@ -79,13 +79,18 @@ def main():
     with concurrent.futures.ProcessPoolExecutor(
             max_workers=config["workers"], mp_context=multiprocessing.get_context("spawn")) as pool:
         engine = league.League(config, pool)
-        # No hand-picked warm-start seed this run. The land=4 hypothesis seeded last
-        # time was itself broken (land_deadline=10 stranded the config at 2
-        # quadrants) and, retested clean with land4_deadline fixed, land=4 alone is a
-        # net negative vs main_leader (6.2% win, 16/16 reached it) -- see
-        # analysis/REPORT_deployment_diagnosis.md. Two hand-picked guesses in a row
-        # were wrong; better to let TPE explore the now-corrected space (land_deadline
-        # and land4_deadline properly decoupled) than add a third guess.
+        # One warm start, not a guess this time. Measured 2026-09-23: every new
+        # lever is HARMFUL on its own -- plant_urgency alone fills the land but
+        # drains cash to 2.7 and hires zero hands; cash_discount alone switches to
+        # short-cycle crops but, at our ~100 plants a game, just harvests less value
+        # from the same few tiles. They only pay together, which is precisely the
+        # structure TPE is for and precisely what hand-picking cannot find (four
+        # straight failures). Seeding one joint point costs a single trial.
+        engine.state.setdefault('warm_starts',[]).append(league.warm_params(dict(
+            league.BASE, cash_discount=.80, cash_patience=8000., plant_urgency=3.,
+            seed_fill=8, tiles_per_unit=7, hire_pace=1, crop_style='quick',
+            survival_bias=1., fert_in_window=1, land_deadline=12, expansion_hands=7,
+            strawberry_target=30)))
         try:
             engine.run()
         except (TimeoutError, KeyboardInterrupt):
