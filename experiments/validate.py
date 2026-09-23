@@ -13,12 +13,15 @@ import support  # noqa
 # opponent -> min win rate. main_leader.py is a leader-style opponent (see
 # analysis/REPORT_deployment_diagnosis.md): the league is otherwise all our own
 # lineage, which has not predicted leaderboard placement.
-# main_leader2.py is the reference opponent that matters: it is profile-matched to a
-# rank-2 leaderboard team from real replays (2026-09-23), whereas main_leader.py was
-# built from ~600-rated opponents in our own games and so never represented the top of
-# the table. Kept at the same 0.55 floor, but read its number first.
+# main_leader2.py is profile-matched to a rank-2 leaderboard team from real replays
+# (2026-09-23), unlike main_leader.py which was built from ~600-rated opponents in our
+# own games. But it is NOT yet a credible stand-in: every candidate so far beats it
+# 98-100%, including one that wins 0% against everything else, so its win rate carries
+# no information and it is deliberately NOT a gate condition. It stays in the pool as
+# a measurement, at a floor low enough that it cannot block a promotion, until it is
+# calibrated well enough to lose to something.
 GATES = {"main_v9.py": 0.80, "main_v12.py": 0.60, "main_v13.py": 0.55,
-         "main_leader.py": 0.55, "main_leader2.py": 0.55}
+         "main_leader.py": 0.55, "main_leader2.py": 0.0}
 
 def occupancy(rows, days=("10", "20")):
     """Mean cash / productive tiles / bare owned tiles at a couple of checkpoints."""
