@@ -1,5 +1,6 @@
 """main_leader2 -- a league opponent built to the MEASURED behavioural profile of
 Majkel1337 (rank 2, leaderboard 3065.7), from 5 real replays downloaded 2026-09-23.
+See analysis/REPORT_leader_gap.md.
 
 This supersedes main_leader.py as the reference opponent. main_leader.py was built
 from the behaviour of agents in OUR replays -- and those opponents are all ~600-rated,
@@ -7,8 +8,12 @@ because Kaggle matches on rating: of 233 distinct opponents in our episode histo
 none is in the leaderboard top 20. So the old "leader profile" was mid-field play, and
 beating it 75-81% told us nothing about the actual top of the table.
 
-It is a profile match, not a reconstruction of their policy: same parameterised scorer
-as everything else here, with the knobs set so its measured trace matches theirs.
+The defining trait is a constant ~6.3-6.8 productive tiles per hand, held all game,
+with fast hiring to raise the ceiling -- not maximal planting. A first cut of this
+file used uncapped planting and was beaten 100% of the time, because tiles planted
+past watering throughput simply die.
+
+It is a profile match, not a reconstruction of their policy.
 """
 """Enhanced Game v15: v14 plus three searchable production mechanics -- survival-priced
 watering, fertilizer across the whole yield window, and planting capped by watering
@@ -20,7 +25,7 @@ import copy
 # A soft commitment, never an unconditional cached action. Reset every day/game.
 _MEMORY = {}
 
-CFG = {'animals': 18, 'hands': 12, 'land': 3, 'crop_bias': 1.5, 'care_bias': 1.3, 'fert_bias': 1.6, 'opponent_weight': 0.0, 'liquidate': True, 'drop_units': 5, 'drop_value': 1000000, 'cash_release': True, 'deposit_bias': 0.3, 'feed_fix': True, 'care_cap': 1.3, 'plant_floor': 40, 'hire_pace': 1, 'workload_hiring': False, 'work_per_hand': 8, 'keep_late_hands': True, 'land_util': 0.3, 'land_buffer': 300, 'commitment': 1.3, 'region_weight': 0.8, 'distance_weight': 0.65, 'dig_value': 45, 'animal_deadline': 12, 'land_deadline': 10, 'expansion_hands': 7, 'night_deposit': True, 'late_day': 24, 'crop_bias_late': 1.5, 'plant_floor_late': 40, 'deposit_bias_late': 0.3, 'strawberry_target': 34, 'survival_bias': 1.0, 'fert_in_window': 1, 'tiles_per_unit': 0, 'seed_stock': 2, 'land4_deadline': 26, 'early_cash_bias': 0.0, 'plant_urgency': 4.0, 'seed_fill': 20, 'animal_style': 'balanced', 'crop_style': 'quick'}
+CFG = {'animals': 18, 'hands': 12, 'land': 3, 'crop_bias': 1.5, 'care_bias': 1.3, 'fert_bias': 1.6, 'opponent_weight': 0.0, 'liquidate': True, 'drop_units': 5, 'drop_value': 1000000, 'cash_release': True, 'deposit_bias': 0.3, 'feed_fix': True, 'care_cap': 1.3, 'plant_floor': 40, 'hire_pace': 1, 'workload_hiring': False, 'work_per_hand': 8, 'keep_late_hands': True, 'land_util': 0.3, 'land_buffer': 300, 'commitment': 1.3, 'region_weight': 0.8, 'distance_weight': 0.85, 'dig_value': 45, 'animal_deadline': 12, 'land_deadline': 10, 'expansion_hands': 7, 'night_deposit': True, 'late_day': 24, 'crop_bias_late': 1.5, 'plant_floor_late': 40, 'deposit_bias_late': 0.3, 'strawberry_target': 34, 'survival_bias': 1.0, 'fert_in_window': 1, 'tiles_per_unit': 7, 'seed_stock': 2, 'land4_deadline': 26, 'early_cash_bias': 0.0, 'plant_urgency': 2.0, 'seed_fill': 12, 'animal_style': 'balanced', 'crop_style': 'quick'}
 CROPS={'WHEAT':(10,2,4,4),'CARROT':(20,2,3,3),'MELON':(80,10,12,6),'TOMATO':(50,8,11,4),'STRAWBERRY':(100,10,16,4)}
 ANIMALS={'COW':(400,'MILK',8,2),'SHEEP':(500,'WOOL',6,3),'GOOSE':(300,'EGG',4,1)}
 BASE={'WHEAT':25,'CARROT':35,'MELON':250,'TOMATO':60,'STRAWBERRY':120,'MILK':160,'WOOL':200,'EGG':50,'FERTILIZER':100}
@@ -265,6 +270,11 @@ def agent(obs):
         # capped. The leader sells 409 wheat and 222 carrot units a game to our ~100
         # and ~22.
         bare=sum(1 for x,y in coords if tiles[y][x] is None)
+        # Never buy seed for ground we are not allowed to plant: with tiles_per_unit
+        # set, planting stops at what the hands can actually water, and seed bought
+        # past that is cash burned for nothing.
+        if CFG.get('tiles_per_unit',0):
+            bare=max(0,min(bare,len(positions)*CFG['tiles_per_unit']-occupied))
         for c in sorted(CROPS,key=lambda c:-crop_scores[c]/CROPS[c][0]):
             if bare<=0:break
             if crop_scores[c]<=0:continue

@@ -33,9 +33,16 @@ def occupancy(rows, days=("10", "20")):
             return round(statistics.mean(vals), 1) if vals else None
         out["day" + d] = {"cash": m("cash"), "productive": None, "bare": m("bare"),
                           "crops": m("crops"), "animals": m("animals"), "hands": m("hands"),
-                          "quadrants": m("quadrants")}
-        if out["day" + d]["crops"] is not None and out["day" + d]["animals"] is not None:
-            out["day" + d]["productive"] = round(out["day" + d]["crops"] + out["day" + d]["animals"], 1)
+                          "quadrants": m("quadrants"), "weeds": m("weeds"),
+                          "unwatered": m("unwatered")}
+        c, an, hd = out["day" + d]["crops"], out["day" + d]["animals"], out["day" + d]["hands"]
+        if c is not None and an is not None:
+            out["day" + d]["productive"] = round(c + an, 1)
+            # Tiles carried per hand. The leader's trace sits at 6.3-6.8 all game
+            # (25 tiles/4 hands, 50/8, 74.6/11); ours runs ~3.5, which is the real
+            # shape of the occupancy gap.
+            if hd:
+                out["day" + d]["per_hand"] = round((c + an) / max(1.0, hd), 2)
     return out
 
 

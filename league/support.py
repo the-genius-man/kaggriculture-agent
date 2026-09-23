@@ -92,7 +92,11 @@ def worker(job):
         # bare = owned but empty. The 2026-09-23 replay study made this the metric of
         # record: a rank-2 leader holds 0 bare tiles every day, we carry 20-40.
         bare=sum(t is None for t in tiles)
-        snapshots[str(day)]=dict(cash=f.money,crops=crops,animals=animals,bare=bare,hands=len(f.hands),
+        # weeds = tiles already lost to two consecutive dry days. This is the direct
+        # evidence of planting beyond watering throughput, which a productive-tile
+        # count alone cannot show.
+        weeds=sum(isinstance(t,dict) and t.get('kind')=='WEED' for t in tiles)
+        snapshots[str(day)]=dict(cash=f.money,crops=crops,animals=animals,bare=bare,weeds=weeds,hands=len(f.hands),
                                 quadrants=len(f.unlocked_quadrants),productive_quadrants=len(active_regions),
                                 unwatered=sum(isinstance(t,dict) and bool(t.get('crop')) and not t.get('watered_today') for t in tiles),
                                 unfed=sum(isinstance(t,dict) and bool(t.get('animal')) and not t.get('fed_today') for t in tiles),

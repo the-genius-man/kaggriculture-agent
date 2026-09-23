@@ -253,6 +253,11 @@ def agent(obs):
         # capped. The leader sells 409 wheat and 222 carrot units a game to our ~100
         # and ~22.
         bare=sum(1 for x,y in coords if tiles[y][x] is None)
+        # Never buy seed for ground we are not allowed to plant: with tiles_per_unit
+        # set, planting stops at what the hands can actually water, and seed bought
+        # past that is cash burned for nothing.
+        if CFG.get('tiles_per_unit',0):
+            bare=max(0,min(bare,len(positions)*CFG['tiles_per_unit']-occupied))
         for c in sorted(CROPS,key=lambda c:-crop_scores[c]/CROPS[c][0]):
             if bare<=0:break
             if crop_scores[c]<=0:continue
