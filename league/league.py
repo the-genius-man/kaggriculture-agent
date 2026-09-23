@@ -21,7 +21,7 @@ import optuna
 import support
 
 BASE=dict(support.BASE)
-SPACE={
+FULL_SPACE={
     'animals':('int',6,22,2), 'hands':('int',8,12,1), 'land':('int',2,4,1),
     'crop_bias':('float',.6,2.5), 'care_bias':('float',.6,2.),
     'fert_bias':('float',.6,1.8), 'opponent_weight':('cat',0.,.5,1.),
@@ -71,6 +71,26 @@ SPACE={
     # seed_fill stocks seed against bare tiles instead of a flat per-crop cap.
     'plant_urgency':('float',1.,6.), 'seed_fill':('cat',0,4,8,12,20),
 }
+
+# The search was never underpowered by budget, it was underpowered by width.
+# FULL_SPACE is 41 dimensions and a cycle affords 14-24 general trials; TPE wants
+# roughly 10-20 trials PER dimension, so every search this project has run explored
+# about a twentieth of what it needed and never promoted anything. The 2026-09-23
+# run made that concrete: its best trial simply drifted back to V14 with every new
+# lever near-off, which reads like a verdict on the levers but is mostly TPE never
+# having looked.
+#
+# So freeze the 31 parameters we have no evidence about at their V14 values and
+# search only what the replay study actually implicates (analysis/REPORT_leader_gap.md):
+# when cash arrives, how hard a bare tile bids, how much seed is stocked, how many
+# tiles a hand can carry, how fast we hire, which crops, when land is bought, how
+# much strawberry, and how hard we defend a planted tile. Ten dimensions at the same
+# trial count is ~4x the density, and every one of them is on the cash loop that the
+# measurements say decides the game.
+FOCUS = ('cash_discount', 'cash_patience', 'plant_urgency', 'seed_fill',
+         'tiles_per_unit', 'hire_pace', 'crop_style', 'land_deadline',
+         'strawberry_target', 'survival_bias')
+SPACE = {k: FULL_SPACE[k] for k in FOCUS}
 
 def sample(trial):
     p=dict(BASE)

@@ -37,7 +37,7 @@ def main():
 
     config = dict(
         output_dir=WORK, time_budget_minutes=MINUTES, max_cycles=30,
-        general_trials=14, exploiter_trials=6,
+        general_trials=24, exploiter_trials=6,   # 10-dim space earns deeper cycles
         workers=min(4, os.cpu_count() or 2),
         train_seeds=3, selection_seeds=4, holdout_seeds=24, finalists=2, selfplay_seeds=2,
         # Raised 2026-09-20: the promoted V15 candidate cleared the 55% gate floor
