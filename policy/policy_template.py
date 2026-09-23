@@ -78,6 +78,7 @@ def agent(obs):
         # cash_discount=1.0 reproduces v15 exactly. Below 1 it prices impatience,
         # and the impatience fades as the bank fills, because waiting only costs
         # what the missing cash could have been reinvested in.
+        value=(yld*price-cost)/(lifespan+4)*P['crop_bias']*style_weight
         _disc=CFG.get('cash_discount',1.)
         if _disc<1.:
             starved=max(0.,1.-me['money']/max(1.,CFG.get('cash_patience',8000.)))

@@ -31,6 +31,8 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
       - run: pip install "kaggle>=2"
+      - name: Smoke-test the rendered policy before spending kernel time
+        run: python experiments/smoke_agent.py
       - name: Pack self-contained kernel (source embedded; repo is private)
         run: python tools/pack_kernel.py --mode validate --seeds "${SEEDS:-24}" --seed-base "${SEED_BASE:-40000000}" --slug "$KERNEL_SLUG"
       - name: Push kernel and wait
