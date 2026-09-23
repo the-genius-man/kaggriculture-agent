@@ -1,0 +1,80 @@
+name: study-replays
+# Manual only. Downloads a study set of REAL replays -- our worst losses plus a
+# leaderboard leader's best wins -- and reduces them to compact per-seat metrics.
+#
+# The raw replays are a private artifact (they expose our exact move-by-move policy;
+# see CLAUDE.md). What leaves this job for analysis is replay_analysis, a few hundred
+# bytes per game: day-by-day cash/tiles/crops/animals/hands plus action and market
+# counts for both seats. That is what makes "what does a 3000-rated agent do in days
+# 1-10 that we don't" answerable without moving megabytes around.
+on:
+  workflow_dispatch:
+    inputs:
+      ours: { description: "how many of our recent submissions to study", required: false, default: "3" }
+      losses: { description: "worst losses per submission", required: false, default: "10" }
+      top_submission: { description: "a leader's submission id (blank = crawl to find one)", required: false, default: "" }
+      top_wins: { description: "leader wins to download", required: false, default: "5" }
+concurrency: { group: kaggle-study, cancel-in-progress: false }
+permissions: { contents: read }
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_KEY }}
+      OURS: ${{ github.event.inputs.ours || 3 }}
+      LOSSES: ${{ github.event.inputs.losses || 10 }}
+      TOP_SUB: ${{ github.event.inputs.top_submission }}
+      TOP_WINS: ${{ github.event.inputs.top_wins || 5 }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install "kaggle>=2"
+      - name: Find a leaderboard leader's submission, if not given
+        run: |
+          set -euo pipefail
+          if [ -z "${TOP_SUB}" ]; then
+            python tools/find_top_submissions.py --out top_players.json || true
+            TOP_SUB=$(python -c "
+import json
+try:
+    d=json.load(open('top_players.json'))
+    hits=d.get('leaderboard_hits') or []
+    print(hits[0]['submission'] if hits else (d.get('strongest_seen') or [{}])[0].get('submission',''))
+except Exception:
+    print('')
+")
+            echo "discovered leader submission: ${TOP_SUB}"
+          fi
+          echo "TOP_SUB=${TOP_SUB}" >> "$GITHUB_ENV"
+      - name: Download the study set
+        run: |
+          python tools/fetch_study_replays.py \
+            --ours "$OURS" --losses "$LOSSES" \
+            ${TOP_SUB:+--top-submission "$TOP_SUB"} --top-wins "$TOP_WINS" \
+            --out study
+      - name: Reduce replays to compact metrics
+        run: |
+          set -euo pipefail
+          mkdir -p analysis_out
+          # One schema dump first: if the replay shape ever differs from what the
+          # analyser assumes, this says so without needing another download round.
+          first=$(find study -name '*.json' ! -name index.json | head -1)
+          if [ -n "$first" ]; then python tools/analyze_replays.py "$first" --schema > analysis_out/schema.txt; fi
+          for d in study/*/; do
+            [ -d "$d" ] || continue
+            name=$(basename "$d")
+            python tools/analyze_replays.py "$d" --out "analysis_out/${name}.json" \
+              > "analysis_out/${name}.txt" 2>&1 || echo "analyse failed for $name" >> analysis_out/errors.txt
+          done
+          cp study/index.json analysis_out/ 2>/dev/null || true
+          cp top_players.json analysis_out/ 2>/dev/null || true
+          ls -la analysis_out
+      - name: Upload compact analysis (safe to read)
+        uses: actions/upload-artifact@v4
+        with: { name: replay_analysis, path: analysis_out }
+      - name: Upload raw replays (private, collaborators only)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: raw_replays, path: study, if-no-files-found: warn }
