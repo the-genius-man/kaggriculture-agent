@@ -61,7 +61,11 @@ SPACE={
     # Reweights crop choice toward fast first-harvest (WHEAT/CARROT) over slow
     # high-value (STRAWBERRY) while cash-starved (money<2000); see policy_template.py
     # crop_value. New 2026-09-22, direct response to the day-10 cash gap.
-    'early_cash_bias':('float',0.,3.),
+    # Superseded by cash_discount and dropped from the search: measured 2026-09-22,
+    # a 2.0 setting moved the real win rate to 46% and never overcame melon's 4x raw
+    # score advantage, so it was spending a search dimension on nothing.
+    # 'early_cash_bias':('float',0.,3.),
+    'cash_discount':('float',.70,1.), 'cash_patience':('cat',3000.,8000.,15000.),
     # v16, from the real-replay study of a rank-2 leader (2026-09-23): filling owned
     # land is the dominant gap. plant_urgency lets a bare tile outbid maintenance;
     # seed_fill stocks seed against bare tiles instead of a flat per-crop cap.

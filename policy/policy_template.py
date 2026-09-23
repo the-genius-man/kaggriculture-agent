@@ -66,14 +66,24 @@ def agent(obs):
         style_weight=1.0
         if style=='quick':style_weight=1.5 if c in ('WHEAT','CARROT') else .75
         if style=='orchard':style_weight=1.5 if c in ('TOMATO','STRAWBERRY') else .75
-        value=(yld*price-cost)/(lifespan+4)*P['crop_bias']*style_weight
-        # Diagnosis (analysis/REPORT_deployment_diagnosis.md): this value-per-turn
-        # score has no notion of cash urgency, so it can rate a slow-payback crop
-        # (STRAWBERRY, first yield ~day 10) above a fast one (WHEAT, ~day 2) even
-        # while cash-starved and unable to hire or expand -- exactly when speed to
-        # first sale matters most. Off by default (0 reproduces v15 exactly); >0
-        # reweights toward low `first` the more cash-starved (money below 2000,
-        # roughly the starting bank) we are, tapering to no effect above that.
+        # Discount a crop's revenue by how long we wait for it. Without this the
+        # score is blind to WHEN cash arrives: MELON rates 133 against WHEAT's 17
+        # purely on size, though a melon ties the tile ~12 days for one payment
+        # while wheat first-yields on day 2 and can recycle three times in the same
+        # span. Early cash is not merely nice, it compounds -- it is what buys the
+        # hands, land and animals that produce everything later. The rank-2 leader's
+        # trace is exactly that shape (analysis/REPORT_leader_gap.md): cash held at
+        # 139/338/299 through day 7, then 6,876 by day 10, off 409 wheat and 222
+        # carrot units a game, while we plant melon and earn nothing before day 10.
+        # cash_discount=1.0 reproduces v15 exactly. Below 1 it prices impatience,
+        # and the impatience fades as the bank fills, because waiting only costs
+        # what the missing cash could have been reinvested in.
+        _disc=CFG.get('cash_discount',1.)
+        if _disc<1.:
+            starved=max(0.,1.-me['money']/max(1.,CFG.get('cash_patience',8000.)))
+            d=1.-(1.-_disc)*starved
+            value=(yld*price*(d**first)-cost)/(lifespan+4)*P['crop_bias']*style_weight
+        # Superseded by cash_discount, kept so existing rendered agents still load.
         _ecb=CFG.get('early_cash_bias',0.)
         if _ecb>0 and me['money']<2000:
             value*=1+_ecb*(1-me['money']/2000)/first

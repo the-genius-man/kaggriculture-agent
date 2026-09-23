@@ -36,6 +36,12 @@ BASE.update(early_cash_bias=0.)
 # Together they target the one difference that dominates every other: the leader ends
 # every day with zero bare owned tiles; we carry 20-40 while our hands idle.
 BASE.update(plant_urgency=1., seed_fill=0)
+# Time-to-cash discounting in crop_value (policy_template.py). cash_discount=1.0
+# reproduces v15 exactly. This is the structural fix for the defect found on
+# 2026-09-23: the scorer ranked crops by size alone and could not see that a melon
+# ties a tile ~12 days for one payment while wheat recycles three times, which is the
+# whole shape of the leader's early game.
+BASE.update(cash_discount=1., cash_patience=8000.)
 ENV_VERSION = "1.32.7"
 CHECKPOINT_COPY = ''
 
