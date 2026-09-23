@@ -1,5 +1,5 @@
-b10905cc7ace.py [ACTIVE]  37 games  win  43.2%  our cash  78126  opp cash  86666
-main_v14.py    [ACTIVE]  67 games  win  43.3%  our cash  77417  opp cash  88103
+b10905cc7ace.py [ACTIVE]  38 games  win  44.7%  our cash  78459  opp cash  86312
+main_v14.py    [ACTIVE]  70 games  win  41.4%  our cash  77381  opp cash  89951
 cff15ce57d4b-search.py [frozen]  62 games  win  48.4%  our cash  82002  opp cash  82009
 main_v12_fill.py [frozen]  24 games  win  45.8%  our cash  78545  opp cash  80184
 main_v14.py    [frozen]  41 games  win  51.2%  our cash  87512  opp cash  82732

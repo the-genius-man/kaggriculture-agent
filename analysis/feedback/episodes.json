@@ -4,6 +4,14 @@
   "active": true,
   "episodes": [
    {
+    "episode": 112535526,
+    "end": "2026-09-23T17:29:55.331994100Z",
+    "our_cash": 90782,
+    "opp_cash": 73220,
+    "won": true,
+    "opponent": "Govind Sharma"
+   },
+   {
     "episode": 112468664,
     "end": "2026-09-23T13:45:15.360149300Z",
     "our_cash": 88315,
@@ -305,6 +313,30 @@
   "file": "main_v14.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 112574012,
+    "end": "2026-09-23T19:45:30.775056500Z",
+    "our_cash": 67275,
+    "opp_cash": 139518,
+    "won": false,
+    "opponent": "HD h Joratos"
+   },
+   {
+    "episode": 112514233,
+    "end": "2026-09-23T16:27:14.027863400Z",
+    "our_cash": 81581,
+    "opp_cash": 155333,
+    "won": false,
+    "opponent": "liminhai"
+   },
+   {
+    "episode": 112512535,
+    "end": "2026-09-23T16:17:53.591925Z",
+    "our_cash": 80930,
+    "opp_cash": 98803,
+    "won": false,
+    "opponent": "ayutin tin"
+   },
    {
     "episode": 112422395,
     "end": "2026-09-23T11:05:36.821320Z",
@@ -1061,7 +1093,7 @@
     "our_cash": 51841,
     "opp_cash": 28970,
     "won": true,
-    "opponent": "John Moncel"
+    "opponent": "M.Y.C.E.L.I.S"
    },
    {
     "episode": 111111039,
@@ -1109,7 +1141,7 @@
     "our_cash": 92712,
     "opp_cash": 159310,
     "won": false,
-    "opponent": "Mikhail Karchevskiy"
+    "opponent": "NSK_54"
    },
    {
     "episode": 110924599,
