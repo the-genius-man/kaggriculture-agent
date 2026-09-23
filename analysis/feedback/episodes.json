@@ -4,6 +4,38 @@
   "active": true,
   "episodes": [
    {
+    "episode": 112468664,
+    "end": "2026-09-23T13:45:15.360149300Z",
+    "our_cash": 88315,
+    "opp_cash": 169000,
+    "won": false,
+    "opponent": "Ian lin"
+   },
+   {
+    "episode": 112461169,
+    "end": "2026-09-23T13:16:28.698318900Z",
+    "our_cash": 77453,
+    "opp_cash": 53088,
+    "won": true,
+    "opponent": "Shifa Salsabiila"
+   },
+   {
+    "episode": 112439393,
+    "end": "2026-09-23T12:04:02.173557800Z",
+    "our_cash": 44604,
+    "opp_cash": 113290,
+    "won": false,
+    "opponent": "TS"
+   },
+   {
+    "episode": 112424656,
+    "end": "2026-09-23T11:12:06.816401200Z",
+    "our_cash": 77277,
+    "opp_cash": 48057,
+    "won": true,
+    "opponent": "Tians12"
+   },
+   {
     "episode": 112364727,
     "end": "2026-09-23T07:52:36.992825300Z",
     "our_cash": 124167,
@@ -274,6 +306,14 @@
   "active": true,
   "episodes": [
    {
+    "episode": 112422395,
+    "end": "2026-09-23T11:05:36.821320Z",
+    "our_cash": 53877,
+    "opp_cash": 50949,
+    "won": true,
+    "opponent": "weimean"
+   },
+   {
     "episode": 112330313,
     "end": "2026-09-23T05:55:37.519614Z",
     "our_cash": 39138,
@@ -495,7 +535,7 @@
     "our_cash": 88181,
     "opp_cash": 162899,
     "won": false,
-    "opponent": "Tim Zagrebelny"
+    "opponent": "Reinforcement Larping"
    },
    {
     "episode": 111136246,
@@ -877,7 +917,7 @@
     "our_cash": 42135,
     "opp_cash": 115216,
     "won": false,
-    "opponent": "MaybeIcanShow"
+    "opponent": "\u513f\u5b50\u4f1a\u79cd\u5730"
    },
    {
     "episode": 111843212,
