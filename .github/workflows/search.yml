@@ -31,6 +31,7 @@ jobs:
       MINUTES: ${{ github.event.inputs.minutes || 150 }}
       OWNER: ${{ github.repository_owner }}
       CHECKPOINT_ARG: ""
+      RESUME_ID: ${{ github.event.inputs.resume_run_id }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -100,7 +101,12 @@ jobs:
           python -m json.tool artifact/decision.json
           promoted=$(python -c "import json;print('true' if json.load(open('artifact/decision.json')).get('promoted') else 'false')")
           if [ "$promoted" = true ]; then tag="PROMOTED"; else tag="no promotion"; fi
+          # Same fix train.yml needed: a resume runs at the SAME commit as the run it
+          # continues, so both compute search/<sha>-search and the second push is
+          # rejected stale (2026-09-23 run 35908457700 -- the kernel had finished and
+          # its results were safe in the artifacts, but the PR step threw them away).
           name="${GITHUB_SHA:0:12}-search"
+          if [ -n "${RESUME_ID}" ]; then name="${name}-r${GITHUB_RUN_ID}"; fi
           { echo "## Search result: $tag"; echo;
             echo "Time budget: ${MINUTES} minutes. Full trial history and the resumable"
             echo "checkpoint are in this run's **search-output**/**search-checkpoint**"
