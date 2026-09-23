@@ -78,19 +78,20 @@ self-play league with strict promotion gates.
   V14 read 600.0 at 17:2x and 645.3 by 19:1x on 2026-09-18. Never compare a fresh
   submission against a settled one; re-read both in the same pull.
 
-## Current status (measured through 2026-09-22)
+## Current status (measured through 2026-09-23)
 
-See `analysis/REPORT_deployment_diagnosis.md` for the evidence behind all of this.
+Evidence: `analysis/REPORT_leader_gap.md` (2026-09-23, real replays of an actual
+leaderboard leader — read this one first) and `analysis/REPORT_deployment_diagnosis.md`
+(earlier, and wrong wherever it calls `main_leader.py` a leader profile).
 
-- **Standing: rank 5,676 of 9,792 teams, score 641.2** (`main_v14.py`, resubmitted
-  2026-09-19 14:43; pulled 2026-09-22). The field grew from 9,462 teams on 2026-09-18,
-  so rank drift alone doesn't mean the agent got weaker — score is flat.
-- **Best deployed agent: V14 (641.2), currently one of the two active submissions.**
-  The other active slot is the V15 search candidate `cff15ce57d4b-search.py` (632.0) —
-  active only because it's one of the last two by submission date, not because it's
-  winning; see the V15 rollback bullet below. V12 617.7, V9 612.0, V13 599.6,
-  V11 586.6 — all inside the rating's own noise band, so treat them as
-  indistinguishable from each other and from V14.
+- **Standing: rank 5,821 of 9,871 teams, score 621.5** (`b10905cc7ace.py`, the
+  `early_cash_bias` candidate submitted 2026-09-22 22:59; pulled 2026-09-23). V14 read
+  641.2 on 2026-09-22 and 611.5 a day later with no code change — the clearest
+  reminder that the +/-60 noise band is wider than anything we tune.
+- **Active submissions: `b10905cc7ace.py` (621.5) and `main_v14.py` (611.5).**
+  Everything else is frozen history: V15-search 632.0, V12 617.7, V9 612.0, V13 599.6,
+  V11 586.6 — all inside the rating's own noise band, so treat every version we have
+  ever shipped as indistinguishable on score alone.
 - Confirmed fallback: **V12 trial-23** (`agents/main_v12.py`, `sha256 dffae949e74e...`).
   Note V12 is configured `'land': 2`, so it is hard-capped at 50 of 75 tiles.
 - `agents/main_v13.py` **does not exist in this repo**, so the `main_v13.py` arm of the
@@ -116,9 +117,24 @@ See `analysis/REPORT_deployment_diagnosis.md` for the evidence behind all of thi
   `95+hour*4+120*consecutive_unwatered` (~215 for a plant dying tonight) against a
   harvest at ~364, then divides by distance. Losing a strawberry costs its 100 seed
   plus ~480 of future yield, so survival watering is underpriced by roughly 10x.
-- **`agents/main_leader.py`** is a league opponent built to the leaders' measured
-  behavioural profile (not a reconstruction of their policy). Its mechanism fixes
-  work: melons at max yield 17% -> 86%, strawberry dry-out deaths 8.0 -> 4.0.
+- **`agents/main_leader.py` is NOT a leader profile, and never was.** Corrected
+  2026-09-23: it was built from the behaviour of opponents in *our* replays, and
+  Kaggle matches simulation episodes on rating, so all of them sit near our ~620. Of
+  **233 distinct opponents** in our entire episode history, **zero** appear in the
+  leaderboard top 20. Every "leader profile" claim made before 2026-09-23 describes
+  mid-field play. This is why candidates kept clearing 75-81% against it and then
+  winning ~46-53% of real games: the gate was not lying, it was answering a different
+  question. Its mechanism fixes are still real (melons at max yield 17% -> 86%,
+  strawberry dry-out deaths 8.0 -> 4.0); its *status* as a reference for the top of
+  the table is not. See `analysis/REPORT_leader_gap.md`.
+- **To study actual leaders, crawl to them.**
+  `competitions.EpisodeService/ListEpisodes` only accepts `submissionId` (a `teamId`
+  payload 400s), but its response carries every involved team's
+  `publicLeaderboardSubmissionId` and every episode exposes both agents' Elo, so a
+  best-first crawl over the episode graph reaches the top in **2 calls**
+  (`tools/find_top_submissions.py`). `tools/fetch_study_replays.py` +
+  `tools/analyze_replays.py` + the `study-replays` workflow turn real replays into
+  compact per-seat metrics without importing the simulator.
 - **The V14 candidate FAILS the gate, and only because of `main_leader`.** Kaggle
   kernel holdout 2026-09-19, 24 fresh seeds both seats: vs V9 100% (+11,167), vs V12
   93.8% (+10,290), vs **main_leader 33.3% (-2,400, CI90 [-4410, -549])**, V13 skipped
@@ -161,11 +177,39 @@ See `analysis/REPORT_deployment_diagnosis.md` for the evidence behind all of thi
   on one opponent's 48 games does not mean the candidate is strong against the field.
   The day-10 cash gap remains the next thing to isolate, independent of land count —
   not land=4 again.
-- **Search relaunched 2026-09-22** (`search-v15` workflow, 150 min budget, ref `main`)
-  on the space with the `land4_deadline` fix and no hand-picked warm-start seed,
-  letting TPE explore fresh rather than chasing a third hand-picked guess. Result
-  lands as a draft PR when it finishes (~2h33m historically, i.e. around 2026-09-22
-  11:15 UTC).
+- **`early_cash_bias=2.0` was submitted 2026-09-22 and is live.** Gate 75.0% then
+  79.2% vs main_leader across two independent seed bases (pooled 77.1% over 96
+  games) — consistent, unlike V14's 33.3%/45.8% split. Real result: **621.5 rating,
+  46.2% win rate over 26 games**. Third time a gate result did not survive contact
+  with the leaderboard.
+- **The real gap, measured 2026-09-23 against a rank-2 team** (Majkel1337, 3065.7,
+  130/160 wins, mean cash 111,679 vs our ~78,000), from 35 real replays:
+  **they end every day with zero bare owned tiles; we carry 20-40.** They hold a
+  constant **6.3-6.8 productive tiles per hand** all game (25 at 4 hands, 50 at 8,
+  74.6 at 11) — we run ~2.1-3.6. They PLANT 275 times to our ~100, idle (PASS) 94
+  times to our 370-455, and move 3,216 steps to our 4,372. Their early game is a
+  short-cycle cash engine (409 wheat + 222 carrot units sold; cash held at
+  139/338/299 through day 7, then 6,876 by day 10).
+- **The system is a closed cash loop, and single levers make it worse.** seed costs
+  cash -> cash buys hands -> hands water -> watering keeps crops alive -> crops earn
+  -> income buys seed. Measured, each alone: `plant_urgency` fills the land but
+  drains cash to 2.7 and hires **zero** hands (0% win rate); `cash_discount` picks the
+  right crops but at ~100 plants a game just harvests less value per tile. **Four
+  hand-picked configs in a row have failed for this reason** — prefer the search.
+- **`crop_value` was blind to *when* cash arrives** (fixed 2026-09-23). It scored
+  value per tile-turn, so MELON rated 133 against WHEAT's 17 on size alone, though a
+  melon ties a tile ~12 days for one payment while wheat recycles three times.
+  `cash_discount` (default 1.0 = unchanged) discounts revenue by `d**first` with the
+  impatience fading as the bank fills. This was the structural reason knob-tuning
+  kept failing: no parameter can express what the formula cannot see.
+- **Always run `python experiments/smoke_agent.py` before spending kernel time.** It
+  renders the policy at BASE defaults plus every lever corner and actually calls
+  `agent()` on a synthetic observation, in about a second, with no simulator import.
+  It exists because a `crop_value` rewrite left `value` assigned only inside an
+  `if cash_discount<1.0` branch: the one-shot gate happened to test 0.80, passed, and
+  the bug reached a 150-minute search, which died on trial 0 with a thoroughly
+  unhelpful `max() iterable argument is empty`. It is now a step in `train.yml` and
+  `search.yml`.
 
 ## What the leaderboard analysis says to work on next
 
