@@ -2,7 +2,6 @@
 import argparse, concurrent.futures, contextlib, hashlib, importlib.util, io, json
 import math, multiprocessing, os, random, shutil, sqlite3, statistics, time, zipfile
 from pathlib import Path
-import optuna
 
 BASE = dict(animals=16,hands=12,land=3,crop_bias=1.5,care_bias=1.3,fert_bias=1.,
             opponent_weight=0.,liquidate=False,drop_units=5,drop_value=1000000,
@@ -262,6 +261,11 @@ def verify_export(root,opponent,seed):
     return {"cash":[s.reward for s in e.steps[-1]],"status":[s.status for s in e.steps[-1]]}
 
 def main(config_path):
+    # Imported here, not at module scope: BASE/render/worker/summary are the parts
+    # everything else uses, and they need no search library. Keeping optuna out of
+    # the module import lets experiments/smoke_agent.py run as a fast pre-flight in
+    # CI before the heavy requirements are installed.
+    import optuna
     global CHECKPOINT_COPY
     cfg=json.loads(Path(config_path).read_text());root=Path(cfg["output_dir"]).resolve()
     CHECKPOINT_COPY=cfg.get('checkpoint_copy','')
