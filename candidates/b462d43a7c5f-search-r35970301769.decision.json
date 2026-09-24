@@ -1,0 +1,12 @@
+{
+  "status": "paused_resume_available",
+  "export": "agents/egv1_champion_51d5846a2659a77e.py",
+  "sha256": "51d5846a2659a77ee5f487c1fc499a0808221059df1e1356fd256b5a70476f50",
+  "promoted": true,
+  "promotions": 1,
+  "cycle": 2,
+  "phase": "general",
+  "target_reached": false,
+  "latest_report": "reports/holdout_c001.json",
+  "note": "Local league results; no leaderboard rank guarantee. No Kaggle submission was made."
+}
