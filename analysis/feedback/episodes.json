@@ -1,8 +1,53 @@
 {
+ "56519087": {
+  "file": "b462d43a7c5f-search-r35970301769.py",
+  "active": false,
+  "episodes": []
+ },
  "56475549": {
   "file": "b10905cc7ace.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 112815625,
+    "end": "2026-09-24T09:40:26.726713200Z",
+    "our_cash": 74018,
+    "opp_cash": 79848,
+    "won": false,
+    "opponent": "ngzeonwang"
+   },
+   {
+    "episode": 112797959,
+    "end": "2026-09-24T08:40:59.452416200Z",
+    "our_cash": 63716,
+    "opp_cash": 128151,
+    "won": false,
+    "opponent": "sissoko cheick"
+   },
+   {
+    "episode": 112788679,
+    "end": "2026-09-24T08:08:23.181823900Z",
+    "our_cash": 131061,
+    "opp_cash": 13910,
+    "won": true,
+    "opponent": "canwind"
+   },
+   {
+    "episode": 112770397,
+    "end": "2026-09-24T07:03:19.375956200Z",
+    "our_cash": 89524,
+    "opp_cash": 87128,
+    "won": true,
+    "opponent": "tsuka3a_soc"
+   },
+   {
+    "episode": 112738323,
+    "end": "2026-09-24T05:13:26.979387600Z",
+    "our_cash": 64077,
+    "opp_cash": 98764,
+    "won": false,
+    "opponent": "Abhishek Dubey"
+   },
    {
     "episode": 112667142,
     "end": "2026-09-24T01:10:13.603418100Z",
@@ -329,6 +374,38 @@
   "file": "main_v14.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 112832092,
+    "end": "2026-09-24T10:36:25.938473400Z",
+    "our_cash": 68623,
+    "opp_cash": 65662,
+    "won": true,
+    "opponent": "LingLingToshite"
+   },
+   {
+    "episode": 112797930,
+    "end": "2026-09-24T08:40:53.574879300Z",
+    "our_cash": 44414,
+    "opp_cash": 119114,
+    "won": false,
+    "opponent": "poijio"
+   },
+   {
+    "episode": 112787110,
+    "end": "2026-09-24T07:58:43.002270700Z",
+    "our_cash": 71183,
+    "opp_cash": 99,
+    "won": true,
+    "opponent": "guohaowen"
+   },
+   {
+    "episode": 112693425,
+    "end": "2026-09-24T02:39:26.322324300Z",
+    "our_cash": 36393,
+    "opp_cash": 98796,
+    "won": false,
+    "opponent": "team_fn"
+   },
    {
     "episode": 112664836,
     "end": "2026-09-24T00:58:25.557625800Z",
@@ -1930,276 +2007,6 @@
     "opp_cash": 25875,
     "won": true,
     "opponent": "Amritesh Anand"
-   }
-  ]
- },
- "56334872": {
-  "file": "main_v12.py",
-  "active": false,
-  "episodes": [
-   {
-    "episode": 110818690,
-    "end": "2026-09-19T12:03:34.826827Z",
-    "our_cash": 79893,
-    "opp_cash": 77012,
-    "won": true,
-    "opponent": "yoshiki116"
-   },
-   {
-    "episode": 110762788,
-    "end": "2026-09-19T08:39:25.021828800Z",
-    "our_cash": 77969,
-    "opp_cash": 85626,
-    "won": false,
-    "opponent": "manos papagiannidis"
-   },
-   {
-    "episode": 110711141,
-    "end": "2026-09-19T05:34:15.000952800Z",
-    "our_cash": 68879,
-    "opp_cash": 64862,
-    "won": true,
-    "opponent": "Team Rot-Wei\u00df"
-   },
-   {
-    "episode": 110668966,
-    "end": "2026-09-19T03:02:54.584497100Z",
-    "our_cash": 101476,
-    "opp_cash": 87400,
-    "won": true,
-    "opponent": "Albert Einstein F Muritiba"
-   },
-   {
-    "episode": 110641972,
-    "end": "2026-09-19T01:22:05.625498400Z",
-    "our_cash": 82737,
-    "opp_cash": 64076,
-    "won": true,
-    "opponent": "XDang13"
-   },
-   {
-    "episode": 110594999,
-    "end": "2026-09-18T22:26:46.759128900Z",
-    "our_cash": 79385,
-    "opp_cash": 90807,
-    "won": false,
-    "opponent": "Luche"
-   },
-   {
-    "episode": 110554969,
-    "end": "2026-09-18T19:57:08.355585900Z",
-    "our_cash": 47356,
-    "opp_cash": 86462,
-    "won": false,
-    "opponent": "Matthew B"
-   },
-   {
-    "episode": 110555307,
-    "end": "2026-09-18T19:56:47.182332300Z",
-    "our_cash": 66251,
-    "opp_cash": 69215,
-    "won": false,
-    "opponent": "AjayVarma555"
-   },
-   {
-    "episode": 110535008,
-    "end": "2026-09-18T18:44:24.247492700Z",
-    "our_cash": 82674,
-    "opp_cash": 82320,
-    "won": true,
-    "opponent": "Jeel Gajera"
-   },
-   {
-    "episode": 110523939,
-    "end": "2026-09-18T17:59:39.574451800Z",
-    "our_cash": 108235,
-    "opp_cash": 35966,
-    "won": true,
-    "opponent": "Keaton Zang"
-   },
-   {
-    "episode": 110522862,
-    "end": "2026-09-18T17:58:09.073979700Z",
-    "our_cash": 56435,
-    "opp_cash": 31346,
-    "won": true,
-    "opponent": "Abin Biju"
-   },
-   {
-    "episode": 110521730,
-    "end": "2026-09-18T17:52:47.385944800Z",
-    "our_cash": 53875,
-    "opp_cash": 55731,
-    "won": false,
-    "opponent": "Rai1"
-   },
-   {
-    "episode": 110520655,
-    "end": "2026-09-18T17:49:45.671353300Z",
-    "our_cash": 81100,
-    "opp_cash": 120738,
-    "won": false,
-    "opponent": "Lucas Ferreira"
-   },
-   {
-    "episode": 110519566,
-    "end": "2026-09-18T17:43:31.165544600Z",
-    "our_cash": 69310,
-    "opp_cash": 66380,
-    "won": true,
-    "opponent": "Yiman Gao"
-   },
-   {
-    "episode": 110518461,
-    "end": "2026-09-18T17:39:47.085683600Z",
-    "our_cash": 87153,
-    "opp_cash": 95468,
-    "won": false,
-    "opponent": "jackee777"
-   },
-   {
-    "episode": 110517343,
-    "end": "2026-09-18T17:35:23.816447900Z",
-    "our_cash": 72698,
-    "opp_cash": 103622,
-    "won": false,
-    "opponent": "Jackson Sauls"
-   },
-   {
-    "episode": 110516223,
-    "end": "2026-09-18T17:32:16.913924500Z",
-    "our_cash": 55583,
-    "opp_cash": 52463,
-    "won": true,
-    "opponent": "Marcben James Samuel"
-   },
-   {
-    "episode": 110515153,
-    "end": "2026-09-18T17:31:27.218242Z",
-    "our_cash": 49306,
-    "opp_cash": 51910,
-    "won": false,
-    "opponent": "Hiroyuki Fujimaki"
-   },
-   {
-    "episode": 110514031,
-    "end": "2026-09-18T17:23:04.784386600Z",
-    "our_cash": 81511,
-    "opp_cash": 87351,
-    "won": false,
-    "opponent": "Daniel Bandy"
-   },
-   {
-    "episode": 110512930,
-    "end": "2026-09-18T17:19:11.772081600Z",
-    "our_cash": 101117,
-    "opp_cash": 97481,
-    "won": true,
-    "opponent": "Kushpreet Singh"
-   },
-   {
-    "episode": 110511760,
-    "end": "2026-09-18T17:17:25.370030500Z",
-    "our_cash": 72165,
-    "opp_cash": 89625,
-    "won": false,
-    "opponent": "Leon"
-   },
-   {
-    "episode": 110510679,
-    "end": "2026-09-18T17:14:13.053593800Z",
-    "our_cash": 71548,
-    "opp_cash": 94673,
-    "won": false,
-    "opponent": "Dr. Mikholae Hutchinson"
-   },
-   {
-    "episode": 110509567,
-    "end": "2026-09-18T17:10:11.717660600Z",
-    "our_cash": 45539,
-    "opp_cash": 76854,
-    "won": false,
-    "opponent": "Goober"
-   },
-   {
-    "episode": 110508483,
-    "end": "2026-09-18T17:05:53.967043500Z",
-    "our_cash": 66952,
-    "opp_cash": 116635,
-    "won": false,
-    "opponent": "42"
-   },
-   {
-    "episode": 110507379,
-    "end": "2026-09-18T16:59:43.754211Z",
-    "our_cash": 80735,
-    "opp_cash": 65059,
-    "won": true,
-    "opponent": "Jaume Batlle i Ferrer"
-   },
-   {
-    "episode": 110506284,
-    "end": "2026-09-18T16:58:08.116867700Z",
-    "our_cash": 82808,
-    "opp_cash": 80679,
-    "won": true,
-    "opponent": "Dragon"
-   },
-   {
-    "episode": 110505206,
-    "end": "2026-09-18T16:54:28.243681400Z",
-    "our_cash": 46132,
-    "opp_cash": 35087,
-    "won": true,
-    "opponent": "KO Ho Tin"
-   },
-   {
-    "episode": 110504084,
-    "end": "2026-09-18T16:47:45.914725300Z",
-    "our_cash": 59329,
-    "opp_cash": 53534,
-    "won": true,
-    "opponent": "m-toshi desu"
-   },
-   {
-    "episode": 110503000,
-    "end": "2026-09-18T16:45:35.039516500Z",
-    "our_cash": 56789,
-    "opp_cash": 68503,
-    "won": false,
-    "opponent": "tawashi"
-   },
-   {
-    "episode": 110501912,
-    "end": "2026-09-18T16:39:57.359767700Z",
-    "our_cash": 104141,
-    "opp_cash": 64446,
-    "won": true,
-    "opponent": "Kanik Aggarwal"
-   },
-   {
-    "episode": 110500788,
-    "end": "2026-09-18T16:36:04.688192300Z",
-    "our_cash": 78455,
-    "opp_cash": 109675,
-    "won": false,
-    "opponent": "gh"
-   },
-   {
-    "episode": 110499703,
-    "end": "2026-09-18T16:33:55.219667300Z",
-    "our_cash": 51894,
-    "opp_cash": 81615,
-    "won": false,
-    "opponent": "Shane Thivaharraja"
-   },
-   {
-    "episode": 110498646,
-    "end": "2026-09-18T16:27:00.354430600Z",
-    "our_cash": 77305,
-    "opp_cash": 56109,
-    "won": true,
-    "opponent": "Ryan Cheung"
    }
   ]
  }
