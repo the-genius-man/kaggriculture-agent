@@ -4,6 +4,14 @@
   "active": true,
   "episodes": [
    {
+    "episode": 112975862,
+    "end": "2026-09-24T18:54:48.169599500Z",
+    "our_cash": 88135,
+    "opp_cash": 57500,
+    "won": true,
+    "opponent": "Firman Imam"
+   },
+   {
     "episode": 112935955,
     "end": "2026-09-24T16:34:24.890080100Z",
     "our_cash": 79642,
@@ -225,6 +233,14 @@
   "file": "b10905cc7ace.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 113007114,
+    "end": "2026-09-24T20:41:33.608325300Z",
+    "our_cash": 67438,
+    "opp_cash": 53008,
+    "won": true,
+    "opponent": "Dwij12"
+   },
    {
     "episode": 112928935,
     "end": "2026-09-24T16:09:07.088229600Z",
