@@ -12,6 +12,7 @@ on:
     inputs:
       ours: { description: "how many of our recent submissions to study", required: false, default: "3" }
       losses: { description: "worst losses per submission", required: false, default: "10" }
+      wins: { description: "best wins per submission (losses alone bias the picture)", required: false, default: "0" }
       top_submission: { description: "a leader's submission id (blank = crawl to find one)", required: false, default: "" }
       top_wins: { description: "leader wins to download", required: false, default: "5" }
 concurrency: { group: kaggle-study, cancel-in-progress: false }
@@ -24,6 +25,7 @@ jobs:
       KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_KEY }}
       OURS: ${{ github.event.inputs.ours || 3 }}
       LOSSES: ${{ github.event.inputs.losses || 10 }}
+      WINS: ${{ github.event.inputs.wins || 0 }}
       TOP_SUB: ${{ github.event.inputs.top_submission }}
       TOP_WINS: ${{ github.event.inputs.top_wins || 5 }}
     steps:
@@ -43,7 +45,7 @@ jobs:
       - name: Download the study set
         run: |
           python tools/fetch_study_replays.py \
-            --ours "$OURS" --losses "$LOSSES" \
+            --ours "$OURS" --losses "$LOSSES" --wins "$WINS" \
             ${TOP_SUB:+--top-submission "$TOP_SUB"} --top-wins "$TOP_WINS" \
             --out study
       - name: Reduce replays to compact metrics

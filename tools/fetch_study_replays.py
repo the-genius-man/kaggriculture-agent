@@ -50,6 +50,9 @@ def main():
     p.add_argument("--submissions", default="analysis/feedback/submissions.csv")
     p.add_argument("--ours", type=int, default=3, help="how many of our recent submissions")
     p.add_argument("--losses", type=int, default=10, help="worst losses per submission")
+    p.add_argument("--wins", type=int, default=0,
+                    help="best wins per submission too -- losses alone bias the picture,"
+                         " since they cannot show what the agent does when it works")
     p.add_argument("--top-submission", default=None, help="a leader's submission id")
     p.add_argument("--top-wins", type=int, default=5)
     p.add_argument("--out", default="analysis/feedback/study")
@@ -66,8 +69,11 @@ def main():
             continue
         losses = sorted((r for r in rows if not r["won"]),
                         key=lambda r: r["our_cash"] - r["opp_cash"])[:a.losses]
-        print("%s (%s): %d episodes, taking %d worst losses" % (sid, name, len(rows), len(losses)))
-        for r in losses:
+        wins = sorted((r for r in rows if r["won"]),
+                      key=lambda r: -(r["our_cash"] - r["opp_cash"]))[:a.wins]
+        print("%s (%s): %d episodes, taking %d worst losses and %d best wins"
+              % (sid, name, len(rows), len(losses), len(wins)))
+        for r in losses + wins:
             path = download(r["episode"], out / ("ours_%s" % sid))
             if path:
                 index["ours"].append({**r, "submission": sid, "file": path.name,
