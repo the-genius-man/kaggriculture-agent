@@ -4,6 +4,22 @@
   "active": true,
   "episodes": [
    {
+    "episode": 112667142,
+    "end": "2026-09-24T01:10:13.603418100Z",
+    "our_cash": 55973,
+    "opp_cash": 63544,
+    "won": false,
+    "opponent": "BarrelAged"
+   },
+   {
+    "episode": 112600981,
+    "end": "2026-09-23T21:12:12.532286600Z",
+    "our_cash": 98503,
+    "opp_cash": 105551,
+    "won": false,
+    "opponent": "Rohan Jain"
+   },
+   {
     "episode": 112535526,
     "end": "2026-09-23T17:29:55.331994100Z",
     "our_cash": 90782,
@@ -313,6 +329,14 @@
   "file": "main_v14.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 112664836,
+    "end": "2026-09-24T00:58:25.557625800Z",
+    "our_cash": 121234,
+    "opp_cash": 137996,
+    "won": false,
+    "opponent": "victor souza"
+   },
    {
     "episode": 112574012,
     "end": "2026-09-23T19:45:30.775056500Z",
