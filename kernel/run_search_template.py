@@ -19,6 +19,9 @@ WORK = "/kaggle/working"
 SRC = "/tmp/kaggriculture_src"          # /kaggle itself is not writable
 PAYLOAD = "__PAYLOAD__"
 MINUTES = __MINUTES__
+# "1" when this run was dispatched with resume_run_id, so a silently-missing
+# checkpoint becomes a fast failure instead of 150 minutes of redone work.
+EXPECT_CHECKPOINT = "__EXPECT_CHECKPOINT__"
 
 
 def main():
@@ -58,11 +61,22 @@ def main():
     # as before. League's own manifest check still refuses a mismatched checkpoint
     # (stale league.py/support.py/policy_template.py/fixed-agent hashes) rather than
     # silently corrupting it.
+    mounted = sorted(glob.glob("/kaggle/input/*")) if os.path.isdir("/kaggle/input") else []
+    print("mounted inputs:", mounted, flush=True)
+    for m in mounted:
+        print("  ", m, "->", sorted(os.listdir(m))[:10], flush=True)
     checkpoints = glob.glob("/kaggle/input/*/checkpoint.zip")
     if checkpoints:
         with zipfile.ZipFile(checkpoints[0]) as z:
             z.extractall(WORK)
         print("resumed from checkpoint dataset:", checkpoints[0], sorted(os.listdir(WORK)), flush=True)
+    elif EXPECT_CHECKPOINT == "1":
+        # Fail loudly. Silently starting fresh is what made three separate 150-minute
+        # runs redo cycle 0 and look like a search that simply never promotes: the
+        # cycle-0 holdout numbers came back byte-identical every time, because they
+        # were literally the same computation.
+        raise SystemExit("resume was requested but no checkpoint.zip is mounted under "
+                         "/kaggle/input -- mounted: %s" % (mounted,))
     (Path(WORK) / "search_config.json").write_text(json.dumps(config, indent=2))
     print("search config:", json.dumps(config, indent=2), flush=True)
 

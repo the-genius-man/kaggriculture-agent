@@ -85,7 +85,8 @@ def main():
         substitutions = {"__PAYLOAD__": payload, "__SEEDS__": a.seeds, "__SEED_BASE__": a.seed_base}
     else:
         template_name = "run_search_template.py"
-        substitutions = {"__PAYLOAD__": payload, "__MINUTES__": a.minutes}
+        substitutions = {"__PAYLOAD__": payload, "__MINUTES__": a.minutes,
+                          "__EXPECT_CHECKPOINT__": "1" if a.checkpoint_dataset else "0"}
 
     template = (ROOT / "kernel" / template_name).read_text(encoding="utf-8")
     for k, v in substitutions.items():
