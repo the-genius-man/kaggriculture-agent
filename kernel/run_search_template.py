@@ -65,11 +65,26 @@ def main():
     print("mounted inputs:", mounted, flush=True)
     for m in mounted:
         print("  ", m, "->", sorted(os.listdir(m))[:10], flush=True)
+    # Kaggle EXTRACTS archives when it builds a dataset, so the mount holds the
+    # checkpoint's contents (state.json, manifest.json, study.db, agents/, ...) and
+    # NOT checkpoint.zip. Globbing for the zip is what silently failed every resume.
+    # Accept either shape.
     checkpoints = glob.glob("/kaggle/input/*/checkpoint.zip")
+    extracted = [m for m in mounted if os.path.isfile(os.path.join(m, "state.json"))]
     if checkpoints:
         with zipfile.ZipFile(checkpoints[0]) as z:
             z.extractall(WORK)
-        print("resumed from checkpoint dataset:", checkpoints[0], sorted(os.listdir(WORK)), flush=True)
+        print("resumed from checkpoint zip:", checkpoints[0], sorted(os.listdir(WORK)), flush=True)
+    elif extracted:
+        import shutil
+        shutil.copytree(extracted[0], WORK, dirs_exist_ok=True)
+        # The mount is read-only; the league writes state.json/study.db constantly.
+        for root, _dirs, files in os.walk(WORK):
+            for f in files:
+                p = os.path.join(root, f)
+                os.chmod(p, os.stat(p).st_mode | 0o600)
+        print("resumed from extracted checkpoint:", extracted[0],
+              sorted(os.listdir(WORK)), flush=True)
     elif EXPECT_CHECKPOINT == "1":
         # Fail loudly. Silently starting fresh is what made three separate 150-minute
         # runs redo cycle 0 and look like a search that simply never promotes: the
