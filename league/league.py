@@ -29,7 +29,7 @@ FULL_SPACE={
     'deposit_bias':('float',.15,.65), 'care_cap':('cat',1.3,2.,3.),
     'plant_floor':('cat',12,25,40,60,80), 'hire_pace':('int',1,3,1),
     'workload_hiring':('cat',False,True), 'work_per_hand':('cat',6,8,10,12),
-    'land_util':('cat',0.,.35,.45,.55,.75), 'land_buffer':('cat',300,700,1500),
+    'land_util':('cat',0.,.35,.45,.55,.75,.85,.95), 'land_buffer':('cat',300,700,1500),
     'commitment':('cat',1.,1.3,1.7), 'region_weight':('cat',.65,.8,1.),
     'distance_weight':('cat',.45,.65,.85), 'dig_value':('cat',20,45,75),
     'animal_deadline':('cat',12,16,19), 'expansion_hands':('cat',7,9,11),
@@ -52,7 +52,7 @@ FULL_SPACE={
     'tiles_per_unit':('cat',0,4,5,6,7,8), 'seed_stock':('cat',2,3,4,6),
     # Not previously searched (frozen at BASE's land_deadline=18); the diagnosis's
     # top-priority gap is establishing occupancy earlier, so this is now a knob.
-    'land_deadline':('cat',10,12,15,18),
+    'land_deadline':('cat',10,12,15,18,22,26),
     # The 4th quadrant's own, later deadline (bug found 2026-09-20: a single
     # land_deadline made landcount 3->4 structurally unreachable whenever it was set
     # early enough to matter for the 2nd/3rd -- both a hand test and a seeded search
@@ -70,6 +70,8 @@ FULL_SPACE={
     # land is the dominant gap. plant_urgency lets a bare tile outbid maintenance;
     # seed_fill stocks seed against bare tiles instead of a flat per-crop cap.
     'plant_urgency':('float',1.,6.), 'seed_fill':('cat',0,4,8,12,20),
+    # Gate expansion on how full the land we already own is, measured per quadrant.
+    'land_fill_gate':('cat',0,1),
 }
 
 # The search was never underpowered by budget, it was underpowered by width.
@@ -87,9 +89,21 @@ FULL_SPACE={
 # much strawberry, and how hard we defend a planted tile. Ten dimensions at the same
 # trial count is ~4x the density, and every one of them is on the cash loop that the
 # measurements say decides the game.
-FOCUS = ('cash_discount', 'cash_patience', 'plant_urgency', 'seed_fill',
-         'tiles_per_unit', 'hire_pace', 'crop_style', 'land_deadline',
-         'strawberry_target', 'survival_bias')
+# Round 2 of the focus, after 16 real replays of the promoted champion showed the
+# binding constraint had moved. Its wins and losses differ on ONE thing -- whether the
+# 2nd quadrant lands by day 7 (2.0 vs 1.6) -- and it never once reaches a 3rd, capping
+# it at ~47 productive tiles while every opponent that beats it converts 2.9 quadrants
+# into ~66. The cause is structural: the 3rd quadrant needs 2,700 cash before
+# land_deadline=10, and we hold 82 at day 7.
+#
+# So the expansion gates come in (land_fill_gate, land_util, expansion_hands,
+# land_buffer, later land_deadline values), and two converged dimensions go out to pay
+# for them: cash_patience picked 15000 in every top trial across both cycles, and
+# crop_style never discriminated (best trials split balanced/orchard, 'quick' never
+# won one).
+FOCUS = ('cash_discount', 'plant_urgency', 'seed_fill', 'tiles_per_unit',
+         'hire_pace', 'land_deadline', 'strawberry_target', 'survival_bias',
+         'land_fill_gate', 'land_util', 'expansion_hands', 'land_buffer')
 SPACE = {k: FULL_SPACE[k] for k in FOCUS}
 
 def sample(trial):
@@ -166,7 +180,7 @@ class League:
         # leaderboard player's measured behavioural profile (analysis/
         # REPORT_deployment_diagnosis.md). Everything else here is our own lineage;
         # V14 passed the old pool 93.8-100% and then lost most games to this one.
-        for name in ['main_v9.py','main_v11.py','main_v12.py','main_v14.py','main_leader.py']:
+        for name in ['main_v9.py','main_v11.py','main_v12.py','main_v14.py','main_v16.py','main_leader.py']:
             shutil.copyfile(self.agents_dir/name,self.root/'agents'/name);fixed.append('agents/'+name)
         for name,p in {
             'stress_crops.py':dict(BASE,animals=6,hands=12,land=4,crop_bias=2.,plant_floor=60,land_util=.35,crop_style='orchard'),
@@ -194,10 +208,11 @@ class League:
             shutil.copyfile(self.agents_dir/n,self.root/'sources'/n)
         if (self.root/'state.json').exists():self.state=json.loads((self.root/'state.json').read_text())
         else:
-            # V14 is the strongest agent measured so far (beats V9 100%, V12 93.8% on
-            # a 24-seed holdout); start the search from it, not the older V12.
-            self.state=dict(cycle=0,phase='new_cycle',champion='agents/main_v14.py',
-                            champion_sha=support.digest(self.root/'agents/main_v14.py'),
+            # V16 is the first promoted champion (2026-09-24): it beats V14 81.2% on a
+            # fresh 24-seed holdout, so starting from V14 would hand back the only
+            # promotion this project has produced.
+            self.state=dict(cycle=0,phase='new_cycle',champion='agents/main_v16.py',
+                            champion_sha=support.digest(self.root/'agents/main_v16.py'),
                             archives=[],tested_hashes=[],no_progress=0,promotions=0,
                             target_reached=False,restarts=0)
         for a in self.state['archives']:

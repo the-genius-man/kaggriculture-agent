@@ -71,7 +71,15 @@ def main():
         configs.append(("disc=%s fill=%s urgency=%s tpu=%s" % (disc, fill, urgency, tpu),
                         dict(cash_discount=disc, seed_fill=fill, plant_urgency=urgency,
                              tiles_per_unit=tpu)))
+    # The per-quadrant expansion gate divides by a quadrant tile count, so exercise it
+    # on boards with 1, 2 and 3 quadrants unlocked and at both threshold extremes.
+    for gate, util in itertools.product((0, 1), (0.0, 0.95)):
+        configs.append(("fill_gate=%s land_util=%s" % (gate, util),
+                        dict(land_fill_gate=gate, land_util=util, land=4,
+                             land_deadline=26, land_buffer=300)))
     states = [dict(day=0, hour=0, money=3000, unlocked=1, planted=0),
+              dict(day=8, hour=10, money=9000, unlocked=2, planted=24),   # part-full 2nd
+              dict(day=12, hour=9, money=30000, unlocked=3, planted=50),  # part-full 3rd
               dict(day=0, hour=0, money=0, unlocked=1, planted=0),      # broke
               dict(day=9, hour=13, money=120, unlocked=2, planted=20),
               dict(day=19, hour=21, money=40000, unlocked=3, planted=40),

@@ -1,3 +1,17 @@
+"""main_v16 -- first agent this project ever promoted through the league gate.
+
+Searched config (2026-09-24, search run 35970301769, holdout_c001): cash_discount
+0.902, plant_urgency 2.683, seed_fill 20, tiles_per_unit 5, hire_pace 1,
+land_deadline 10, survival_bias 0.921, strawberry_target 20. Gate on 24 fresh seeds,
+both seats: v12 95.8%, v9 87.5%, v11 85.4%, v14 81.2%, main_leader 56.2%, pooled
+margin CI90 [+9197, +11712].
+
+The exported agent hashed sha256 51d5846a2659a77ee5f487c1fc499a0808221059df1e1356fd256b5a70476f50;
+this file adds only this docstring, so its own hash differs while behaviour does not.
+Live on Kaggle as submission 56519087. Known ceiling, from 16 real replays: it never
+reaches a 3rd quadrant, capping it near 47 productive tiles, while opponents that beat
+it convert 2.9 quadrants into ~66. See analysis/REPORT_leader_gap.md.
+"""
 """Enhanced Game v15: v14 plus three searchable production mechanics -- survival-priced
 watering, fertilizer across the whole yield window, and planting capped by watering
 throughput. Each is off by default (survival_bias=0, fert_in_window=0, tiles_per_unit=0)
@@ -8,7 +22,7 @@ import copy
 # A soft commitment, never an unconditional cached action. Reset every day/game.
 _MEMORY = {}
 
-CFG = {}  # replaced by the trainer
+CFG = {'animals': 16, 'hands': 12, 'land': 3, 'crop_bias': 1.5, 'care_bias': 1.3, 'fert_bias': 1.0, 'opponent_weight': 0.0, 'liquidate': True, 'drop_units': 5, 'drop_value': 1000000, 'cash_release': True, 'deposit_bias': 0.3, 'feed_fix': True, 'care_cap': 1.3, 'plant_floor': 40, 'hire_pace': 1, 'workload_hiring': False, 'work_per_hand': 8, 'keep_late_hands': True, 'land_util': 0.45, 'land_buffer': 700, 'commitment': 1.3, 'region_weight': 0.8, 'distance_weight': 0.65, 'dig_value': 45, 'animal_deadline': 16, 'land_deadline': 10, 'expansion_hands': 9, 'night_deposit': True, 'late_day': 24, 'crop_bias_late': 1.5, 'plant_floor_late': 40, 'deposit_bias_late': 0.3, 'strawberry_target': 20, 'survival_bias': 0.9212260420025589, 'fert_in_window': 0, 'tiles_per_unit': 5, 'seed_stock': 2, 'land4_deadline': 18, 'early_cash_bias': 0.0, 'plant_urgency': 2.6829210354471957, 'seed_fill': 20, 'cash_discount': 0.902154545822063, 'cash_patience': 15000.0, 'crop_style': 'balanced'}
 CROPS={'WHEAT':(10,2,4,4),'CARROT':(20,2,3,3),'MELON':(80,10,12,6),'TOMATO':(50,8,11,4),'STRAWBERRY':(100,10,16,4)}
 ANIMALS={'COW':(400,'MILK',8,2),'SHEEP':(500,'WOOL',6,3),'GOOSE':(300,'EGG',4,1)}
 BASE={'WHEAT':25,'CARROT':35,'MELON':250,'TOMATO':60,'STRAWBERRY':120,'MILK':160,'WOOL':200,'EGG':50,'FERTILIZER':100}
@@ -290,23 +304,7 @@ def agent(obs):
     # the single-deadline behavior exactly.
     staffed=(landcount<2 or len(positions)>=CFG.get('expansion_hands',9))
     deadline=CFG.get('land4_deadline',CFG.get('land_deadline',18)) if landcount>=3 else CFG.get('land_deadline',18)
-    # How full "the land we already own" is. The averaged form hides the case that
-    # actually matters: quadrant 1 full and quadrant 2 empty reads as 50%, clearing a
-    # 0.45 threshold and justifying a THIRD quadrant while the second sits bare. With
-    # land_fill_gate the ratio is the emptiest owned quadrant instead, so expansion
-    # means "everything I hold is nearly full" -- which is the leader's measured
-    # signature (zero bare tiles at every checkpoint, and three quadrants).
-    # 0 reproduces the averaged behaviour exactly.
-    if CFG.get('land_fill_gate',0):
-        quads={}
-        for x,y in coords:
-            cell=quads.setdefault((x//center,y//center),[0,0]);cell[1]+=1
-            t=tiles[y][x]
-            if isinstance(t,dict) and (t.get('crop') or t.get('animal')):cell[0]+=1
-        fullness=min((o/n for o,n in quads.values() if n),default=0.)
-    else:
-        fullness=occupied/max(1,len(coords))
-    if landcount<CFG['land'] and day<deadline and staffed and fullness>=CFG['land_util']:
+    if landcount<CFG['land'] and day<deadline and staffed and occupied/max(1,len(coords))>=CFG['land_util']:
         cost=[1000,2000,4000][landcount-1]
         if cash>cost+CFG['land_buffer']:buy(['BUY_LAND'],cost)
     _MEMORY={'tick':tick,'player':player,'jobs':jobs}

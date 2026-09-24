@@ -40,7 +40,14 @@ BASE.update(plant_urgency=1., seed_fill=0)
 # 2026-09-23: the scorer ranked crops by size alone and could not see that a melon
 # ties a tile ~12 days for one payment while wheat recycles three times, which is the
 # whole shape of the leader's early game.
-BASE.update(cash_discount=1., cash_patience=8000.)
+# cash_patience frozen at 15000 rather than searched: every top trial in both search
+# cycles picked 15000, the top of its range. Freezing it at the arbitrary old default
+# instead would have quietly handicapped the runs that follow.
+BASE.update(cash_discount=1., cash_patience=15000.)
+# Expansion gate shape (policy_template.py). 0 = the averaged occupancy ratio this
+# has always used; 1 = the emptiest owned quadrant, so "buy land only when what I
+# already hold is full" becomes expressible at all. See analysis/REPORT_leader_gap.md.
+BASE.update(land_fill_gate=0)
 ENV_VERSION = "1.32.7"
 CHECKPOINT_COPY = ''
 
