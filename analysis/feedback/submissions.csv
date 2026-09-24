@@ -1,6 +1,6 @@
 ref,fileName,date,description,status,publicScore,privateScore
-56519087,b462d43a7c5f-search-r35970301769.py,2026-09-24 10:36:19.143000,PR #27 b462d43a7c5f-search-r35970301769 via submit-to-kaggle label,SubmissionStatus.COMPLETE,622.6,
-56475549,b10905cc7ace.py,2026-09-22 22:59:05.967000,PR #12 b10905cc7ace via submit-to-kaggle label,SubmissionStatus.COMPLETE,581.2,
+56519087,b462d43a7c5f-search-r35970301769.py,2026-09-24 10:36:19.143000,PR #27 b462d43a7c5f-search-r35970301769 via submit-to-kaggle label,SubmissionStatus.COMPLETE,634.6,
+56475549,b10905cc7ace.py,2026-09-22 22:59:05.967000,PR #12 b10905cc7ace via submit-to-kaggle label,SubmissionStatus.COMPLETE,586.7,
 56362365,main_v14.py,2026-09-19 14:43:03.533000,"Rollback: V15 search candidate underperforming, reverting to V14",SubmissionStatus.COMPLETE,599.3,
 56362069,cff15ce57d4b-search.py,2026-09-19 14:33:19.720000,PR #2 cff15ce57d4b-search via submit-to-kaggle label,SubmissionStatus.COMPLETE,642.8,
 56359811,main_v12_fill.py,2026-09-19 13:13:03.387000,"plant quota + melon peak 12; fill Q2 with strawberries, meter premium sells (4/turn), buy Q3 only after ~88% occupancy. Internal 43/48 vs V12, 14/16 vs V9. Replaces V12 slot; V14 stays live.",SubmissionStatus.COMPLETE,619.8,

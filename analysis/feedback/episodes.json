@@ -4,6 +4,14 @@
   "active": true,
   "episodes": [
    {
+    "episode": 112935955,
+    "end": "2026-09-24T16:34:24.890080100Z",
+    "our_cash": 79642,
+    "opp_cash": 55080,
+    "won": true,
+    "opponent": "Goller"
+   },
+   {
     "episode": 112897441,
     "end": "2026-09-24T14:21:52.556986800Z",
     "our_cash": 113717,
@@ -217,6 +225,14 @@
   "file": "b10905cc7ace.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 112928935,
+    "end": "2026-09-24T16:09:07.088229600Z",
+    "our_cash": 122959,
+    "opp_cash": 81534,
+    "won": true,
+    "opponent": "Scarttish"
+   },
    {
     "episode": 112848093,
     "end": "2026-09-24T11:30:25.994723600Z",
