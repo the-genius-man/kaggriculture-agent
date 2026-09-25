@@ -200,6 +200,8 @@ class League:
             p=Path(p);name='external_'+support.digest(p)[:16]+'.py'
             shutil.copyfile(p,self.root/'agents'/name);fixed.append('agents/'+name)
         self.fixed=fixed
+        support.OBJECTIVE=cfg.get('objective','cash')
+        if support.OBJECTIVE not in ('cash','wins'):raise ValueError('objective must be cash or wins')
         contract={k:cfg[k] for k in ['train_seeds','selection_seeds','holdout_seeds','general_trials','exploiter_trials',
                   'finalists','history_size','selfplay_seeds','v9_win_rate','champion_win_rate','min_opponent_win_rate',
                   'max_decision_seconds','target_mean_cash','target_win_rate','target_80k_rate']}
@@ -207,6 +209,7 @@ class League:
         contract['sources']['policy_template.py']=support.digest(self.template_path)
         contract['fixed']={p:support.digest(self.root/p) for p in fixed}
         contract['environment']=support.ENV_VERSION
+        contract['objective']=support.OBJECTIVE
         manifest=self.root/'manifest.json'
         if manifest.exists() and json.loads(manifest.read_text())!=contract:
             raise ValueError('This checkpoint has different code, opponents or study settings. Start a new output folder.')

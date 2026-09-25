@@ -51,6 +51,10 @@ def main():
         stop_on_target=True, stagnation_cycles=6, v9_win_rate=.80, champion_win_rate=.60,
         min_opponent_win_rate=.55, max_decision_seconds=.80, extra_opponents=[],
         checkpoint_copy="",
+        # Trial/selection score (league/support.py score). 'cash' since 2026-09-25:
+        # our own final cash vs the leader's 111,679 mean, with smaller win/margin
+        # terms. 'wins' is the previous formula. Promotion gates are unaffected.
+        objective="cash",
     )
     Path(WORK).mkdir(parents=True, exist_ok=True)
     # tools/pack_kernel.py --checkpoint-dataset attaches a Kaggle Dataset holding a
