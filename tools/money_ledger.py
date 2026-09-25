@@ -47,6 +47,7 @@ def _new_seat():
         "rot_units_lost": Counter(), "rot_deaths": Counter(), "animal_escapes": Counter(),
         "overflow_units": Counter(), "revenue_by_day": Counter(), "spend_by_day": Counter(),
         "unit_turns": 0, "daily": {}, "harvest_age_units": defaultdict(list),
+        "item_day": defaultdict(Counter),
     }
 
 
@@ -68,9 +69,11 @@ def _instrument():
             delta = farm["money"] - before
             if op == "SELL":
                 s["revenue"][item] += delta; s["sold_units"][item] += 1; s["revenue_by_day"][day] += delta
+                s["item_day"][day]["+" + item] += delta
             else:
                 key = ("seed:" if op == "BUY_SEED" else "") + item
                 s["spend"][key] += -delta; s["bought_units"][key] += 1; s["spend_by_day"][day] += -delta
+                s["item_day"][day]["-" + key] += -delta
         return ok
 
     def hire(farm, private, board_size, mult=K.FARM_HAND_COST_MULT):
@@ -78,12 +81,14 @@ def _instrument():
         s = seat(farm)
         if s is not None and farm["money"] < before:
             s["spend"]["hire"] += before - farm["money"]; s["spend_by_day"][CTX["step"] // 24] += before - farm["money"]
+            s["item_day"][CTX["step"] // 24]["-hire"] += before - farm["money"]
 
     def land(farm, board_size):
         before = farm["money"]; orig_land(farm, board_size)
         s = seat(farm)
         if s is not None and farm["money"] < before:
             s["spend"]["land"] += before - farm["money"]; s["spend_by_day"][CTX["step"] // 24] += before - farm["money"]
+            s["item_day"][CTX["step"] // 24]["-land"] += before - farm["money"]
 
     def unit(farm, private, idx, action, board_size, day, turns_per_day, shed_capacity=100):
         s = seat(farm)
@@ -263,6 +268,8 @@ def _finish(env, n, meta):
             "unsold_at_end": dict(leftover), "seeds_left_at_end": seeds_left,
             "revenue_by_day": {d: round(s["revenue_by_day"].get(d, 0)) for d in range(30)},
             "spend_by_day": {d: round(s["spend_by_day"].get(d, 0)) for d in range(30)},
+            # Signed cash flow per item per day: "+X" sales of X, "-X" purchases.
+            "item_day": {d: {k: round(v) for k, v in s["item_day"][d].most_common()} for d in range(30)},
             "daily": {d: s["daily"][d] for d in sorted(s["daily"]) if d in SNAP_DAYS or True},
         })
     return {**meta, "seats": seats}
