@@ -4,6 +4,30 @@
   "active": true,
   "episodes": [
    {
+    "episode": 113328981,
+    "end": "2026-09-25T15:09:42.255014900Z",
+    "our_cash": 42936,
+    "opp_cash": 78787,
+    "won": false,
+    "opponent": "Kousuke55"
+   },
+   {
+    "episode": 113295278,
+    "end": "2026-09-25T13:15:06.495797800Z",
+    "our_cash": 118804,
+    "opp_cash": 29686,
+    "won": true,
+    "opponent": "Nezihe S\u00f6zen"
+   },
+   {
+    "episode": 113282886,
+    "end": "2026-09-25T12:30:31.597004700Z",
+    "our_cash": 102813,
+    "opp_cash": 76227,
+    "won": true,
+    "opponent": "SuperMercat"
+   },
+   {
     "episode": 113222053,
     "end": "2026-09-25T09:01:30.452543Z",
     "our_cash": 112387,
@@ -257,6 +281,22 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 113303630,
+    "end": "2026-09-25T13:42:46.286668200Z",
+    "our_cash": 63332,
+    "opp_cash": 49340,
+    "won": true,
+    "opponent": "Hamna Kaleem"
+   },
+   {
+    "episode": 113281732,
+    "end": "2026-09-25T12:23:35.023576700Z",
+    "our_cash": 88988,
+    "opp_cash": 86569,
+    "won": true,
+    "opponent": "Yichi Zhang"
+   },
    {
     "episode": 113218064,
     "end": "2026-09-25T08:50:40.503242700Z",
