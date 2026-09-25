@@ -48,6 +48,12 @@ BASE.update(cash_discount=1., cash_patience=15000.)
 # has always used; 1 = the emptiest owned quadrant, so "buy land only when what I
 # already hold is full" becomes expressible at all. See analysis/REPORT_leader_gap.md.
 BASE.update(land_fill_gate=0)
+# v18 levers from the exact cash ledger (analysis/REPORT_cash_ledger.md), each 0/off
+# = v17 exactly: the leaders' day-0 animal opening and day-1 hiring reserve, a
+# strawberry block planted by rush_deadline, wheat/carrot harvested right after the
+# day's in-window watering, and fertilizer carried for crops instead of sold at 4.
+BASE.update(opening_animals=0, opening_reserve=0, strawberry_rush=0, rush_deadline=8,
+            short_harvest=0, fert_deposit_units=4)
 ENV_VERSION = "1.32.7"
 CHECKPOINT_COPY = ''
 

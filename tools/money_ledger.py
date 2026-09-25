@@ -52,6 +52,11 @@ def _new_seat():
 
 
 def _instrument():
+    # Idempotent: wrapping twice would double-count every event (pool workers reuse
+    # one process for many games).
+    if getattr(K, "_ledger_instrumented", False):
+        return
+    K._ledger_instrumented = True
     orig_commit, orig_hire, orig_land = K._commit_unit, K._do_hire, K._do_buy_land
     orig_unit, orig_plants, orig_animals = K._apply_unit_action, K._daily_refresh_plants, K._daily_refresh_animals
     orig_decay, orig_drop = K._decay_plants, K._drop_inventories_to_shed

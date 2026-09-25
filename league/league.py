@@ -72,6 +72,14 @@ FULL_SPACE={
     'plant_urgency':('float',1.,6.), 'seed_fill':('cat',0,4,8,12,20),
     # Gate expansion on how full the land we already own is, measured per quadrant.
     'land_fill_gate':('cat',0,1),
+    # v18, from the exact cash ledger (analysis/REPORT_cash_ledger.md). Screened one
+    # at a time on 2026-09-25 (16-game paired screens vs v16): short_harvest won 75%
+    # on two seed sets but did not raise our own cash; opening and rush alone were
+    # negative -- the rush starved animal buying, the opening starved seed. Coupled
+    # levers on a closed cash loop, so they go to the search rather than a hand pick.
+    'short_harvest':('cat',0,1), 'fert_deposit_units':('cat',4,8,12),
+    'opening_animals':('cat',0,1), 'opening_reserve':('cat',0,60),
+    'strawberry_rush':('cat',0,8,12,22),
 }
 
 # The search was never underpowered by budget, it was underpowered by width.
@@ -103,7 +111,9 @@ FULL_SPACE={
 # won one).
 FOCUS = ('cash_discount', 'plant_urgency', 'seed_fill', 'tiles_per_unit',
          'hire_pace', 'land_deadline', 'strawberry_target', 'survival_bias',
-         'land_fill_gate', 'land_util', 'expansion_hands', 'land_buffer')
+         'land_fill_gate', 'land_util', 'expansion_hands', 'land_buffer',
+         'short_harvest', 'fert_in_window', 'fert_deposit_units', 'opening_animals',
+         'opening_reserve', 'strawberry_rush')
 SPACE = {k: FULL_SPACE[k] for k in FOCUS}
 
 def sample(trial):
