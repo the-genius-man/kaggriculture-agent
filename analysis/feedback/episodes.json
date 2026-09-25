@@ -4,6 +4,22 @@
   "active": true,
   "episodes": [
    {
+    "episode": 113222053,
+    "end": "2026-09-25T09:01:30.452543Z",
+    "our_cash": 112387,
+    "opp_cash": 116562,
+    "won": false,
+    "opponent": "Nepsirhc"
+   },
+   {
+    "episode": 113208024,
+    "end": "2026-09-25T08:12:44.650974600Z",
+    "our_cash": 76646,
+    "opp_cash": 83816,
+    "won": false,
+    "opponent": "Shota Takano"
+   },
+   {
     "episode": 113194700,
     "end": "2026-09-25T07:28:35.223537600Z",
     "our_cash": 61591,
@@ -241,6 +257,14 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 113218064,
+    "end": "2026-09-25T08:50:40.503242700Z",
+    "our_cash": 52250,
+    "opp_cash": 121705,
+    "won": false,
+    "opponent": "Datta Dhebe"
+   },
    {
     "episode": 113172624,
     "end": "2026-09-25T06:12:07.642479Z",
@@ -1577,7 +1601,7 @@
     "our_cash": 42135,
     "opp_cash": 115216,
     "won": false,
-    "opponent": "\u513f\u5b50\u4f1a\u79cd\u5730"
+    "opponent": "M78\u661f\u4e91"
    },
    {
     "episode": 111843212,
