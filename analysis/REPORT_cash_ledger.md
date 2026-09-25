@@ -122,3 +122,36 @@ The internal gate should be told about this directly: score candidates on **reve
 days 10-19** and **strawberries in the ground on day 7**, alongside wins. These are the
 two numbers that separate a 3000-rated agent from ours, and neither depends on who the
 opponent is.
+
+## 5. First attempt at the fixes, screened locally (2026-09-25)
+
+Each lever was added to `policy/policy_template.py` off by default (rendering v17's
+config reproduces v17 byte for byte and move for move), then screened with
+`experiments/screen_ledger.py`: v17 + overrides vs v16, paired seeds, both seats.
+
+| variant (on v17) | games | win vs v16 | margin | own final cash | strawb d7 | milk rev |
+|---|---:|---:|---:|---:|---:|---:|
+| v17 | 16 / 16 | 44% / 25% | -873 / -2,789 | 87.8k / 92.8k | 0 | 29-37k |
+| `short_harvest` + fert window + carry 12 | 16 / 16 | **75% / 75%** | **+10,969 / +14,193** | 92.2k / 91.1k | 0 | 34k |
+| + fert_bias 2.5 | 16 | 56% | -1,760 | 82.8k | 0 | 30k |
+| opening (3 sheep + 2 cows, reserve 60) | 16 | 25% | -3,812 | 81.5k | 0 | — |
+| strawberry rush 22 by day 8 | 16 / 12 | 0% / 0% | -15,098 / -11,985 | 72.7k / 70.0k | 17 | 19k |
+| all of the above | 16 / 12 | 25% / 33% | -4,640 / -3,518 | 76.1k / 70.5k | 22 | 13k |
+
+(Two numbers = two independent seed sets, bases 97100000 and 97300000.)
+
+What this shows:
+
+* **Copying the leaders' inputs does not copy their economy.** The rush put 22
+  strawberries in the ground by day 7, as the leaders do, and lost every game: the
+  seed money came out of animal buying (day-10 animals 13 -> 8, milk revenue 29k ->
+  19k), and the extra strawberries sold ~15% cheaper. The leaders afford both because
+  their days 0-9 revenue is 14k to our 7-9k. **We have not yet reproduced that.**
+* `short_harvest` is the only lever that wins, and it wins on **margin, not cash**:
+  our own final cash is flat vs v17 while v16's falls. It works through the shared
+  market, so it says less about the leaderboard than its win rate suggests.
+* Raising the fertilizer bid did not raise fertilizer use (64 -> 64 actions). The
+  binding limit is collection (leaders 430 a game, us 170-270), not priority.
+* All six levers are now in the search space (`league/league.py` FOCUS, 18 dims),
+  because they are coupled on the cash loop and every hand pick here, like every hand
+  pick before it, broke a different link.

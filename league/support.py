@@ -48,6 +48,12 @@ BASE.update(cash_discount=1., cash_patience=15000.)
 # has always used; 1 = the emptiest owned quadrant, so "buy land only when what I
 # already hold is full" becomes expressible at all. See analysis/REPORT_leader_gap.md.
 BASE.update(land_fill_gate=0)
+# v18 levers from the exact cash ledger (analysis/REPORT_cash_ledger.md), each 0/off
+# = v17 exactly: the leaders' day-0 animal opening and day-1 hiring reserve, a
+# strawberry block planted by rush_deadline, wheat/carrot harvested right after the
+# day's in-window watering, and fertilizer carried for crops instead of sold at 4.
+BASE.update(opening_animals=0, opening_reserve=0, strawberry_rush=0, rush_deadline=8,
+            short_harvest=0, fert_deposit_units=4)
 ENV_VERSION = "1.32.7"
 CHECKPOINT_COPY = ''
 
@@ -123,7 +129,25 @@ def worker(job):
                 max_decision_seconds=max(elapsed),normal=True,snapshots=snapshots,actions=action_counts,
                 route_switches=route_switches,route_continuation_opportunities=observed_routes)
 
+# Search objective. 'wins' is the formula every search through 2026-09-24 used:
+# winning against our own pool dominates. Measured three times (V15 81%->52.8% real,
+# early_cash_bias 77%->46%, v16 gate-pass->~50%), and again on 2026-09-25 when
+# short_harvest won 75% vs v16 while its own cash stayed flat (it wins through the
+# shared market), that rewards beating our lineage, not producing more. 'cash' makes
+# our OWN final cash the main term, scaled so 1.0 = the rank-2 leader's measured
+# 111,679 mean over 161 real games (analysis/REPORT_leader_gap.md). Uncapped: there is
+# no income ceiling. Win and margin stay as smaller terms so a trial cannot score by
+# producing well while losing every game. The promotion gates are unchanged.
+OBJECTIVE='cash'
+LEADER_MEAN_CASH=111679.
 def score(rows):
+    if OBJECTIVE=='cash':
+        terms=[]
+        for r in rows:
+            win=1. if r["cash"]>r["rival_cash"] else (.5 if r["cash"]==r["rival_cash"] else 0.)
+            margin=max(-1.,min(1.,(r["cash"]-r["rival_cash"])/max(3000.,r["rival_cash"])))
+            terms.append(.60*max(0.,r["cash"])/LEADER_MEAN_CASH+.25*win+.15*margin)
+        return statistics.mean(terms)
     # Winning dominates; time to $80k is a small secondary preference.
     terms=[]
     for r in rows:
