@@ -4,6 +4,30 @@
   "active": true,
   "episodes": [
    {
+    "episode": 113194700,
+    "end": "2026-09-25T07:28:35.223537600Z",
+    "our_cash": 61591,
+    "opp_cash": 103379,
+    "won": false,
+    "opponent": "Michael Jordan"
+   },
+   {
+    "episode": 113181637,
+    "end": "2026-09-25T06:43:51.521746600Z",
+    "our_cash": 51910,
+    "opp_cash": 42024,
+    "won": true,
+    "opponent": "PLM"
+   },
+   {
+    "episode": 113139519,
+    "end": "2026-09-25T04:19:20.287169100Z",
+    "our_cash": 106269,
+    "opp_cash": 93069,
+    "won": true,
+    "opponent": "Aromal vK"
+   },
+   {
     "episode": 113099466,
     "end": "2026-09-25T02:02:27.116073200Z",
     "our_cash": 69963,
@@ -217,6 +241,22 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 113172624,
+    "end": "2026-09-25T06:12:07.642479Z",
+    "our_cash": 129178,
+    "opp_cash": 53873,
+    "won": true,
+    "opponent": "\u3064\u308b\u3052\u30fc\u306d\u3075"
+   },
+   {
+    "episode": 113142932,
+    "end": "2026-09-25T04:29:42.489163900Z",
+    "our_cash": 87832,
+    "opp_cash": 124016,
+    "won": false,
+    "opponent": "yoho kumedayo"
+   },
    {
     "episode": 113087812,
     "end": "2026-09-25T01:20:10.231407800Z",
