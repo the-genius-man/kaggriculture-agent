@@ -1,6 +1,6 @@
 ref,fileName,date,description,status,publicScore,privateScore
-56533583,v17cand_3quadrant.py,2026-09-24 23:24:57.927000,PR #30 v17cand_3quadrant via submit-to-kaggle label,SubmissionStatus.COMPLETE,587.8,
-56519087,b462d43a7c5f-search-r35970301769.py,2026-09-24 10:36:19.143000,PR #27 b462d43a7c5f-search-r35970301769 via submit-to-kaggle label,SubmissionStatus.COMPLETE,637.0,
+56533583,v17cand_3quadrant.py,2026-09-24 23:24:57.927000,PR #30 v17cand_3quadrant via submit-to-kaggle label,SubmissionStatus.COMPLETE,539.8,
+56519087,b462d43a7c5f-search-r35970301769.py,2026-09-24 10:36:19.143000,PR #27 b462d43a7c5f-search-r35970301769 via submit-to-kaggle label,SubmissionStatus.COMPLETE,589.0,
 56475549,b10905cc7ace.py,2026-09-22 22:59:05.967000,PR #12 b10905cc7ace via submit-to-kaggle label,SubmissionStatus.COMPLETE,592.8,
 56362365,main_v14.py,2026-09-19 14:43:03.533000,"Rollback: V15 search candidate underperforming, reverting to V14",SubmissionStatus.COMPLETE,599.3,
 56362069,cff15ce57d4b-search.py,2026-09-19 14:33:19.720000,PR #2 cff15ce57d4b-search via submit-to-kaggle label,SubmissionStatus.COMPLETE,642.8,
