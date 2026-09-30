@@ -714,6 +714,14 @@
   "active": true,
   "episodes": [
    {
+    "episode": 115875803,
+    "end": "2026-09-30T17:03:44.037707500Z",
+    "our_cash": 52379,
+    "opp_cash": 125213,
+    "won": false,
+    "opponent": "alijs"
+   },
+   {
     "episode": 115787584,
     "end": "2026-09-30T13:09:40.216346Z",
     "our_cash": 67188,
