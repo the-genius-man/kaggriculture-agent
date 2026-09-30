@@ -20,8 +20,11 @@ import support  # noqa
 # no information and it is deliberately NOT a gate condition. It stays in the pool as
 # a measurement, at a floor low enough that it cannot block a promotion, until it is
 # calibrated well enough to lose to something.
-GATES = {"main_v9.py": 0.80, "main_v12.py": 0.60, "main_v13.py": 0.55,
-         "main_leader.py": 0.55, "main_leader2.py": 0.0}
+# main_v16.py is the current champion (the league's frozen_champion since 2026-09-24),
+# so it carries CLAUDE.md's ">= 60% vs current champion" floor; main_v12.py keeps its
+# 0.60 as the confirmed fallback.
+GATES = {"main_v9.py": 0.80, "main_v12.py": 0.60, "main_v16.py": 0.60,
+         "main_v13.py": 0.55, "main_leader.py": 0.55, "main_leader2.py": 0.0}
 
 def occupancy(rows, days=("10", "20")):
     """Mean cash / productive tiles / bare owned tiles at a couple of checkpoints."""
