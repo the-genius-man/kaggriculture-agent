@@ -1,1 +1,16 @@
-{"strawberry_target": 30}
+{
+ "land": 4,
+ "care_bias": 1.1866339066395248,
+ "hire_pace": 3,
+ "work_per_hand": 12,
+ "land_util": 0.35,
+ "land_deadline": 10,
+ "strawberry_target": 20,
+ "survival_bias": 0.5174651913898427,
+ "tiles_per_unit": 5,
+ "land4_deadline": 22,
+ "plant_urgency": 2.6829210354471957,
+ "seed_fill": 20,
+ "cash_discount": 0.902154545822063,
+ "crop_style": "balanced"
+}

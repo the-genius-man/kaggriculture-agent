@@ -8,7 +8,7 @@ import copy
 # A soft commitment, never an unconditional cached action. Reset every day/game.
 _MEMORY = {}
 
-CFG = {}  # replaced by the trainer
+CFG = {'animals': 16, 'hands': 12, 'land': 4, 'crop_bias': 1.5, 'care_bias': 1.1866339066395248, 'fert_bias': 1.0, 'opponent_weight': 0.0, 'liquidate': True, 'drop_units': 5, 'drop_value': 1000000, 'cash_release': True, 'deposit_bias': 0.3, 'feed_fix': True, 'care_cap': 1.3, 'plant_floor': 40, 'hire_pace': 3, 'workload_hiring': False, 'work_per_hand': 12, 'keep_late_hands': True, 'land_util': 0.35, 'land_buffer': 700, 'commitment': 1.3, 'region_weight': 0.8, 'distance_weight': 0.65, 'dig_value': 45, 'animal_deadline': 16, 'land_deadline': 10, 'expansion_hands': 9, 'night_deposit': True, 'late_day': 24, 'crop_bias_late': 1.5, 'plant_floor_late': 40, 'deposit_bias_late': 0.3, 'strawberry_target': 20, 'survival_bias': 0.5174651913898427, 'fert_in_window': 0, 'tiles_per_unit': 5, 'seed_stock': 2, 'land4_deadline': 22, 'early_cash_bias': 0.0, 'plant_urgency': 2.6829210354471957, 'seed_fill': 20, 'cash_discount': 0.902154545822063, 'cash_patience': 15000.0, 'land_fill_gate': 0, 'opening_animals': 0, 'opening_reserve': 0, 'strawberry_rush': 0, 'rush_deadline': 8, 'short_harvest': 0, 'fert_deposit_units': 4, 'crop_style': 'balanced'}
 CROPS={'WHEAT':(10,2,4,4),'CARROT':(20,2,3,3),'MELON':(80,10,12,6),'TOMATO':(50,8,11,4),'STRAWBERRY':(100,10,16,4)}
 ANIMALS={'COW':(400,'MILK',8,2),'SHEEP':(500,'WOOL',6,3),'GOOSE':(300,'EGG',4,1)}
 BASE={'WHEAT':25,'CARROT':35,'MELON':250,'TOMATO':60,'STRAWBERRY':120,'MILK':160,'WOOL':200,'EGG':50,'FERTILIZER':100}

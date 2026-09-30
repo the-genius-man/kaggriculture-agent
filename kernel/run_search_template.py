@@ -51,6 +51,10 @@ def main():
         stop_on_target=True, stagnation_cycles=6, v9_win_rate=.80, champion_win_rate=.60,
         min_opponent_win_rate=.55, max_decision_seconds=.80, extra_opponents=[],
         checkpoint_copy="",
+        # Trial/selection score (league/support.py score). 'cash' since 2026-09-25:
+        # our own final cash vs the leader's 111,679 mean, with smaller win/margin
+        # terms. 'wins' is the previous formula. Promotion gates are unaffected.
+        objective="cash",
     )
     Path(WORK).mkdir(parents=True, exist_ok=True)
     # tools/pack_kernel.py --checkpoint-dataset attaches a Kaggle Dataset holding a
@@ -108,18 +112,17 @@ def main():
     with concurrent.futures.ProcessPoolExecutor(
             max_workers=config["workers"], mp_context=multiprocessing.get_context("spawn")) as pool:
         engine = league.League(config, pool)
-        # One warm start, not a guess this time. Measured 2026-09-23: every new
-        # lever is HARMFUL on its own -- plant_urgency alone fills the land but
-        # drains cash to 2.7 and hires zero hands; cash_discount alone switches to
-        # short-cycle crops but, at our ~100 plants a game, just harvests less value
-        # from the same few tiles. They only pay together, which is precisely the
-        # structure TPE is for and precisely what hand-picking cannot find (four
-        # straight failures). Seeding one joint point costs a single trial.
+        # Two joint land+staffing+watering warm starts on top of v16 (round-3 focus,
+        # 2026-09-30): v17's third-quadrant gates with its watering, and the same
+        # carried to a 4th quadrant with the heaviest staffing the space allows.
+        # Joint, not single-lever: every lever measured alone has hurt (2026-09-23).
         engine.state.setdefault('warm_starts',[]).append(league.warm_params(dict(
-            league.BASE, cash_discount=.80, cash_patience=8000., plant_urgency=3.,
-            seed_fill=8, tiles_per_unit=7, hire_pace=1, crop_style='quick',
-            survival_bias=1., fert_in_window=1, land_deadline=12, expansion_hands=7,
-            strawberry_target=30)))
+            league.BASE, **league.FROZEN, land=3, land_util=.95, land_deadline=22,
+            tiles_per_unit=7, survival_bias=1.6070091593773252, hire_pace=1)))
+        engine.state.setdefault('warm_starts',[]).append(league.warm_params(dict(
+            league.BASE, **league.FROZEN, land=4, land_util=.95, land_deadline=22,
+            land4_deadline=22, hands=12, hire_pace=3, work_per_hand=6,
+            tiles_per_unit=7, survival_bias=1.6070091593773252, care_bias=1.6)))
         try:
             engine.run()
         except (TimeoutError, KeyboardInterrupt):
