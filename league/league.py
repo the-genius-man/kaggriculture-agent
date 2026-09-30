@@ -109,15 +109,30 @@ FULL_SPACE={
 # for them: cash_patience picked 15000 in every top trial across both cycles, and
 # crop_style never discriminated (best trials split balanced/orchard, 'quick' never
 # won one).
-FOCUS = ('cash_discount', 'plant_urgency', 'seed_fill', 'tiles_per_unit',
-         'hire_pace', 'land_deadline', 'strawberry_target', 'survival_bias',
-         'land_fill_gate', 'land_util', 'expansion_hands', 'land_buffer',
-         'short_harvest', 'fert_in_window', 'fert_deposit_units', 'opening_animals',
-         'opening_reserve', 'strawberry_rush')
+# Round 3 (2026-09-30): land, staffing and watering, jointly, and nothing else.
+# The 18-dim round-2 search (run 36721537987, cash objective) found nothing above
+# its own v16 warm start in 24 trials, and every trial that switched on a v18 lever
+# lost cash (76-86k vs v16's 89.8k on the same games). Meanwhile the one real
+# occupancy gain we have, v17's third quadrant (66.9 productive tiles at day 20),
+# lost real games (37.5% over 88) because staffing and watering did not scale with
+# it -- the same failure the standalone land=4 test hit on 2026-09-20. So search the
+# land gates together with hands and watering, and freeze everything else.
+FOCUS = ('land', 'land_deadline', 'land4_deadline', 'land_util', 'expansion_hands',
+         'hands', 'hire_pace', 'tiles_per_unit', 'work_per_hand',
+         'survival_bias', 'care_bias')
+# Parameters outside FOCUS are rendered from BASE, and BASE is not v16: freezing
+# by omission would silently reset v16's tuned cash/planting values. Pin them to
+# champion v16 (agents/main_v16.py) instead, v18 levers off.
+FROZEN = dict(cash_discount=0.902154545822063, plant_urgency=2.6829210354471957,
+              seed_fill=20, strawberry_target=20, crop_style='balanced',
+              land_fill_gate=0, fert_in_window=0, land_buffer=700,
+              short_harvest=0, opening_animals=0, opening_reserve=0,
+              strawberry_rush=0, fert_deposit_units=4)
 SPACE = {k: FULL_SPACE[k] for k in FOCUS}
+SPACE['land'] = ('int', 3, 4, 1)  # land=2 is V12's 50-tile cap; nothing wins there
 
 def sample(trial):
-    p=dict(BASE)
+    p=dict(BASE,**FROZEN)
     for k,s in SPACE.items():
         if s[0]=='int':p[k]=trial.suggest_int(k,s[1],s[2],step=s[3])
         elif s[0]=='float':p[k]=trial.suggest_float(k,s[1],s[2])
