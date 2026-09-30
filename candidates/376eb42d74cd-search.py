@@ -1,3 +1,17 @@
+"""main_v16 -- first agent this project ever promoted through the league gate.
+
+Searched config (2026-09-24, search run 35970301769, holdout_c001): cash_discount
+0.902, plant_urgency 2.683, seed_fill 20, tiles_per_unit 5, hire_pace 1,
+land_deadline 10, survival_bias 0.921, strawberry_target 20. Gate on 24 fresh seeds,
+both seats: v12 95.8%, v9 87.5%, v11 85.4%, v14 81.2%, main_leader 56.2%, pooled
+margin CI90 [+9197, +11712].
+
+The exported agent hashed sha256 51d5846a2659a77ee5f487c1fc499a0808221059df1e1356fd256b5a70476f50;
+this file adds only this docstring, so its own hash differs while behaviour does not.
+Live on Kaggle as submission 56519087. Known ceiling, from 16 real replays: it never
+reaches a 3rd quadrant, capping it near 47 productive tiles, while opponents that beat
+it convert 2.9 quadrants into ~66. See analysis/REPORT_leader_gap.md.
+"""
 """Enhanced Game v15: v14 plus three searchable production mechanics -- survival-priced
 watering, fertilizer across the whole yield window, and planting capped by watering
 throughput. Each is off by default (survival_bias=0, fert_in_window=0, tiles_per_unit=0)
@@ -8,7 +22,7 @@ import copy
 # A soft commitment, never an unconditional cached action. Reset every day/game.
 _MEMORY = {}
 
-CFG = {}  # replaced by the trainer
+CFG = {'animals': 16, 'hands': 12, 'land': 3, 'crop_bias': 1.5, 'care_bias': 1.3, 'fert_bias': 1.0, 'opponent_weight': 0.0, 'liquidate': True, 'drop_units': 5, 'drop_value': 1000000, 'cash_release': True, 'deposit_bias': 0.3, 'feed_fix': True, 'care_cap': 1.3, 'plant_floor': 40, 'hire_pace': 1, 'workload_hiring': False, 'work_per_hand': 8, 'keep_late_hands': True, 'land_util': 0.45, 'land_buffer': 700, 'commitment': 1.3, 'region_weight': 0.8, 'distance_weight': 0.65, 'dig_value': 45, 'animal_deadline': 16, 'land_deadline': 10, 'expansion_hands': 9, 'night_deposit': True, 'late_day': 24, 'crop_bias_late': 1.5, 'plant_floor_late': 40, 'deposit_bias_late': 0.3, 'strawberry_target': 20, 'survival_bias': 0.9212260420025589, 'fert_in_window': 0, 'tiles_per_unit': 5, 'seed_stock': 2, 'land4_deadline': 18, 'early_cash_bias': 0.0, 'plant_urgency': 2.6829210354471957, 'seed_fill': 20, 'cash_discount': 0.902154545822063, 'cash_patience': 15000.0, 'crop_style': 'balanced'}
 CROPS={'WHEAT':(10,2,4,4),'CARROT':(20,2,3,3),'MELON':(80,10,12,6),'TOMATO':(50,8,11,4),'STRAWBERRY':(100,10,16,4)}
 ANIMALS={'COW':(400,'MILK',8,2),'SHEEP':(500,'WOOL',6,3),'GOOSE':(300,'EGG',4,1)}
 BASE={'WHEAT':25,'CARROT':35,'MELON':250,'TOMATO':60,'STRAWBERRY':120,'MILK':160,'WOOL':200,'EGG':50,'FERTILIZER':100}
@@ -90,11 +104,6 @@ def agent(obs):
             value*=1+_ecb*(1-me['money']/2000)/first
         return value
     crop_scores={c:crop_value(c) for c in CROPS}
-    # strawberry_rush: get a strawberry block of this size in the ground by rush_deadline.
-    # Leaders hold 19-23 strawberries on day 7; we held 0 until day 10+, so our crop
-    # paid out on days 20-28 instead of 16-22, which is where ~2/3 of the revenue gap
-    # sits (analysis/REPORT_cash_ledger.md). 0 = off.
-    rush_active=CFG.get('strawberry_rush',0)>0 and 1<=day<=CFG.get('rush_deadline',8)
     for idx,pos0 in enumerate(positions):
         pos=tuple(pos0);inv=invs[idx];best=(-1,None,None);carried=next((a for a in ANIMALS if inv.get(a,0)),None)
         nearest_shed=min(access,key=lambda q:dist(pos,q));ds=dist(pos,nearest_shed)
@@ -118,10 +127,7 @@ def agent(obs):
         # Deposits make produce sellable before night and before the final turn.
         goods=sum(v for k,v in inv.items() if k not in ('WHEAT','FERTILIZER') and k not in ANIMALS)
         goods_value=sum(v*prices.get(k,0) for k,v in inv.items() if k not in ANIMALS and k!='WHEAT')
-        # fert_deposit_units: how much fertilizer a unit carries before walking it to the
-        # shed. At 4 (default) it is sold almost as soon as it is collected; leaders
-        # spread 186-234 units a game on crops, we spread ~40-75.
-        deposit=(day==29 and hour+ds>=19 and sum(inv.values())>0) or goods>=CFG['drop_units'] or inv.get('FERTILIZER',0)>=CFG.get('fert_deposit_units',4)
+        deposit=(day==29 and hour+ds>=19 and sum(inv.values())>0) or goods>=CFG['drop_units'] or inv.get('FERTILIZER',0)>=4
         deposit=deposit or goods_value>=CFG['drop_value'] or (CFG['cash_release'] and me['money']<100 and goods_value>0)
         # Inventory is automatically deposited each night. Avoid unnecessary trips
         # when solvent and overnight storage is safe; final day has no such sale.
@@ -164,13 +170,6 @@ def agent(obs):
                 if not fertile and needs_fert and inv.get('FERTILIZER',0) and day<29:
                     offer(min(200,prices[c]*1.4)*CFG['fert_bias'],target,['FERTILIZE'],key)
                 ready=yield_units>0 and age>=first and (c in ('TOMATO','STRAWBERRY') or age>=peak or yield_units>=6 or day==29)
-                # short_harvest: wheat/carrot are paid only by in-window WATER, so harvest
-                # them right AFTER that day's watering, one day before peak. Measured
-                # (analysis/REPORT_cash_ledger.md): leaders harvest wheat at age 3.1 with
-                # 4.4 units; we harvested at age 3.9 with 3.0 -- at peak, but before the
-                # day's watering, forfeiting the last unit. 0 reproduces the old rule.
-                if CFG.get('short_harvest',0) and c in ('WHEAT','CARROT') and yield_units>0 and day<29:
-                    ready=(age>=peak-1 and t.get('watered_today')) or age>peak or (age>=peak and hour>=21)
                 if ready:offer(100+yield_units*prices[c]*.55+(200 if day==29 else 0),target,['HARVEST'],key)
                 if not t.get('watered_today') and not (day==29 and ready):
                     cu=t.get('consecutive_unwatered',0);_sb=CFG.get('survival_bias',0.)
@@ -194,8 +193,6 @@ def agent(obs):
                 available=[c for c in CROPS if seeds.get(c,0)>0 and crop_scores[c]>0]
                 if available:
                     c=max(available,key=lambda c:crop_scores[c])
-                    if rush_active and 'STRAWBERRY' in available and counts['STRAWBERRY']<CFG['strawberry_rush']:
-                        c='STRAWBERRY'
                     # plant_urgency scales a bare tile's bid against maintenance work.
                     # Measured over 35 real replays (2026-09-23): a rank-2 leader ends
                     # every day with ZERO bare owned tiles and plants 275 times a game;
@@ -254,25 +251,11 @@ def agent(obs):
     for h in range(me['hires_today'],target_hands):
         if hour>12 or cash<fib[h]+40:break
         buy(['HIRE'],fib[h])
-    # opening_reserve: on day 0 keep this much back from everything but hiring. Hands
-    # expire every night; spending the start money to ~3 left v17 with ZERO hands all
-    # of day 1, while both leaders re-hire 4. 0 = off.
-    if day==0 and CFG.get('opening_reserve',0):cash=max(0,cash-CFG['opening_reserve'])
     # Include animals placed earlier in this same planned turn; otherwise one
     # disappears from the count and can trigger an unintended extra purchase.
     projected_live=sum(isinstance(tiles[y][x],dict) and bool(tiles[y][x].get('animal')) for x,y in coords)
     total_animals=projected_live+sum(shed.get(a,0) for a in ANIMALS)+sum(inv.get(a,0) for inv in invs for a in ANIMALS)
-    # opening_animals: the leaders' day 0, identical across DECEM and Majkel1337 --
-    # 3 SHEEP + 2 COW before any seed. Fed and CARED daily, each banks +1 on its first
-    # production, so day 6 pays ~18 wool (3,700) and day 8 ~12 milk (2,300): the money
-    # that buys their strawberry block and second/third quadrants. We bought 3
-    # animals and the bursts were half the size. 0 = off.
-    if day==0 and CFG.get('opening_animals',0):
-        have={a:sum(tiles[y][x].get('animal')==a for x,y in animals)+shed.get(a,0)+sum(v.get(a,0) for v in invs) for a in ANIMALS}
-        for a,want in (('SHEEP',3),('COW',2)):
-            for _ in range(max(0,want-have[a])):
-                if not buy(['BUY_ANIMAL',a,1],ANIMALS[a][0]):break
-    elif day<CFG.get('animal_deadline',12) and total_animals<min(CFG['animals'],5+day):
+    if day<CFG.get('animal_deadline',12) and total_animals<min(CFG['animals'],5+day):
         populations={a:sum(tiles[y][x].get('animal')==a for x,y in animals)+shed.get(a,0)+sum(v.get(a,0) for v in invs) for a in ANIMALS}
         values={a:(max(prices[ANIMALS[a][1]],BASE[ANIMALS[a][1]]*.2)*(1+ANIMALS[a][3])/ANIMALS[a][3])/(1+populations[a]*.35) for a in ANIMALS}
         preference={'milk':'COW','wool':'SHEEP','eggs':'GOOSE'}.get(CFG.get('animal_style','balanced'))
@@ -282,46 +265,6 @@ def agent(obs):
     if nlive and hour<22 and (day<29 or not CFG['liquidate']):
         deficit=max(0,nlive*2-shed.get('WHEAT',0)-sum(v.get('WHEAT',0) for v in invs));qty=min(deficit,int(max(0,cash-50)//(prices['WHEAT']+2)))
         if qty:buy(['BUY_PRODUCT','WHEAT',qty],qty*(prices['WHEAT']+2))
-    def buy_land():
-        landcount=len(me['unlocked_quadrants'])
-        # Third/fourth quadrants require occupancy and staffing, not cash alone. The 4th
-        # quadrant gets its own, later deadline: a single land_deadline covering every
-        # purchase makes an early value structurally unreachable for landcount 3->4 (you
-        # cannot own 75 tiles at land_util occupancy AND buy a 4th before the same cutoff
-        # that governs the 2nd/3rd). Defaults to land_deadline, so omitting it reproduces
-        # the single-deadline behavior exactly.
-        staffed=(landcount<2 or len(positions)>=CFG.get('expansion_hands',9))
-        deadline=CFG.get('land4_deadline',CFG.get('land_deadline',18)) if landcount>=3 else CFG.get('land_deadline',18)
-        # How full "the land we already own" is. The averaged form hides the case that
-        # actually matters: quadrant 1 full and quadrant 2 empty reads as 50%, clearing a
-        # 0.45 threshold and justifying a THIRD quadrant while the second sits bare. With
-        # land_fill_gate the ratio is the emptiest owned quadrant instead, so expansion
-        # means "everything I hold is nearly full" -- which is the leader's measured
-        # signature (zero bare tiles at every checkpoint, and three quadrants).
-        # 0 reproduces the averaged behaviour exactly.
-        if CFG.get('land_fill_gate',0):
-            quads={}
-            for x,y in coords:
-                cell=quads.setdefault((x//center,y//center),[0,0]);cell[1]+=1
-                t=tiles[y][x]
-                if isinstance(t,dict) and (t.get('crop') or t.get('animal')):cell[0]+=1
-            fullness=min((o/n for o,n in quads.values() if n),default=0.)
-        else:
-            fullness=occupied/max(1,len(coords))
-        if landcount<CFG['land'] and day<deadline and staffed and fullness>=CFG['land_util']:
-            cost=[1000,2000,4000][landcount-1]
-            if cash>cost+CFG['land_buffer']:return buy(['BUY_LAND'],cost)
-        return False
-    rush_reserved=0
-    if rush_active:
-        # Land before seed: the leaders spend the day-6 wool burst on the 2nd quadrant
-        # AND the strawberries in the same turn. Seed bought first would starve land.
-        new_land=25 if buy_land() else 0
-        bare_now=sum(1 for x,y in coords if tiles[y][x] is None)+new_land
-        have=seeds.get('STRAWBERRY',0)
-        qty=min(CFG['strawberry_rush']-counts['STRAWBERRY']-have,bare_now-have,int(cash//CROPS['STRAWBERRY'][0]))
-        if qty>0 and buy(['BUY_SEED','STRAWBERRY',qty],CROPS['STRAWBERRY'][0]*qty):have+=qty
-        rush_reserved=have
     _stock=CFG.get('seed_stock',2)
     _fill=CFG.get('seed_fill',0)
     if _fill>0:
@@ -334,7 +277,7 @@ def agent(obs):
         # cheap fast crops that actually fill tiles (WHEAT 10, CARROT 20) stayed
         # capped. The leader sells 409 wheat and 222 carrot units a game to our ~100
         # and ~22.
-        bare=sum(1 for x,y in coords if tiles[y][x] is None)-rush_reserved
+        bare=sum(1 for x,y in coords if tiles[y][x] is None)
         # Never buy seed for ground we are not allowed to plant: with tiles_per_unit
         # set, planting stops at what the hands can actually water, and seed bought
         # past that is cash burned for nothing.
@@ -352,6 +295,17 @@ def agent(obs):
         for c in sorted(CROPS,key=lambda c:-crop_scores[c]):
             if crop_scores[c]>0 and seeds.get(c,0)<_stock and cash>100:
                 qty=_stock-seeds.get(c,0);buy(['BUY_SEED',c,qty],CROPS[c][0]*qty)
-    if not rush_active:buy_land()
+    landcount=len(me['unlocked_quadrants'])
+    # Third/fourth quadrants require occupancy and staffing, not cash alone. The 4th
+    # quadrant gets its own, later deadline: a single land_deadline covering every
+    # purchase makes an early value structurally unreachable for landcount 3->4 (you
+    # cannot own 75 tiles at land_util occupancy AND buy a 4th before the same cutoff
+    # that governs the 2nd/3rd). Defaults to land_deadline, so omitting it reproduces
+    # the single-deadline behavior exactly.
+    staffed=(landcount<2 or len(positions)>=CFG.get('expansion_hands',9))
+    deadline=CFG.get('land4_deadline',CFG.get('land_deadline',18)) if landcount>=3 else CFG.get('land_deadline',18)
+    if landcount<CFG['land'] and day<deadline and staffed and occupied/max(1,len(coords))>=CFG['land_util']:
+        cost=[1000,2000,4000][landcount-1]
+        if cash>cost+CFG['land_buffer']:buy(['BUY_LAND'],cost)
     _MEMORY={'tick':tick,'player':player,'jobs':jobs}
     return {'farmer':actions[0],'hands':actions[1:],'market':orders[:10]}
