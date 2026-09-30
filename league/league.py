@@ -72,6 +72,14 @@ FULL_SPACE={
     'plant_urgency':('float',1.,6.), 'seed_fill':('cat',0,4,8,12,20),
     # Gate expansion on how full the land we already own is, measured per quadrant.
     'land_fill_gate':('cat',0,1),
+    # v18, from the exact cash ledger (analysis/REPORT_cash_ledger.md). Screened one
+    # at a time on 2026-09-25 (16-game paired screens vs v16): short_harvest won 75%
+    # on two seed sets but did not raise our own cash; opening and rush alone were
+    # negative -- the rush starved animal buying, the opening starved seed. Coupled
+    # levers on a closed cash loop, so they go to the search rather than a hand pick.
+    'short_harvest':('cat',0,1), 'fert_deposit_units':('cat',4,8,12),
+    'opening_animals':('cat',0,1), 'opening_reserve':('cat',0,60),
+    'strawberry_rush':('cat',0,8,12,22),
 }
 
 # The search was never underpowered by budget, it was underpowered by width.
@@ -103,7 +111,9 @@ FULL_SPACE={
 # won one).
 FOCUS = ('cash_discount', 'plant_urgency', 'seed_fill', 'tiles_per_unit',
          'hire_pace', 'land_deadline', 'strawberry_target', 'survival_bias',
-         'land_fill_gate', 'land_util', 'expansion_hands', 'land_buffer')
+         'land_fill_gate', 'land_util', 'expansion_hands', 'land_buffer',
+         'short_harvest', 'fert_in_window', 'fert_deposit_units', 'opening_animals',
+         'opening_reserve', 'strawberry_rush')
 SPACE = {k: FULL_SPACE[k] for k in FOCUS}
 
 def sample(trial):
@@ -190,6 +200,8 @@ class League:
             p=Path(p);name='external_'+support.digest(p)[:16]+'.py'
             shutil.copyfile(p,self.root/'agents'/name);fixed.append('agents/'+name)
         self.fixed=fixed
+        support.OBJECTIVE=cfg.get('objective','cash')
+        if support.OBJECTIVE not in ('cash','wins'):raise ValueError('objective must be cash or wins')
         contract={k:cfg[k] for k in ['train_seeds','selection_seeds','holdout_seeds','general_trials','exploiter_trials',
                   'finalists','history_size','selfplay_seeds','v9_win_rate','champion_win_rate','min_opponent_win_rate',
                   'max_decision_seconds','target_mean_cash','target_win_rate','target_80k_rate']}
@@ -197,6 +209,7 @@ class League:
         contract['sources']['policy_template.py']=support.digest(self.template_path)
         contract['fixed']={p:support.digest(self.root/p) for p in fixed}
         contract['environment']=support.ENV_VERSION
+        contract['objective']=support.OBJECTIVE
         manifest=self.root/'manifest.json'
         if manifest.exists() and json.loads(manifest.read_text())!=contract:
             raise ValueError('This checkpoint has different code, opponents or study settings. Start a new output folder.')

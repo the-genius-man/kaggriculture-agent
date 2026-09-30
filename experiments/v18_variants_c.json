@@ -1,0 +1,7 @@
+{
+ "v17": {},
+ "short": {"short_harvest": 1, "fert_in_window": 1, "fert_deposit_units": 12},
+ "short_fert": {"short_harvest": 1, "fert_in_window": 1, "fert_deposit_units": 12, "fert_bias": 2.5},
+ "short_fert_open": {"short_harvest": 1, "fert_in_window": 1, "fert_deposit_units": 12, "fert_bias": 2.5, "opening_animals": 1, "opening_reserve": 60},
+ "short_fert_rush12": {"short_harvest": 1, "fert_in_window": 1, "fert_deposit_units": 12, "fert_bias": 2.5, "strawberry_rush": 12, "rush_deadline": 8}
+}
