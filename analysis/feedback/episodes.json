@@ -4,6 +4,22 @@
   "active": true,
   "episodes": [
    {
+    "episode": 115913543,
+    "end": "2026-09-30T18:49:48.455340500Z",
+    "our_cash": 82516,
+    "opp_cash": 174176,
+    "won": false,
+    "opponent": "Abhi Datta"
+   },
+   {
+    "episode": 115884221,
+    "end": "2026-09-30T17:23:39.159825Z",
+    "our_cash": 113126,
+    "opp_cash": 89485,
+    "won": true,
+    "opponent": "Aloise Mutune"
+   },
+   {
     "episode": 115751016,
     "end": "2026-09-30T11:34:29.607084800Z",
     "our_cash": 41432,
@@ -2625,7 +2641,7 @@
     "our_cash": 52559,
     "opp_cash": 116834,
     "won": false,
-    "opponent": "Nathael"
+    "opponent": "[Deleted] ef69f5a4-0a1f-427e-a797-5bea9b8203ff"
    },
    {
     "episode": 110944878,
