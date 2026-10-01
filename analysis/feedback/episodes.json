@@ -4,6 +4,22 @@
   "active": true,
   "episodes": [
    {
+    "episode": 116071166,
+    "end": "2026-10-01T01:46:18.600573600Z",
+    "our_cash": 105867,
+    "opp_cash": 15294,
+    "won": true,
+    "opponent": "Julia Fredo"
+   },
+   {
+    "episode": 116057004,
+    "end": "2026-10-01T01:07:55.959010300Z",
+    "our_cash": 100881,
+    "opp_cash": 95224,
+    "won": true,
+    "opponent": "Nyasha Gandah"
+   },
+   {
     "episode": 115913543,
     "end": "2026-09-30T18:49:48.455340500Z",
     "our_cash": 82516,
@@ -729,6 +745,46 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 116090391,
+    "end": "2026-10-01T02:30:55.256369800Z",
+    "our_cash": 85295,
+    "opp_cash": 78687,
+    "won": true,
+    "opponent": "Jake Mordan"
+   },
+   {
+    "episode": 116085371,
+    "end": "2026-10-01T02:20:18.848137500Z",
+    "our_cash": 91248,
+    "opp_cash": 53595,
+    "won": true,
+    "opponent": "hoo aam"
+   },
+   {
+    "episode": 116083982,
+    "end": "2026-10-01T02:15:54.727684400Z",
+    "our_cash": 56922,
+    "opp_cash": 85034,
+    "won": false,
+    "opponent": "Pradeep Kumar Mahato"
+   },
+   {
+    "episode": 116082440,
+    "end": "2026-10-01T02:13:41.701189500Z",
+    "our_cash": 51039,
+    "opp_cash": 63270,
+    "won": false,
+    "opponent": "Zerbytheboss"
+   },
+   {
+    "episode": 115993079,
+    "end": "2026-09-30T22:31:42.220269600Z",
+    "our_cash": 102177,
+    "opp_cash": 106385,
+    "won": false,
+    "opponent": "Andrew Kalita"
+   },
    {
     "episode": 115875803,
     "end": "2026-09-30T17:03:44.037707500Z",
@@ -2641,7 +2697,7 @@
     "our_cash": 52559,
     "opp_cash": 116834,
     "won": false,
-    "opponent": "[Deleted] ef69f5a4-0a1f-427e-a797-5bea9b8203ff"
+    "opponent": "[Deleted] 2fceeac8-47e6-4861-9adc-c9ec6bbd9188"
    },
    {
     "episode": 110944878,
