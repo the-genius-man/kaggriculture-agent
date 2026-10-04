@@ -4,6 +4,126 @@
   "active": true,
   "episodes": [
    {
+    "episode": 117866738,
+    "end": "2026-10-04T11:21:30.024301900Z",
+    "our_cash": 55022,
+    "opp_cash": 74013,
+    "won": false,
+    "opponent": "i-yuki23"
+   },
+   {
+    "episode": 117851873,
+    "end": "2026-10-04T10:37:37.242742500Z",
+    "our_cash": 69763,
+    "opp_cash": 59588,
+    "won": true,
+    "opponent": "men-of-culture"
+   },
+   {
+    "episode": 117850258,
+    "end": "2026-10-04T10:33:21.150669600Z",
+    "our_cash": 92798,
+    "opp_cash": 67264,
+    "won": true,
+    "opponent": "HaY0801"
+   },
+   {
+    "episode": 117835301,
+    "end": "2026-10-04T09:53:45.319872300Z",
+    "our_cash": 110532,
+    "opp_cash": 78856,
+    "won": true,
+    "opponent": "Parham Ghazanfari"
+   },
+   {
+    "episode": 117834614,
+    "end": "2026-10-04T09:51:29.682802800Z",
+    "our_cash": 50852,
+    "opp_cash": 69617,
+    "won": false,
+    "opponent": "sgsuh"
+   },
+   {
+    "episode": 117818746,
+    "end": "2026-10-04T09:09:54.839556100Z",
+    "our_cash": 73919,
+    "opp_cash": 64527,
+    "won": true,
+    "opponent": "Ioannis M"
+   },
+   {
+    "episode": 117803901,
+    "end": "2026-10-04T08:27:12.546525100Z",
+    "our_cash": 62963,
+    "opp_cash": 72822,
+    "won": false,
+    "opponent": "jacob OKOTH O"
+   },
+   {
+    "episode": 117789044,
+    "end": "2026-10-04T07:49:54.210129Z",
+    "our_cash": 93669,
+    "opp_cash": 97878,
+    "won": false,
+    "opponent": "Gerbilles Sauci\u00e8res"
+   },
+   {
+    "episode": 117774181,
+    "end": "2026-10-04T07:04:57.151382500Z",
+    "our_cash": 69669,
+    "opp_cash": 83703,
+    "won": false,
+    "opponent": "ROBERT SSEBAMBULIDDE"
+   },
+   {
+    "episode": 117759529,
+    "end": "2026-10-04T06:23:23.899976900Z",
+    "our_cash": 79231,
+    "opp_cash": 108622,
+    "won": false,
+    "opponent": "Dynamic_fire07"
+   },
+   {
+    "episode": 117744711,
+    "end": "2026-10-04T05:44:23.746590800Z",
+    "our_cash": 68458,
+    "opp_cash": 70762,
+    "won": false,
+    "opponent": "liuzewen123"
+   },
+   {
+    "episode": 117729982,
+    "end": "2026-10-04T05:00:57.999019300Z",
+    "our_cash": 98085,
+    "opp_cash": 63794,
+    "won": true,
+    "opponent": "bonvoyage-sugar"
+   },
+   {
+    "episode": 117715346,
+    "end": "2026-10-04T04:18:49.225848200Z",
+    "our_cash": 93363,
+    "opp_cash": 137573,
+    "won": false,
+    "opponent": "anmadev"
+   },
+   {
+    "episode": 117701882,
+    "end": "2026-10-04T03:45:08.247428700Z",
+    "our_cash": 65302,
+    "opp_cash": 63021,
+    "won": true,
+    "opponent": "Alex #4"
+   },
+   {
+    "episode": 117691452,
+    "end": "2026-10-04T03:13:27.300139300Z",
+    "our_cash": 90136,
+    "opp_cash": 82941,
+    "won": true,
+    "opponent": "Mason R. Brito"
+   },
+   {
     "episode": 117683064,
     "end": "2026-10-04T02:54:18.378558500Z",
     "our_cash": 67699,
@@ -1874,6 +1994,150 @@
   "active": true,
   "episodes": [
    {
+    "episode": 117864663,
+    "end": "2026-10-04T11:13:50.486215300Z",
+    "our_cash": 90306,
+    "opp_cash": 77611,
+    "won": true,
+    "opponent": "Mitchelle's Team"
+   },
+   {
+    "episode": 117849895,
+    "end": "2026-10-04T10:32:23.639061Z",
+    "our_cash": 63514,
+    "opp_cash": 38816,
+    "won": true,
+    "opponent": "Roko Torbarina"
+   },
+   {
+    "episode": 117840616,
+    "end": "2026-10-04T10:07:03.375516Z",
+    "our_cash": 94919,
+    "opp_cash": 61455,
+    "won": true,
+    "opponent": "Vordax"
+   },
+   {
+    "episode": 117824899,
+    "end": "2026-10-04T09:24:15.143231800Z",
+    "our_cash": 59776,
+    "opp_cash": 31292,
+    "won": true,
+    "opponent": "Siddharth1984"
+   },
+   {
+    "episode": 117809641,
+    "end": "2026-10-04T08:44:40.073332500Z",
+    "our_cash": 124054,
+    "opp_cash": 79293,
+    "won": true,
+    "opponent": "Jose Alejandro Rivera Jaramillo"
+   },
+   {
+    "episode": 117806308,
+    "end": "2026-10-04T08:35:09.345452900Z",
+    "our_cash": 49199,
+    "opp_cash": 44031,
+    "won": true,
+    "opponent": "Harpal Gujral"
+   },
+   {
+    "episode": 117804246,
+    "end": "2026-10-04T08:30:09.775018900Z",
+    "our_cash": 91892,
+    "opp_cash": 100168,
+    "won": false,
+    "opponent": "Dhruv"
+   },
+   {
+    "episode": 117790501,
+    "end": "2026-10-04T07:52:32.603299600Z",
+    "our_cash": 83069,
+    "opp_cash": 95660,
+    "won": false,
+    "opponent": "Chirag&Sanika"
+   },
+   {
+    "episode": 117775718,
+    "end": "2026-10-04T07:09:38.746664800Z",
+    "our_cash": 73235,
+    "opp_cash": 36012,
+    "won": true,
+    "opponent": "Huchen Jiang"
+   },
+   {
+    "episode": 117760977,
+    "end": "2026-10-04T06:29:00.160256200Z",
+    "our_cash": 91049,
+    "opp_cash": 67082,
+    "won": true,
+    "opponent": "Thananut Phiboonbanakit"
+   },
+   {
+    "episode": 117760736,
+    "end": "2026-10-04T06:28:55.838605300Z",
+    "our_cash": 65396,
+    "opp_cash": 73103,
+    "won": false,
+    "opponent": "Sam Jenkins"
+   },
+   {
+    "episode": 117748344,
+    "end": "2026-10-04T05:53:42.486393500Z",
+    "our_cash": 55808,
+    "opp_cash": 57037,
+    "won": false,
+    "opponent": "HbjaHbja"
+   },
+   {
+    "episode": 117740265,
+    "end": "2026-10-04T05:32:44.140540400Z",
+    "our_cash": 99518,
+    "opp_cash": 92730,
+    "won": true,
+    "opponent": "BeyondAnalytics"
+   },
+   {
+    "episode": 117725525,
+    "end": "2026-10-04T04:50:43.220685Z",
+    "our_cash": 77870,
+    "opp_cash": 74320,
+    "won": true,
+    "opponent": "Liz"
+   },
+   {
+    "episode": 117718621,
+    "end": "2026-10-04T04:27:00.335437200Z",
+    "our_cash": 100517,
+    "opp_cash": 88701,
+    "won": true,
+    "opponent": "BenPalmer59"
+   },
+   {
+    "episode": 117704031,
+    "end": "2026-10-04T03:49:52.363758300Z",
+    "our_cash": 96144,
+    "opp_cash": 66119,
+    "won": true,
+    "opponent": "nick.ai007"
+   },
+   {
+    "episode": 117702554,
+    "end": "2026-10-04T03:46:27.319054800Z",
+    "our_cash": 120936,
+    "opp_cash": 136209,
+    "won": false,
+    "opponent": "Anh-Vu Mai-Nguyen"
+   },
+   {
+    "episode": 117702624,
+    "end": "2026-10-04T03:45:56.113329400Z",
+    "our_cash": 52239,
+    "opp_cash": 70608,
+    "won": false,
+    "opponent": "Clement Ling"
+   },
+   {
     "episode": 117688234,
     "end": "2026-10-04T03:02:43.472871100Z",
     "our_cash": 90723,
@@ -3295,7 +3559,7 @@
     "our_cash": 98775,
     "opp_cash": 179868,
     "won": false,
-    "opponent": "Millia il Velch Cutrettola"
+    "opponent": "Wish me luck"
    },
    {
     "episode": 114502156,
