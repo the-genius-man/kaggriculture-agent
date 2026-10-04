@@ -4,6 +4,86 @@
   "active": true,
   "episodes": [
    {
+    "episode": 117683064,
+    "end": "2026-10-04T02:54:18.378558500Z",
+    "our_cash": 67699,
+    "opp_cash": 100310,
+    "won": false,
+    "opponent": "8ct10nz"
+   },
+   {
+    "episode": 117668198,
+    "end": "2026-10-04T02:07:49.030545800Z",
+    "our_cash": 67072,
+    "opp_cash": 124962,
+    "won": false,
+    "opponent": "Eric S"
+   },
+   {
+    "episode": 117653456,
+    "end": "2026-10-04T01:26:48.761582100Z",
+    "our_cash": 109554,
+    "opp_cash": 86654,
+    "won": true,
+    "opponent": "Matthew Liew"
+   },
+   {
+    "episode": 117638562,
+    "end": "2026-10-04T00:47:28.698696700Z",
+    "our_cash": 113187,
+    "opp_cash": 105617,
+    "won": true,
+    "opponent": "Jong Park"
+   },
+   {
+    "episode": 117623698,
+    "end": "2026-10-04T00:04:25.954497Z",
+    "our_cash": 114869,
+    "opp_cash": 99369,
+    "won": true,
+    "opponent": "ayushk_empire"
+   },
+   {
+    "episode": 117608988,
+    "end": "2026-10-03T23:23:29.089615600Z",
+    "our_cash": 102588,
+    "opp_cash": 109321,
+    "won": false,
+    "opponent": "anthony sinchi"
+   },
+   {
+    "episode": 117594214,
+    "end": "2026-10-03T22:43:00.701084800Z",
+    "our_cash": 65853,
+    "opp_cash": 51392,
+    "won": true,
+    "opponent": "kkunizaw"
+   },
+   {
+    "episode": 117579460,
+    "end": "2026-10-03T22:02:43.946805900Z",
+    "our_cash": 102692,
+    "opp_cash": 114638,
+    "won": false,
+    "opponent": "Francesco Zaccaria"
+   },
+   {
+    "episode": 117564567,
+    "end": "2026-10-03T21:22:13.056432200Z",
+    "our_cash": 75307,
+    "opp_cash": 53156,
+    "won": true,
+    "opponent": "Accer_sz"
+   },
+   {
+    "episode": 117555846,
+    "end": "2026-10-03T20:58:07.303339300Z",
+    "our_cash": 114882,
+    "opp_cash": 132229,
+    "won": false,
+    "opponent": "Emanuel L\u00e1zaro"
+   },
+   {
     "episode": 117541140,
     "end": "2026-10-03T20:17:28.690809100Z",
     "our_cash": 91303,
@@ -1793,6 +1873,110 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 117688234,
+    "end": "2026-10-04T03:02:43.472871100Z",
+    "our_cash": 90723,
+    "opp_cash": 97375,
+    "won": false,
+    "opponent": "TeamBanzaiSL"
+   },
+   {
+    "episode": 117673468,
+    "end": "2026-10-04T02:23:37.342039Z",
+    "our_cash": 87592,
+    "opp_cash": 93651,
+    "won": false,
+    "opponent": "Dean Shalev"
+   },
+   {
+    "episode": 117658676,
+    "end": "2026-10-04T01:45:16.825171200Z",
+    "our_cash": 59248,
+    "opp_cash": 62037,
+    "won": false,
+    "opponent": "Efthimios"
+   },
+   {
+    "episode": 117643849,
+    "end": "2026-10-04T00:59:06.159376800Z",
+    "our_cash": 88335,
+    "opp_cash": 53869,
+    "won": true,
+    "opponent": "Philip"
+   },
+   {
+    "episode": 117629002,
+    "end": "2026-10-04T00:19:09.619335300Z",
+    "our_cash": 61694,
+    "opp_cash": 82401,
+    "won": false,
+    "opponent": "Sky kun"
+   },
+   {
+    "episode": 117614307,
+    "end": "2026-10-03T23:41:24.356724700Z",
+    "our_cash": 65612,
+    "opp_cash": 55756,
+    "won": true,
+    "opponent": "Aryan88097"
+   },
+   {
+    "episode": 117601702,
+    "end": "2026-10-03T23:03:26.295100900Z",
+    "our_cash": 68116,
+    "opp_cash": 71253,
+    "won": false,
+    "opponent": "SoraGinko"
+   },
+   {
+    "episode": 117590824,
+    "end": "2026-10-03T22:30:52.409668100Z",
+    "our_cash": 124710,
+    "opp_cash": 62038,
+    "won": true,
+    "opponent": "Dallas Manning"
+   },
+   {
+    "episode": 117587664,
+    "end": "2026-10-03T22:23:51.588132400Z",
+    "our_cash": 88464,
+    "opp_cash": 131260,
+    "won": false,
+    "opponent": "Light"
+   },
+   {
+    "episode": 117581642,
+    "end": "2026-10-03T22:09:04.671611100Z",
+    "our_cash": 100247,
+    "opp_cash": 130014,
+    "won": false,
+    "opponent": "Hem Viramgama"
+   },
+   {
+    "episode": 117566847,
+    "end": "2026-10-03T21:29:02.651581600Z",
+    "our_cash": 104934,
+    "opp_cash": 73773,
+    "won": true,
+    "opponent": "Noct-Tech zombie"
+   },
+   {
+    "episode": 117564214,
+    "end": "2026-10-03T21:20:03.506508200Z",
+    "our_cash": 103250,
+    "opp_cash": 88658,
+    "won": true,
+    "opponent": "Harsha Vardhan"
+   },
+   {
+    "episode": 117552864,
+    "end": "2026-10-03T20:49:07.732186Z",
+    "our_cash": 65920,
+    "opp_cash": 83605,
+    "won": false,
+    "opponent": "Leo Lai"
+   },
    {
     "episode": 117538135,
     "end": "2026-10-03T20:08:27.967990900Z",
