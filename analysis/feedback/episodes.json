@@ -4,6 +4,70 @@
   "active": true,
   "episodes": [
    {
+    "episode": 117968669,
+    "end": "2026-10-04T15:59:04.889369100Z",
+    "our_cash": 66202,
+    "opp_cash": 73499,
+    "won": false,
+    "opponent": "\u6570\u5b66\u306e\u5c71\u7530"
+   },
+   {
+    "episode": 117953303,
+    "end": "2026-10-04T15:18:09.446161100Z",
+    "our_cash": 116324,
+    "opp_cash": 94833,
+    "won": true,
+    "opponent": "Giampietro Pregnolato"
+   },
+   {
+    "episode": 117937886,
+    "end": "2026-10-04T14:35:13.798111500Z",
+    "our_cash": 71636,
+    "opp_cash": 84522,
+    "won": false,
+    "opponent": "swajay nandanwade"
+   },
+   {
+    "episode": 117924950,
+    "end": "2026-10-04T14:02:26.222338300Z",
+    "our_cash": 60183,
+    "opp_cash": 80279,
+    "won": false,
+    "opponent": "Satyam Pote"
+   },
+   {
+    "episode": 117925028,
+    "end": "2026-10-04T14:01:45.105019200Z",
+    "our_cash": 57056,
+    "opp_cash": 38576,
+    "won": true,
+    "opponent": "Aryuemaan Chowdhury"
+   },
+   {
+    "episode": 117910010,
+    "end": "2026-10-04T13:20:05.523032100Z",
+    "our_cash": 95546,
+    "opp_cash": 53563,
+    "won": true,
+    "opponent": "Devam juthani"
+   },
+   {
+    "episode": 117896105,
+    "end": "2026-10-04T12:40:38.673876200Z",
+    "our_cash": 76619,
+    "opp_cash": 93562,
+    "won": false,
+    "opponent": "Kangqiao LIU"
+   },
+   {
+    "episode": 117881247,
+    "end": "2026-10-04T12:01:56.838722400Z",
+    "our_cash": 66756,
+    "opp_cash": 54575,
+    "won": true,
+    "opponent": "Thal\u00eda Cantero"
+   },
+   {
     "episode": 117866738,
     "end": "2026-10-04T11:21:30.024301900Z",
     "our_cash": 55022,
@@ -1993,6 +2057,94 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 117970293,
+    "end": "2026-10-04T16:03:34.826586400Z",
+    "our_cash": 107152,
+    "opp_cash": 125899,
+    "won": false,
+    "opponent": "wpk1122"
+   },
+   {
+    "episode": 117963198,
+    "end": "2026-10-04T15:44:23.129713600Z",
+    "our_cash": 85486,
+    "opp_cash": 134410,
+    "won": false,
+    "opponent": "[Deleted] bdc3c175-811b-438f-9c3a-c2d9c80c106a"
+   },
+   {
+    "episode": 117954755,
+    "end": "2026-10-04T15:22:08.579791500Z",
+    "our_cash": 57173,
+    "opp_cash": 28644,
+    "won": true,
+    "opponent": "Edmond Kirsch"
+   },
+   {
+    "episode": 117943079,
+    "end": "2026-10-04T14:50:20.512034200Z",
+    "our_cash": 110794,
+    "opp_cash": 131311,
+    "won": false,
+    "opponent": "Hamza Shafik "
+   },
+   {
+    "episode": 117942224,
+    "end": "2026-10-04T14:48:59.032474800Z",
+    "our_cash": 117047,
+    "opp_cash": 88509,
+    "won": true,
+    "opponent": "Jeremy"
+   },
+   {
+    "episode": 117927740,
+    "end": "2026-10-04T14:09:36.222540100Z",
+    "our_cash": 84473,
+    "opp_cash": 55006,
+    "won": true,
+    "opponent": "Nizar Fathurohman"
+   },
+   {
+    "episode": 117921697,
+    "end": "2026-10-04T13:52:11.008614100Z",
+    "our_cash": 59472,
+    "opp_cash": 82767,
+    "won": false,
+    "opponent": "Kimodii"
+   },
+   {
+    "episode": 117906719,
+    "end": "2026-10-04T13:13:57.619200600Z",
+    "our_cash": 81431,
+    "opp_cash": 75834,
+    "won": true,
+    "opponent": "vibecoder"
+   },
+   {
+    "episode": 117891909,
+    "end": "2026-10-04T12:29:47.599207400Z",
+    "our_cash": 100311,
+    "opp_cash": 86892,
+    "won": true,
+    "opponent": "Mehdi El M."
+   },
+   {
+    "episode": 117885973,
+    "end": "2026-10-04T12:11:35.374348Z",
+    "our_cash": 60515,
+    "opp_cash": 56383,
+    "won": true,
+    "opponent": "Ich Benavides"
+   },
+   {
+    "episode": 117871644,
+    "end": "2026-10-04T11:32:53.325475400Z",
+    "our_cash": 106069,
+    "opp_cash": 101770,
+    "won": true,
+    "opponent": "JoshJML"
+   },
    {
     "episode": 117864663,
     "end": "2026-10-04T11:13:50.486215300Z",
@@ -5297,7 +5449,7 @@
     "our_cash": 59345,
     "opp_cash": 74321,
     "won": false,
-    "opponent": "BONES"
+    "opponent": "[Deleted] e774f32a-192d-4e82-aec1-801ece0b900a"
    },
    {
     "episode": 110888648,
