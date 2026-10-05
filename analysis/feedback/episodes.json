@@ -4,6 +4,110 @@
   "active": true,
   "episodes": [
    {
+    "episode": 118198410,
+    "end": "2026-10-05T02:33:53.912134Z",
+    "our_cash": 99004,
+    "opp_cash": 76043,
+    "won": true,
+    "opponent": "Lucienne"
+   },
+   {
+    "episode": 118183272,
+    "end": "2026-10-05T01:53:55.731629200Z",
+    "our_cash": 80042,
+    "opp_cash": 110256,
+    "won": false,
+    "opponent": "Tong Jing Yen"
+   },
+   {
+    "episode": 118168386,
+    "end": "2026-10-05T01:14:23.332614500Z",
+    "our_cash": 91518,
+    "opp_cash": 94014,
+    "won": false,
+    "opponent": "jwboost"
+   },
+   {
+    "episode": 118155449,
+    "end": "2026-10-05T00:37:11.075314600Z",
+    "our_cash": 74637,
+    "opp_cash": 106170,
+    "won": false,
+    "opponent": "Emerson Suarez"
+   },
+   {
+    "episode": 118140234,
+    "end": "2026-10-04T23:50:42.200858Z",
+    "our_cash": 70341,
+    "opp_cash": 97369,
+    "won": false,
+    "opponent": "changwei shi"
+   },
+   {
+    "episode": 118127246,
+    "end": "2026-10-04T23:18:39.152802300Z",
+    "our_cash": 93770,
+    "opp_cash": 122951,
+    "won": false,
+    "opponent": "Johnson Chishimba"
+   },
+   {
+    "episode": 118126715,
+    "end": "2026-10-04T23:14:59.533675900Z",
+    "our_cash": 106057,
+    "opp_cash": 55436,
+    "won": true,
+    "opponent": "dal7"
+   },
+   {
+    "episode": 118119118,
+    "end": "2026-10-04T22:55:41.466331600Z",
+    "our_cash": 69708,
+    "opp_cash": 61150,
+    "won": true,
+    "opponent": "soyukke"
+   },
+   {
+    "episode": 118106469,
+    "end": "2026-10-04T22:24:54.548399500Z",
+    "our_cash": 102576,
+    "opp_cash": 117669,
+    "won": false,
+    "opponent": "Aldibek [dsmlkz]"
+   },
+   {
+    "episode": 118090934,
+    "end": "2026-10-04T21:40:48.363073800Z",
+    "our_cash": 93036,
+    "opp_cash": 88622,
+    "won": true,
+    "opponent": "Cedoque BAGBONON"
+   },
+   {
+    "episode": 118089208,
+    "end": "2026-10-04T21:38:49.008109100Z",
+    "our_cash": 63148,
+    "opp_cash": 27432,
+    "won": true,
+    "opponent": "Sara Lark"
+   },
+   {
+    "episode": 118074184,
+    "end": "2026-10-04T20:56:16.380848600Z",
+    "our_cash": 77693,
+    "opp_cash": 108063,
+    "won": false,
+    "opponent": "Senya Ka"
+   },
+   {
+    "episode": 118073448,
+    "end": "2026-10-04T20:50:42.377630300Z",
+    "our_cash": 116341,
+    "opp_cash": 82653,
+    "won": true,
+    "opponent": "Vinicius Pupin"
+   },
+   {
     "episode": 118060335,
     "end": "2026-10-04T20:14:58.539750600Z",
     "our_cash": 61529,
@@ -2113,6 +2217,102 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 118195502,
+    "end": "2026-10-05T02:24:58.753031100Z",
+    "our_cash": 77168,
+    "opp_cash": 78927,
+    "won": false,
+    "opponent": "Daniel Gallardo G\u00f3mez"
+   },
+   {
+    "episode": 118180325,
+    "end": "2026-10-05T01:45:22.996289700Z",
+    "our_cash": 107522,
+    "opp_cash": 120333,
+    "won": false,
+    "opponent": "cobrapigeon"
+   },
+   {
+    "episode": 118165434,
+    "end": "2026-10-05T01:03:09.797831900Z",
+    "our_cash": 74656,
+    "opp_cash": 75157,
+    "won": false,
+    "opponent": "Matt Dowis"
+   },
+   {
+    "episode": 118150375,
+    "end": "2026-10-05T00:20:04.665303700Z",
+    "our_cash": 122602,
+    "opp_cash": 120198,
+    "won": true,
+    "opponent": "MLEDV"
+   },
+   {
+    "episode": 118141553,
+    "end": "2026-10-04T23:59:39.257004200Z",
+    "our_cash": 98822,
+    "opp_cash": 130271,
+    "won": false,
+    "opponent": "tinaztepec"
+   },
+   {
+    "episode": 118136635,
+    "end": "2026-10-04T23:44:35.969038800Z",
+    "our_cash": 66566,
+    "opp_cash": 57699,
+    "won": true,
+    "opponent": "KucingGanteng"
+   },
+   {
+    "episode": 118128436,
+    "end": "2026-10-04T23:19:18.472854500Z",
+    "our_cash": 91593,
+    "opp_cash": 86898,
+    "won": true,
+    "opponent": "bonvoyage-sugar"
+   },
+   {
+    "episode": 118112597,
+    "end": "2026-10-04T22:39:59.202567700Z",
+    "our_cash": 84577,
+    "opp_cash": 79669,
+    "won": true,
+    "opponent": "QSS Technosoft AI Team"
+   },
+   {
+    "episode": 118111716,
+    "end": "2026-10-04T22:37:47.422914600Z",
+    "our_cash": 91918,
+    "opp_cash": 102556,
+    "won": false,
+    "opponent": "Uman_n3l"
+   },
+   {
+    "episode": 118096163,
+    "end": "2026-10-04T21:59:37.194527100Z",
+    "our_cash": 58784,
+    "opp_cash": 34907,
+    "won": true,
+    "opponent": "fabio5050"
+   },
+   {
+    "episode": 118081905,
+    "end": "2026-10-04T21:15:31.007452300Z",
+    "our_cash": 105058,
+    "opp_cash": 135847,
+    "won": false,
+    "opponent": "Jonathan Glinton"
+   },
+   {
+    "episode": 118078068,
+    "end": "2026-10-04T21:07:03.673948400Z",
+    "our_cash": 110670,
+    "opp_cash": 93557,
+    "won": true,
+    "opponent": "hendracos"
+   },
    {
     "episode": 118062928,
     "end": "2026-10-04T20:22:04.917172900Z",
