@@ -4,6 +4,86 @@
   "active": true,
   "episodes": [
    {
+    "episode": 118733371,
+    "end": "2026-10-06T03:19:41.949489800Z",
+    "our_cash": 66963,
+    "opp_cash": 50032,
+    "won": true,
+    "opponent": "AjayVarma555"
+   },
+   {
+    "episode": 118720415,
+    "end": "2026-10-06T02:43:49.110717200Z",
+    "our_cash": 90562,
+    "opp_cash": 103714,
+    "won": false,
+    "opponent": "zicong pan"
+   },
+   {
+    "episode": 118717781,
+    "end": "2026-10-06T02:38:08.401720500Z",
+    "our_cash": 70984,
+    "opp_cash": 71423,
+    "won": false,
+    "opponent": "Guy Lev"
+   },
+   {
+    "episode": 118712748,
+    "end": "2026-10-06T02:19:48.851097900Z",
+    "our_cash": 84312,
+    "opp_cash": 81373,
+    "won": true,
+    "opponent": "Chikkam Sandeep Munna"
+   },
+   {
+    "episode": 118697362,
+    "end": "2026-10-06T01:42:26.668181700Z",
+    "our_cash": 75364,
+    "opp_cash": 100888,
+    "won": false,
+    "opponent": "Abhi Kumar Agrawal"
+   },
+   {
+    "episode": 118684526,
+    "end": "2026-10-06T01:04:47.391740Z",
+    "our_cash": 98407,
+    "opp_cash": 117344,
+    "won": false,
+    "opponent": "Younes Chafi"
+   },
+   {
+    "episode": 118672892,
+    "end": "2026-10-06T00:32:11.752283700Z",
+    "our_cash": 113318,
+    "opp_cash": 105227,
+    "won": true,
+    "opponent": "Siddharth Kumar Gopal"
+   },
+   {
+    "episode": 118670547,
+    "end": "2026-10-06T00:23:29.283258300Z",
+    "our_cash": 92949,
+    "opp_cash": 82121,
+    "won": true,
+    "opponent": "romin_123"
+   },
+   {
+    "episode": 118656590,
+    "end": "2026-10-05T23:48:33.215707800Z",
+    "our_cash": 111121,
+    "opp_cash": 151929,
+    "won": false,
+    "opponent": "AlbanMaurel7"
+   },
+   {
+    "episode": 118656481,
+    "end": "2026-10-05T23:45:17.398802400Z",
+    "our_cash": 80304,
+    "opp_cash": 72390,
+    "won": true,
+    "opponent": "XLX"
+   },
+   {
     "episode": 118649004,
     "end": "2026-10-05T23:24:17.361095100Z",
     "our_cash": 100712,
@@ -2601,6 +2681,62 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 118735039,
+    "end": "2026-10-06T03:25:40.282410500Z",
+    "our_cash": 97157,
+    "opp_cash": 133259,
+    "won": false,
+    "opponent": "op_star_platinum"
+   },
+   {
+    "episode": 118732914,
+    "end": "2026-10-06T03:21:45.966026500Z",
+    "our_cash": 88663,
+    "opp_cash": 99832,
+    "won": false,
+    "opponent": "Mouafak Dakhlaoui"
+   },
+   {
+    "episode": 118717856,
+    "end": "2026-10-06T02:35:26.695674300Z",
+    "our_cash": 96817,
+    "opp_cash": 106071,
+    "won": false,
+    "opponent": "StrugglerK"
+   },
+   {
+    "episode": 118707466,
+    "end": "2026-10-06T02:07:44.951984700Z",
+    "our_cash": 98378,
+    "opp_cash": 119938,
+    "won": false,
+    "opponent": "the_vinci_coder"
+   },
+   {
+    "episode": 118691997,
+    "end": "2026-10-06T01:25:27.373584900Z",
+    "our_cash": 41630,
+    "opp_cash": 78923,
+    "won": false,
+    "opponent": "Timbo615"
+   },
+   {
+    "episode": 118677222,
+    "end": "2026-10-06T00:44:25.799550500Z",
+    "our_cash": 112590,
+    "opp_cash": 61628,
+    "won": true,
+    "opponent": "StarStone_233"
+   },
+   {
+    "episode": 118662175,
+    "end": "2026-10-06T00:01:04.289339900Z",
+    "our_cash": 105014,
+    "opp_cash": 51362,
+    "won": true,
+    "opponent": "jiten_topiwala"
+   },
    {
     "episode": 118647106,
     "end": "2026-10-05T23:20:10.007066400Z",
