@@ -4,6 +4,78 @@
   "active": true,
   "episodes": [
    {
+    "episode": 119226382,
+    "end": "2026-10-07T02:41:26.353512700Z",
+    "our_cash": 91323,
+    "opp_cash": 111147,
+    "won": false,
+    "opponent": "Prothos"
+   },
+   {
+    "episode": 119218815,
+    "end": "2026-10-07T02:22:39.860855900Z",
+    "our_cash": 59439,
+    "opp_cash": 71472,
+    "won": false,
+    "opponent": "\u30b3\u30ce\u30a6\u30a4"
+   },
+   {
+    "episode": 119203568,
+    "end": "2026-10-07T01:38:52.631264500Z",
+    "our_cash": 71444,
+    "opp_cash": 90094,
+    "won": false,
+    "opponent": "starclan"
+   },
+   {
+    "episode": 119188376,
+    "end": "2026-10-07T00:56:23.338143500Z",
+    "our_cash": 84304,
+    "opp_cash": 100470,
+    "won": false,
+    "opponent": "Daniel LPD"
+   },
+   {
+    "episode": 119173703,
+    "end": "2026-10-07T00:13:11.676044600Z",
+    "our_cash": 85641,
+    "opp_cash": 81319,
+    "won": true,
+    "opponent": "Matt Dowis"
+   },
+   {
+    "episode": 119173648,
+    "end": "2026-10-07T00:13:08.879867700Z",
+    "our_cash": 86429,
+    "opp_cash": 77007,
+    "won": true,
+    "opponent": "Palimpsesto"
+   },
+   {
+    "episode": 119157459,
+    "end": "2026-10-06T23:29:21.408159900Z",
+    "our_cash": 107578,
+    "opp_cash": 76400,
+    "won": true,
+    "opponent": "Mohammad Usman Sajid"
+   },
+   {
+    "episode": 119149836,
+    "end": "2026-10-06T23:09:17.420177700Z",
+    "our_cash": 62778,
+    "opp_cash": 68293,
+    "won": false,
+    "opponent": "amit shulstein"
+   },
+   {
+    "episode": 119139215,
+    "end": "2026-10-06T22:36:23.549953Z",
+    "our_cash": 82826,
+    "opp_cash": 66982,
+    "won": true,
+    "opponent": "gytdrop"
+   },
+   {
     "episode": 119123903,
     "end": "2026-10-06T21:50:28.651823400Z",
     "our_cash": 75552,
@@ -3001,6 +3073,102 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 119219413,
+    "end": "2026-10-07T02:23:38.507621100Z",
+    "our_cash": 50834,
+    "opp_cash": 44266,
+    "won": true,
+    "opponent": "Shivam Shinde"
+   },
+   {
+    "episode": 119218134,
+    "end": "2026-10-07T02:20:43.991600100Z",
+    "our_cash": 109415,
+    "opp_cash": 115663,
+    "won": false,
+    "opponent": "Isaac D. H\u00e9rnandez G."
+   },
+   {
+    "episode": 119215616,
+    "end": "2026-10-07T02:12:05.138924600Z",
+    "our_cash": 91883,
+    "opp_cash": 91769,
+    "won": true,
+    "opponent": "bali rasem"
+   },
+   {
+    "episode": 119200395,
+    "end": "2026-10-07T01:31:48.402685100Z",
+    "our_cash": 94443,
+    "opp_cash": 88201,
+    "won": true,
+    "opponent": "Abhishek Kumar Gupta"
+   },
+   {
+    "episode": 119199637,
+    "end": "2026-10-07T01:29:44.541528800Z",
+    "our_cash": 108092,
+    "opp_cash": 118434,
+    "won": false,
+    "opponent": "Enrico Ambrosio"
+   },
+   {
+    "episode": 119184469,
+    "end": "2026-10-07T00:46:06.629251800Z",
+    "our_cash": 96602,
+    "opp_cash": 94368,
+    "won": true,
+    "opponent": "bvgr"
+   },
+   {
+    "episode": 119174062,
+    "end": "2026-10-07T00:18:27.266489100Z",
+    "our_cash": 76560,
+    "opp_cash": 56824,
+    "won": true,
+    "opponent": "Michael van Mill"
+   },
+   {
+    "episode": 119175011,
+    "end": "2026-10-07T00:17:49.506234600Z",
+    "our_cash": 99493,
+    "opp_cash": 46410,
+    "won": true,
+    "opponent": "Govind Sharma"
+   },
+   {
+    "episode": 119158762,
+    "end": "2026-10-06T23:35:28.797707900Z",
+    "our_cash": 75920,
+    "opp_cash": 83315,
+    "won": false,
+    "opponent": "Matthew Liew"
+   },
+   {
+    "episode": 119143647,
+    "end": "2026-10-06T22:50:47.391952200Z",
+    "our_cash": 99665,
+    "opp_cash": 90297,
+    "won": true,
+    "opponent": "Morpheus0303003"
+   },
+   {
+    "episode": 119139282,
+    "end": "2026-10-06T22:38:59.438813500Z",
+    "our_cash": 76216,
+    "opp_cash": 60033,
+    "won": true,
+    "opponent": "William Lee"
+   },
+   {
+    "episode": 119128561,
+    "end": "2026-10-06T22:05:03.434293900Z",
+    "our_cash": 92658,
+    "opp_cash": 47080,
+    "won": true,
+    "opponent": "Israel Burns"
+   },
    {
     "episode": 119113621,
     "end": "2026-10-06T21:23:43.333771900Z",
