@@ -4,6 +4,134 @@
   "active": true,
   "episodes": [
    {
+    "episode": 119933280,
+    "end": "2026-10-08T12:06:37.735293Z",
+    "our_cash": 81556,
+    "opp_cash": 93589,
+    "won": false,
+    "opponent": "DevilQ"
+   },
+   {
+    "episode": 119917775,
+    "end": "2026-10-08T11:18:03.461941100Z",
+    "our_cash": 97560,
+    "opp_cash": 81918,
+    "won": true,
+    "opponent": "arman1o1"
+   },
+   {
+    "episode": 119902340,
+    "end": "2026-10-08T10:34:22.127993300Z",
+    "our_cash": 54845,
+    "opp_cash": 72148,
+    "won": false,
+    "opponent": "L\u00ea Ng\u1ecdc L\u00e2m"
+   },
+   {
+    "episode": 119893676,
+    "end": "2026-10-08T10:10:36.973933100Z",
+    "our_cash": 87319,
+    "opp_cash": 92686,
+    "won": false,
+    "opponent": "Liz"
+   },
+   {
+    "episode": 119890747,
+    "end": "2026-10-08T10:04:52.205578Z",
+    "our_cash": 78904,
+    "opp_cash": 57440,
+    "won": true,
+    "opponent": "prabalsingh_23"
+   },
+   {
+    "episode": 119875309,
+    "end": "2026-10-08T09:17:55.789046600Z",
+    "our_cash": 59696,
+    "opp_cash": 72909,
+    "won": false,
+    "opponent": "Logan Seitz"
+   },
+   {
+    "episode": 119859819,
+    "end": "2026-10-08T08:34:33.527735500Z",
+    "our_cash": 45542,
+    "opp_cash": 48586,
+    "won": false,
+    "opponent": "cheng-han"
+   },
+   {
+    "episode": 119848088,
+    "end": "2026-10-08T08:04:57.876847200Z",
+    "our_cash": 82103,
+    "opp_cash": 103454,
+    "won": false,
+    "opponent": "ryanocm"
+   },
+   {
+    "episode": 119832597,
+    "end": "2026-10-08T07:20:53.628039300Z",
+    "our_cash": 85681,
+    "opp_cash": 120666,
+    "won": false,
+    "opponent": "Smart Manoj"
+   },
+   {
+    "episode": 119817057,
+    "end": "2026-10-08T06:35:59.370677100Z",
+    "our_cash": 81714,
+    "opp_cash": 67426,
+    "won": true,
+    "opponent": "taha berk"
+   },
+   {
+    "episode": 119801727,
+    "end": "2026-10-08T05:57:30.639822800Z",
+    "our_cash": 66959,
+    "opp_cash": 108434,
+    "won": false,
+    "opponent": "Abhi Kumar Agrawal"
+   },
+   {
+    "episode": 119786222,
+    "end": "2026-10-08T05:12:38.376199300Z",
+    "our_cash": 96980,
+    "opp_cash": 87300,
+    "won": true,
+    "opponent": "V Manmohan"
+   },
+   {
+    "episode": 119770798,
+    "end": "2026-10-08T04:27:28.408699300Z",
+    "our_cash": 94475,
+    "opp_cash": 69449,
+    "won": true,
+    "opponent": "Nanga_rendu_peru"
+   },
+   {
+    "episode": 119766948,
+    "end": "2026-10-08T04:14:56.553945Z",
+    "our_cash": 90285,
+    "opp_cash": 49584,
+    "won": true,
+    "opponent": "jenninglim"
+   },
+   {
+    "episode": 119766626,
+    "end": "2026-10-08T04:14:41.719917100Z",
+    "our_cash": 99053,
+    "opp_cash": 50791,
+    "won": true,
+    "opponent": "Dominik Toric"
+   },
+   {
+    "episode": 119751502,
+    "end": "2026-10-08T03:37:08.861830500Z",
+    "our_cash": 76476,
+    "opp_cash": 88539,
+    "won": false,
+    "opponent": "Vidushiii"
+   },
+   {
     "episode": 119736118,
     "end": "2026-10-08T02:50:49.070250200Z",
     "our_cash": 78329,
@@ -3457,6 +3585,134 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 119932787,
+    "end": "2026-10-08T11:58:34.354101500Z",
+    "our_cash": 75776,
+    "opp_cash": 74801,
+    "won": true,
+    "opponent": "ayushk_empire"
+   },
+   {
+    "episode": 119923386,
+    "end": "2026-10-08T11:33:45.618687600Z",
+    "our_cash": 96272,
+    "opp_cash": 102517,
+    "won": false,
+    "opponent": "huanxian chen"
+   },
+   {
+    "episode": 119907918,
+    "end": "2026-10-08T10:53:08.078225100Z",
+    "our_cash": 86276,
+    "opp_cash": 77683,
+    "won": true,
+    "opponent": "bruhbruh"
+   },
+   {
+    "episode": 119892427,
+    "end": "2026-10-08T10:08:24.109833400Z",
+    "our_cash": 42398,
+    "opp_cash": 55548,
+    "won": false,
+    "opponent": "hxaxd"
+   },
+   {
+    "episode": 119887765,
+    "end": "2026-10-08T09:54:23.443134700Z",
+    "our_cash": 48060,
+    "opp_cash": 21902,
+    "won": true,
+    "opponent": "Ahmed Bootaan"
+   },
+   {
+    "episode": 119872522,
+    "end": "2026-10-08T09:12:17.213557700Z",
+    "our_cash": 87782,
+    "opp_cash": 122595,
+    "won": false,
+    "opponent": "HexTex"
+   },
+   {
+    "episode": 119857104,
+    "end": "2026-10-08T08:29:19.424850100Z",
+    "our_cash": 35970,
+    "opp_cash": 46645,
+    "won": false,
+    "opponent": "Samsay24"
+   },
+   {
+    "episode": 119849275,
+    "end": "2026-10-08T08:08:20.202381600Z",
+    "our_cash": 43186,
+    "opp_cash": 91989,
+    "won": false,
+    "opponent": "\u5f8c\u85e4\u5c06\u6597"
+   },
+   {
+    "episode": 119833831,
+    "end": "2026-10-08T07:25:24.731358600Z",
+    "our_cash": 88580,
+    "opp_cash": 62900,
+    "won": true,
+    "opponent": "truebelief"
+   },
+   {
+    "episode": 119818360,
+    "end": "2026-10-08T06:38:15.080597Z",
+    "our_cash": 47925,
+    "opp_cash": 44443,
+    "won": true,
+    "opponent": "Luis Fernando Faria"
+   },
+   {
+    "episode": 119803010,
+    "end": "2026-10-08T05:58:15.801638600Z",
+    "our_cash": 57557,
+    "opp_cash": 43425,
+    "won": true,
+    "opponent": "Marco Nasuelli"
+   },
+   {
+    "episode": 119787607,
+    "end": "2026-10-08T05:14:25.613286400Z",
+    "our_cash": 74374,
+    "opp_cash": 62992,
+    "won": true,
+    "opponent": "Gruberx"
+   },
+   {
+    "episode": 119772146,
+    "end": "2026-10-08T04:32:01.489582200Z",
+    "our_cash": 59633,
+    "opp_cash": 63588,
+    "won": false,
+    "opponent": "Naman Malik"
+   },
+   {
+    "episode": 119772213,
+    "end": "2026-10-08T04:30:19.026566400Z",
+    "our_cash": 104757,
+    "opp_cash": 82608,
+    "won": true,
+    "opponent": "SelvapriyankaRam"
+   },
+   {
+    "episode": 119756638,
+    "end": "2026-10-08T03:48:26.432759500Z",
+    "our_cash": 89826,
+    "opp_cash": 94478,
+    "won": false,
+    "opponent": "Guzha Panashe H"
+   },
+   {
+    "episode": 119753195,
+    "end": "2026-10-08T03:38:15.315181600Z",
+    "our_cash": 68054,
+    "opp_cash": 61600,
+    "won": true,
+    "opponent": "Slizzle"
+   },
    {
     "episode": 119737798,
     "end": "2026-10-08T02:54:47.278360100Z",
