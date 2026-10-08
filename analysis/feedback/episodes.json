@@ -4,6 +4,102 @@
   "active": true,
   "episodes": [
    {
+    "episode": 119736118,
+    "end": "2026-10-08T02:50:49.070250200Z",
+    "our_cash": 78329,
+    "opp_cash": 85086,
+    "won": false,
+    "opponent": "Abu Saleh"
+   },
+   {
+    "episode": 119731697,
+    "end": "2026-10-08T02:40:25.185331100Z",
+    "our_cash": 97835,
+    "opp_cash": 86815,
+    "won": true,
+    "opponent": "Abhimanyu Singh"
+   },
+   {
+    "episode": 119726818,
+    "end": "2026-10-08T02:25:04.389346Z",
+    "our_cash": 89060,
+    "opp_cash": 61601,
+    "won": true,
+    "opponent": "inversion"
+   },
+   {
+    "episode": 119717263,
+    "end": "2026-10-08T01:58:01.039058400Z",
+    "our_cash": 58931,
+    "opp_cash": 47956,
+    "won": true,
+    "opponent": "lixinglong ye"
+   },
+   {
+    "episode": 119701874,
+    "end": "2026-10-08T01:16:28.708477400Z",
+    "our_cash": 108906,
+    "opp_cash": 91566,
+    "won": true,
+    "opponent": "\u534e\u4e1c \u6731"
+   },
+   {
+    "episode": 119692775,
+    "end": "2026-10-08T00:53:26.420265100Z",
+    "our_cash": 93243,
+    "opp_cash": 76297,
+    "won": true,
+    "opponent": "Yogesh2850"
+   },
+   {
+    "episode": 119678932,
+    "end": "2026-10-08T00:12:06.150484900Z",
+    "our_cash": 58791,
+    "opp_cash": 50028,
+    "won": true,
+    "opponent": "menna hassanM"
+   },
+   {
+    "episode": 119678571,
+    "end": "2026-10-08T00:10:56.705141300Z",
+    "our_cash": 67333,
+    "opp_cash": 68109,
+    "won": false,
+    "opponent": "Boladi"
+   },
+   {
+    "episode": 119675658,
+    "end": "2026-10-08T00:01:37.053321100Z",
+    "our_cash": 89062,
+    "opp_cash": 77214,
+    "won": true,
+    "opponent": "Denis Zerov"
+   },
+   {
+    "episode": 119660318,
+    "end": "2026-10-07T23:21:14.988956700Z",
+    "our_cash": 53023,
+    "opp_cash": 70059,
+    "won": false,
+    "opponent": "Miaohua Zhang"
+   },
+   {
+    "episode": 119648603,
+    "end": "2026-10-07T22:42:29.991772900Z",
+    "our_cash": 112476,
+    "opp_cash": 93165,
+    "won": true,
+    "opponent": "TirumalaMarri"
+   },
+   {
+    "episode": 119645292,
+    "end": "2026-10-07T22:30:55.863452300Z",
+    "our_cash": 105800,
+    "opp_cash": 151620,
+    "won": false,
+    "opponent": "taijunhao"
+   },
+   {
     "episode": 119629923,
     "end": "2026-10-07T21:45:11.169664900Z",
     "our_cash": 53718,
@@ -3361,6 +3457,94 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 119737798,
+    "end": "2026-10-08T02:54:47.278360100Z",
+    "our_cash": 99075,
+    "opp_cash": 102478,
+    "won": false,
+    "opponent": "MugaBros"
+   },
+   {
+    "episode": 119737093,
+    "end": "2026-10-08T02:53:44.446168700Z",
+    "our_cash": 87702,
+    "opp_cash": 71492,
+    "won": true,
+    "opponent": "yunchuan liu"
+   },
+   {
+    "episode": 119721692,
+    "end": "2026-10-08T02:11:58.366155400Z",
+    "our_cash": 79655,
+    "opp_cash": 116340,
+    "won": false,
+    "opponent": "nishchal jain"
+   },
+   {
+    "episode": 119721064,
+    "end": "2026-10-08T02:08:52.098869800Z",
+    "our_cash": 104126,
+    "opp_cash": 92709,
+    "won": true,
+    "opponent": "Koshtubh Singh Parihar"
+   },
+   {
+    "episode": 119705704,
+    "end": "2026-10-08T01:28:02.835155200Z",
+    "our_cash": 67080,
+    "opp_cash": 101453,
+    "won": false,
+    "opponent": "Ganesh "
+   },
+   {
+    "episode": 119690289,
+    "end": "2026-10-08T00:45:00.067786800Z",
+    "our_cash": 79483,
+    "opp_cash": 85548,
+    "won": false,
+    "opponent": "kissadolce"
+   },
+   {
+    "episode": 119679558,
+    "end": "2026-10-08T00:11:09.178287200Z",
+    "our_cash": 80616,
+    "opp_cash": 85197,
+    "won": false,
+    "opponent": "googunmo"
+   },
+   {
+    "episode": 119664221,
+    "end": "2026-10-07T23:31:56.846685200Z",
+    "our_cash": 101953,
+    "opp_cash": 122858,
+    "won": false,
+    "opponent": "Guruprasad Parasnis"
+   },
+   {
+    "episode": 119655429,
+    "end": "2026-10-07T23:01:32.323373900Z",
+    "our_cash": 74185,
+    "opp_cash": 70137,
+    "won": true,
+    "opponent": "fahimMK"
+   },
+   {
+    "episode": 119654729,
+    "end": "2026-10-07T22:58:07.370097700Z",
+    "our_cash": 51061,
+    "opp_cash": 62633,
+    "won": false,
+    "opponent": "Cordiz"
+   },
+   {
+    "episode": 119641430,
+    "end": "2026-10-07T22:21:54.979671600Z",
+    "our_cash": 84052,
+    "opp_cash": 105273,
+    "won": false,
+    "opponent": "nono00"
+   },
    {
     "episode": 119629272,
     "end": "2026-10-07T21:41:41.013805900Z",
