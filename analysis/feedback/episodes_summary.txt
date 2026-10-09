@@ -1,5 +1,5 @@
-v17cand_3quadrant.py [ACTIVE] 496 games  win  50.0%  our cash  82096  opp cash  84330
-b462d43a7c5f-search-r35970301769.py [ACTIVE] 500 games  win  50.2%  our cash  82405  opp cash  82994
+v17cand_3quadrant.py [ACTIVE] 521 games  win  50.1%  our cash  82188  opp cash  84575
+b462d43a7c5f-search-r35970301769.py [ACTIVE] 521 games  win  50.7%  our cash  82272  opp cash  82530
 b10905cc7ace.py [frozen]  48 games  win  43.8%  our cash  79523  opp cash  84792
 main_v14.py    [frozen]  75 games  win  41.3%  our cash  76781  opp cash  89576
 cff15ce57d4b-search.py [frozen]  62 games  win  48.4%  our cash  82002  opp cash  82009
