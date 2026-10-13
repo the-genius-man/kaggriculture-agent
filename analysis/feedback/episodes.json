@@ -4,6 +4,70 @@
   "active": true,
   "episodes": [
    {
+    "episode": 123137833,
+    "end": "2026-10-13T04:08:39.576586200Z",
+    "our_cash": 72848,
+    "opp_cash": 93168,
+    "won": false,
+    "opponent": "NOTSUREKITTY"
+   },
+   {
+    "episode": 123118508,
+    "end": "2026-10-13T03:37:21.689907500Z",
+    "our_cash": 84637,
+    "opp_cash": 73837,
+    "won": true,
+    "opponent": "Mohammed Mukthar"
+   },
+   {
+    "episode": 123098557,
+    "end": "2026-10-13T02:58:26.457458600Z",
+    "our_cash": 58138,
+    "opp_cash": 66555,
+    "won": false,
+    "opponent": "GorillaGhost"
+   },
+   {
+    "episode": 123078390,
+    "end": "2026-10-13T02:25:28.059946700Z",
+    "our_cash": 80715,
+    "opp_cash": 36377,
+    "won": true,
+    "opponent": "machineabao"
+   },
+   {
+    "episode": 123057704,
+    "end": "2026-10-13T01:49:43.908011700Z",
+    "our_cash": 110543,
+    "opp_cash": 89211,
+    "won": true,
+    "opponent": "HayDay Protestors"
+   },
+   {
+    "episode": 123037044,
+    "end": "2026-10-13T01:17:40.274733900Z",
+    "our_cash": 109759,
+    "opp_cash": 120746,
+    "won": false,
+    "opponent": "probability"
+   },
+   {
+    "episode": 123025486,
+    "end": "2026-10-13T00:55:47.852723500Z",
+    "our_cash": 73446,
+    "opp_cash": 97883,
+    "won": false,
+    "opponent": "Vishnu R Mohan"
+   },
+   {
+    "episode": 123005001,
+    "end": "2026-10-13T00:15:14.838943700Z",
+    "our_cash": 72214,
+    "opp_cash": 75866,
+    "won": false,
+    "opponent": "Ademola Arigbabuwo"
+   },
+   {
     "episode": 122984754,
     "end": "2026-10-12T23:37:44.380094700Z",
     "our_cash": 69385,
@@ -5753,6 +5817,86 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 123127464,
+    "end": "2026-10-13T03:52:39.838846Z",
+    "our_cash": 106906,
+    "opp_cash": 94763,
+    "won": true,
+    "opponent": "hendracos"
+   },
+   {
+    "episode": 123118586,
+    "end": "2026-10-13T03:36:42.817230800Z",
+    "our_cash": 95803,
+    "opp_cash": 77462,
+    "won": true,
+    "opponent": "Ashish Kumar"
+   },
+   {
+    "episode": 123098626,
+    "end": "2026-10-13T03:01:30.077140600Z",
+    "our_cash": 72399,
+    "opp_cash": 74049,
+    "won": false,
+    "opponent": "JacobKooi"
+   },
+   {
+    "episode": 123098149,
+    "end": "2026-10-13T02:59:34.198291900Z",
+    "our_cash": 81273,
+    "opp_cash": 61061,
+    "won": true,
+    "opponent": "xianhao Lin6077"
+   },
+   {
+    "episode": 123078462,
+    "end": "2026-10-13T02:25:30.987060600Z",
+    "our_cash": 47427,
+    "opp_cash": 59884,
+    "won": false,
+    "opponent": "MLEDV"
+   },
+   {
+    "episode": 123068990,
+    "end": "2026-10-13T02:10:32.855689900Z",
+    "our_cash": 86560,
+    "opp_cash": 74724,
+    "won": true,
+    "opponent": "chunluran"
+   },
+   {
+    "episode": 123047768,
+    "end": "2026-10-13T01:31:05.266598300Z",
+    "our_cash": 96036,
+    "opp_cash": 111115,
+    "won": false,
+    "opponent": "shoaib khan"
+   },
+   {
+    "episode": 123026523,
+    "end": "2026-10-13T00:56:58.039233800Z",
+    "our_cash": 60664,
+    "opp_cash": 77484,
+    "won": false,
+    "opponent": "Vijay Krishna Lanka"
+   },
+   {
+    "episode": 123006550,
+    "end": "2026-10-13T00:20:06.838149900Z",
+    "our_cash": 69162,
+    "opp_cash": 97083,
+    "won": false,
+    "opponent": "aiexpert1120"
+   },
+   {
+    "episode": 123006395,
+    "end": "2026-10-13T00:18:38.429297900Z",
+    "our_cash": 78085,
+    "opp_cash": 74852,
+    "won": true,
+    "opponent": "Satvik R Shetty"
+   },
    {
     "episode": 122986193,
     "end": "2026-10-12T23:40:08.738902400Z",
