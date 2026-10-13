@@ -4,6 +4,182 @@
   "active": true,
   "episodes": [
    {
+    "episode": 123681699,
+    "end": "2026-10-13T21:59:45.121381900Z",
+    "our_cash": 81596,
+    "opp_cash": 81089,
+    "won": true,
+    "opponent": "robin baldeo"
+   },
+   {
+    "episode": 123664907,
+    "end": "2026-10-13T21:23:04.469590900Z",
+    "our_cash": 60861,
+    "opp_cash": 81054,
+    "won": false,
+    "opponent": "Alissa King"
+   },
+   {
+    "episode": 123654186,
+    "end": "2026-10-13T21:03:03.325052700Z",
+    "our_cash": 70368,
+    "opp_cash": 47596,
+    "won": true,
+    "opponent": "yoshiki116"
+   },
+   {
+    "episode": 123639530,
+    "end": "2026-10-13T20:32:30.718330900Z",
+    "our_cash": 47166,
+    "opp_cash": 30187,
+    "won": true,
+    "opponent": "Aryan88097"
+   },
+   {
+    "episode": 123622793,
+    "end": "2026-10-13T19:57:40.836385400Z",
+    "our_cash": 89068,
+    "opp_cash": 58888,
+    "won": true,
+    "opponent": "zhang xin"
+   },
+   {
+    "episode": 123617691,
+    "end": "2026-10-13T19:43:21.937850500Z",
+    "our_cash": 102058,
+    "opp_cash": 68537,
+    "won": true,
+    "opponent": "lixinglong ye"
+   },
+   {
+    "episode": 123603776,
+    "end": "2026-10-13T19:17:07.648395500Z",
+    "our_cash": 74839,
+    "opp_cash": 80518,
+    "won": false,
+    "opponent": "Aadhithya Ramesh"
+   },
+   {
+    "episode": 123585292,
+    "end": "2026-10-13T18:41:52.696421Z",
+    "our_cash": 90733,
+    "opp_cash": 104381,
+    "won": false,
+    "opponent": "xianhao Lin6077"
+   },
+   {
+    "episode": 123584383,
+    "end": "2026-10-13T18:41:35.157445300Z",
+    "our_cash": 83094,
+    "opp_cash": 34223,
+    "won": true,
+    "opponent": "Sanchit Handa"
+   },
+   {
+    "episode": 123584523,
+    "end": "2026-10-13T18:38:21.312954500Z",
+    "our_cash": 46797,
+    "opp_cash": 49485,
+    "won": false,
+    "opponent": "Nepsirhc"
+   },
+   {
+    "episode": 123565382,
+    "end": "2026-10-13T18:03:42.389541500Z",
+    "our_cash": 84289,
+    "opp_cash": 72933,
+    "won": true,
+    "opponent": "sometimeafter"
+   },
+   {
+    "episode": 123551866,
+    "end": "2026-10-13T17:38:41.332205200Z",
+    "our_cash": 60702,
+    "opp_cash": 64082,
+    "won": false,
+    "opponent": "Jeff Law #2"
+   },
+   {
+    "episode": 123531163,
+    "end": "2026-10-13T17:02:33.928660Z",
+    "our_cash": 73314,
+    "opp_cash": 91722,
+    "won": false,
+    "opponent": "ko_fusion_JPN"
+   },
+   {
+    "episode": 123512013,
+    "end": "2026-10-13T16:28:48.486615300Z",
+    "our_cash": 69000,
+    "opp_cash": 71195,
+    "won": false,
+    "opponent": "Yaroslav Tanko"
+   },
+   {
+    "episode": 123508658,
+    "end": "2026-10-13T16:21:30.313324800Z",
+    "our_cash": 102819,
+    "opp_cash": 96923,
+    "won": true,
+    "opponent": "Kakarott 10"
+   },
+   {
+    "episode": 123491787,
+    "end": "2026-10-13T15:45:16.692759300Z",
+    "our_cash": 51660,
+    "opp_cash": 39208,
+    "won": true,
+    "opponent": "Ramana Prabhu Sana"
+   },
+   {
+    "episode": 123487054,
+    "end": "2026-10-13T15:39:23.755188300Z",
+    "our_cash": 94321,
+    "opp_cash": 115575,
+    "won": false,
+    "opponent": "Sujal Agarwal2301"
+   },
+   {
+    "episode": 123469977,
+    "end": "2026-10-13T15:01:33.697699200Z",
+    "our_cash": 102378,
+    "opp_cash": 98394,
+    "won": true,
+    "opponent": "Shivam Kushwaha"
+   },
+   {
+    "episode": 123454478,
+    "end": "2026-10-13T14:26:50.434692Z",
+    "our_cash": 90717,
+    "opp_cash": 91217,
+    "won": false,
+    "opponent": "Antonio Stanciu"
+   },
+   {
+    "episode": 123437157,
+    "end": "2026-10-13T13:53:16.149665900Z",
+    "our_cash": 61417,
+    "opp_cash": 85137,
+    "won": false,
+    "opponent": "RMS Danaraj"
+   },
+   {
+    "episode": 123435205,
+    "end": "2026-10-13T13:49:37.014829400Z",
+    "our_cash": 70926,
+    "opp_cash": 91233,
+    "won": false,
+    "opponent": "Mounika Kommireddy"
+   },
+   {
+    "episode": 123417946,
+    "end": "2026-10-13T13:13:41.157335200Z",
+    "our_cash": 91727,
+    "opp_cash": 92705,
+    "won": false,
+    "opponent": "Efthimios"
+   },
+   {
     "episode": 123400721,
     "end": "2026-10-13T12:41:04.234560400Z",
     "our_cash": 95227,
@@ -5993,6 +6169,166 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 123668034,
+    "end": "2026-10-13T21:32:07.036675200Z",
+    "our_cash": 73878,
+    "opp_cash": 66217,
+    "won": true,
+    "opponent": "S Aishvarya"
+   },
+   {
+    "episode": 123652925,
+    "end": "2026-10-13T21:00:45.928069600Z",
+    "our_cash": 73244,
+    "opp_cash": 80844,
+    "won": false,
+    "opponent": "liuzewen123"
+   },
+   {
+    "episode": 123636578,
+    "end": "2026-10-13T20:25:10.639630100Z",
+    "our_cash": 48574,
+    "opp_cash": 52529,
+    "won": false,
+    "opponent": "Mikiyaas"
+   },
+   {
+    "episode": 123625255,
+    "end": "2026-10-13T19:58:52.780339300Z",
+    "our_cash": 79297,
+    "opp_cash": 92636,
+    "won": false,
+    "opponent": "ingemarieke"
+   },
+   {
+    "episode": 123620203,
+    "end": "2026-10-13T19:52:14.765498Z",
+    "our_cash": 64074,
+    "opp_cash": 97628,
+    "won": false,
+    "opponent": "Mateus Cruz, Msc."
+   },
+   {
+    "episode": 123602948,
+    "end": "2026-10-13T19:15:30.346661800Z",
+    "our_cash": 81766,
+    "opp_cash": 76015,
+    "won": true,
+    "opponent": "Huanchen Jia"
+   },
+   {
+    "episode": 123584493,
+    "end": "2026-10-13T18:41:06.285007600Z",
+    "our_cash": 85250,
+    "opp_cash": 88641,
+    "won": false,
+    "opponent": "JairSanchez151270"
+   },
+   {
+    "episode": 123582124,
+    "end": "2026-10-13T18:35:55.123153300Z",
+    "our_cash": 100600,
+    "opp_cash": 111349,
+    "won": false,
+    "opponent": "\u0410\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440 \u0422\u0440\u0438\u0444\u043e\u043d\u043e\u0432"
+   },
+   {
+    "episode": 123562889,
+    "end": "2026-10-13T17:58:17.303888700Z",
+    "our_cash": 58100,
+    "opp_cash": 72149,
+    "won": false,
+    "opponent": "ckd999"
+   },
+   {
+    "episode": 123542035,
+    "end": "2026-10-13T17:22:14.941836300Z",
+    "our_cash": 109393,
+    "opp_cash": 131847,
+    "won": false,
+    "opponent": "Heavy Drivers 2.0"
+   },
+   {
+    "episode": 123542249,
+    "end": "2026-10-13T17:19:19.930061800Z",
+    "our_cash": 97061,
+    "opp_cash": 114740,
+    "won": false,
+    "opponent": "Yash Katiyar"
+   },
+   {
+    "episode": 123521739,
+    "end": "2026-10-13T16:43:48.583083700Z",
+    "our_cash": 49594,
+    "opp_cash": 89950,
+    "won": false,
+    "opponent": "Aman Gupta"
+   },
+   {
+    "episode": 123506823,
+    "end": "2026-10-13T16:18:18.552211100Z",
+    "our_cash": 48010,
+    "opp_cash": 58760,
+    "won": false,
+    "opponent": "Alberto MV"
+   },
+   {
+    "episode": 123506698,
+    "end": "2026-10-13T16:15:31.924900100Z",
+    "our_cash": 97546,
+    "opp_cash": 74749,
+    "won": true,
+    "opponent": "Bennett Hellman"
+   },
+   {
+    "episode": 123489874,
+    "end": "2026-10-13T15:42:47.587331500Z",
+    "our_cash": 58738,
+    "opp_cash": 113274,
+    "won": false,
+    "opponent": "HoJoonYun"
+   },
+   {
+    "episode": 123473996,
+    "end": "2026-10-13T15:08:32.986337800Z",
+    "our_cash": 107178,
+    "opp_cash": 99498,
+    "won": true,
+    "opponent": "R\u00faben Martins"
+   },
+   {
+    "episode": 123455819,
+    "end": "2026-10-13T14:33:39.932302Z",
+    "our_cash": 63033,
+    "opp_cash": 62052,
+    "won": true,
+    "opponent": "FunnyBishop"
+   },
+   {
+    "episode": 123456953,
+    "end": "2026-10-13T14:32:53.884032600Z",
+    "our_cash": 51998,
+    "opp_cash": 82026,
+    "won": false,
+    "opponent": "kanzaler ensemble"
+   },
+   {
+    "episode": 123438476,
+    "end": "2026-10-13T13:54:46.481019Z",
+    "our_cash": 83568,
+    "opp_cash": 83738,
+    "won": false,
+    "opponent": "Riki Garcia"
+   },
+   {
+    "episode": 123421300,
+    "end": "2026-10-13T13:21:10.289716700Z",
+    "our_cash": 104573,
+    "opp_cash": 103919,
+    "won": true,
+    "opponent": "ashsah"
+   },
    {
     "episode": 123403936,
     "end": "2026-10-13T12:43:50.440273Z",
