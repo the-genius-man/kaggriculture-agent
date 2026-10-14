@@ -4,6 +4,94 @@
   "active": true,
   "episodes": [
    {
+    "episode": 123802511,
+    "end": "2026-10-14T01:59:33.315863900Z",
+    "our_cash": 87084,
+    "opp_cash": 82598,
+    "won": true,
+    "opponent": "Cristian034"
+   },
+   {
+    "episode": 123801983,
+    "end": "2026-10-14T01:56:31.703195Z",
+    "our_cash": 65349,
+    "opp_cash": 90823,
+    "won": false,
+    "opponent": "Veeranuch Leelalai"
+   },
+   {
+    "episode": 123801786,
+    "end": "2026-10-14T01:55:19.659771Z",
+    "our_cash": 86663,
+    "opp_cash": 87168,
+    "won": false,
+    "opponent": "menna hassanM"
+   },
+   {
+    "episode": 123784230,
+    "end": "2026-10-14T01:19:14.759551900Z",
+    "our_cash": 80819,
+    "opp_cash": 100509,
+    "won": false,
+    "opponent": "techtech69"
+   },
+   {
+    "episode": 123781338,
+    "end": "2026-10-14T01:17:28.740861200Z",
+    "our_cash": 99195,
+    "opp_cash": 87646,
+    "won": true,
+    "opponent": "ketterking"
+   },
+   {
+    "episode": 123762371,
+    "end": "2026-10-14T00:41:01.117250900Z",
+    "our_cash": 85327,
+    "opp_cash": 50060,
+    "won": true,
+    "opponent": "walid waccub"
+   },
+   {
+    "episode": 123744267,
+    "end": "2026-10-14T00:04:32.567864700Z",
+    "our_cash": 113807,
+    "opp_cash": 97506,
+    "won": true,
+    "opponent": "Trung Ph\u1ea1m \u0110\u1ee9c"
+   },
+   {
+    "episode": 123727902,
+    "end": "2026-10-13T23:35:36.112677Z",
+    "our_cash": 58577,
+    "opp_cash": 79700,
+    "won": false,
+    "opponent": "fred mahinay"
+   },
+   {
+    "episode": 123707252,
+    "end": "2026-10-13T22:52:55.973604900Z",
+    "our_cash": 87413,
+    "opp_cash": 104142,
+    "won": false,
+    "opponent": "romin_123"
+   },
+   {
+    "episode": 123706936,
+    "end": "2026-10-13T22:51:59.752941900Z",
+    "our_cash": 72376,
+    "opp_cash": 103847,
+    "won": false,
+    "opponent": "lxh unbound"
+   },
+   {
+    "episode": 123687328,
+    "end": "2026-10-13T22:12:56.782466100Z",
+    "our_cash": 94590,
+    "opp_cash": 66904,
+    "won": true,
+    "opponent": "LCNN JJ"
+   },
+   {
     "episode": 123681699,
     "end": "2026-10-13T21:59:45.121381900Z",
     "our_cash": 81596,
@@ -6169,6 +6257,86 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 123808164,
+    "end": "2026-10-14T02:12:02.405912600Z",
+    "our_cash": 63051,
+    "opp_cash": 62268,
+    "won": true,
+    "opponent": "Ki\u1ec7t L\u01b0u"
+   },
+   {
+    "episode": 123808430,
+    "end": "2026-10-14T02:11:26.608445300Z",
+    "our_cash": 49103,
+    "opp_cash": 74297,
+    "won": false,
+    "opponent": "Aldibek [dsmlkz]"
+   },
+   {
+    "episode": 123791522,
+    "end": "2026-10-14T01:37:18.440144Z",
+    "our_cash": 86564,
+    "opp_cash": 70704,
+    "won": true,
+    "opponent": "Rajan Aggarwal"
+   },
+   {
+    "episode": 123772776,
+    "end": "2026-10-14T01:00:56.017448800Z",
+    "our_cash": 100681,
+    "opp_cash": 43488,
+    "won": true,
+    "opponent": "Bartholomew Jordan"
+   },
+   {
+    "episode": 123754106,
+    "end": "2026-10-14T00:25:53.070947700Z",
+    "our_cash": 84346,
+    "opp_cash": 92786,
+    "won": false,
+    "opponent": "Ethan Hung"
+   },
+   {
+    "episode": 123749693,
+    "end": "2026-10-14T00:14:02.775842900Z",
+    "our_cash": 88495,
+    "opp_cash": 75204,
+    "won": true,
+    "opponent": "Shashank Jangid (G25AIT2100)"
+   },
+   {
+    "episode": 123744132,
+    "end": "2026-10-14T00:04:15.320844600Z",
+    "our_cash": 63778,
+    "opp_cash": 64111,
+    "won": false,
+    "opponent": "David Leati"
+   },
+   {
+    "episode": 123724157,
+    "end": "2026-10-13T23:27:44.981681800Z",
+    "our_cash": 61259,
+    "opp_cash": 95318,
+    "won": false,
+    "opponent": "The Devil's World 678"
+   },
+   {
+    "episode": 123703954,
+    "end": "2026-10-13T22:47:39.492345800Z",
+    "our_cash": 68919,
+    "opp_cash": 56931,
+    "won": true,
+    "opponent": "xxxx333"
+   },
+   {
+    "episode": 123684845,
+    "end": "2026-10-13T22:09:05.809138800Z",
+    "our_cash": 93202,
+    "opp_cash": 66688,
+    "won": true,
+    "opponent": "Dean Shalev"
+   },
    {
     "episode": 123668034,
     "end": "2026-10-13T21:32:07.036675200Z",
