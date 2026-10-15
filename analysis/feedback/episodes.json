@@ -4,6 +4,70 @@
   "active": true,
   "episodes": [
    {
+    "episode": 124411931,
+    "end": "2026-10-14T23:57:30.341717800Z",
+    "our_cash": 75083,
+    "opp_cash": 75732,
+    "won": false,
+    "opponent": "skyblue01"
+   },
+   {
+    "episode": 124395797,
+    "end": "2026-10-14T23:27:28.533097700Z",
+    "our_cash": 70325,
+    "opp_cash": 62324,
+    "won": true,
+    "opponent": "Danko Schroeder"
+   },
+   {
+    "episode": 124379626,
+    "end": "2026-10-14T22:48:50.479420700Z",
+    "our_cash": 72984,
+    "opp_cash": 117575,
+    "won": false,
+    "opponent": "Tyler Durden"
+   },
+   {
+    "episode": 124376274,
+    "end": "2026-10-14T22:40:32.925764700Z",
+    "our_cash": 53084,
+    "opp_cash": 65494,
+    "won": false,
+    "opponent": "MakiMakiAi"
+   },
+   {
+    "episode": 124364824,
+    "end": "2026-10-14T22:16:57.066082600Z",
+    "our_cash": 90131,
+    "opp_cash": 56861,
+    "won": true,
+    "opponent": "Dhruv"
+   },
+   {
+    "episode": 124363435,
+    "end": "2026-10-14T22:10:45.775357800Z",
+    "our_cash": 46339,
+    "opp_cash": 59657,
+    "won": false,
+    "opponent": "Gabriel oth\u00e1vio"
+   },
+   {
+    "episode": 124355949,
+    "end": "2026-10-14T21:56:45.838769800Z",
+    "our_cash": 81386,
+    "opp_cash": 81787,
+    "won": false,
+    "opponent": "jatan sanghvi"
+   },
+   {
+    "episode": 124342281,
+    "end": "2026-10-14T21:28:34.448432200Z",
+    "our_cash": 78081,
+    "opp_cash": 77643,
+    "won": true,
+    "opponent": "Rashi Jain07"
+   },
+   {
     "episode": 124325954,
     "end": "2026-10-14T20:48:34.157312300Z",
     "our_cash": 71273,
@@ -6641,6 +6705,70 @@
   "file": "b462d43a7c5f-search-r35970301769.py",
   "active": true,
   "episodes": [
+   {
+    "episode": 124412597,
+    "end": "2026-10-15T00:01:46.572656600Z",
+    "our_cash": 37135,
+    "opp_cash": 40791,
+    "won": false,
+    "opponent": "Harshpreet Singh"
+   },
+   {
+    "episode": 124396391,
+    "end": "2026-10-14T23:27:15.876282600Z",
+    "our_cash": 41697,
+    "opp_cash": 42374,
+    "won": false,
+    "opponent": "Viet Anh Ngo "
+   },
+   {
+    "episode": 124395267,
+    "end": "2026-10-14T23:19:37.308077Z",
+    "our_cash": 61659,
+    "opp_cash": 60864,
+    "won": true,
+    "opponent": "romin_123"
+   },
+   {
+    "episode": 124382151,
+    "end": "2026-10-14T22:55:44.066263100Z",
+    "our_cash": 68327,
+    "opp_cash": 60730,
+    "won": true,
+    "opponent": "Giampietro Pregnolato"
+   },
+   {
+    "episode": 124378011,
+    "end": "2026-10-14T22:47:31.787003200Z",
+    "our_cash": 79935,
+    "opp_cash": 73046,
+    "won": true,
+    "opponent": "Michael Mullen"
+   },
+   {
+    "episode": 124364573,
+    "end": "2026-10-14T22:15:37.503810100Z",
+    "our_cash": 114445,
+    "opp_cash": 97598,
+    "won": true,
+    "opponent": "Gerbilles Sauci\u00e8res"
+   },
+   {
+    "episode": 124363556,
+    "end": "2026-10-14T22:09:52.760320Z",
+    "our_cash": 76873,
+    "opp_cash": 95140,
+    "won": false,
+    "opponent": "Jacob Stultz1"
+   },
+   {
+    "episode": 124348074,
+    "end": "2026-10-14T21:38:04.907799800Z",
+    "our_cash": 77436,
+    "opp_cash": 108028,
+    "won": false,
+    "opponent": "Shekhar Suman"
+   },
    {
     "episode": 124331753,
     "end": "2026-10-14T20:57:54.442892600Z",
