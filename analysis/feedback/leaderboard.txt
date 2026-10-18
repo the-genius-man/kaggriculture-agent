@@ -1,4 +1,4 @@
-Next Page Token = CfDJ8JDwKpgsc5hJpcljKjpYpOGbq8_dBJq8pzXr3f0-Ku2uQ16GtQCQhKqbtkz-bFG2HNsgp-pjsp1uYo_zPgCf8SI
+Next Page Token = CfDJ8JDwKpgsc5hJpcljKjpYpOFTezugDyJ_lLsT79SKWzhH7fQdhLDOI0ECKFbCfd3y32-2vuuALZMsTGWUIiNIugc
   teamId  teamName                    submissionDate              score   
 --------  --------------------------  --------------------------  ------  
 16681125  M & M & P & Q               2026-09-30 15:21:46.810000  5890.3  
@@ -8,7 +8,7 @@ Next Page Token = CfDJ8JDwKpgsc5hJpcljKjpYpOGbq8_dBJq8pzXr3f0-Ku2uQ16GtQCQhKqbtk
 16624026  有辣条有权                       2026-09-30 23:29:22.773000  5473.7  
 16736435  CDE                         2026-09-30 23:36:56.816000  5465.0  
 16623559  DECEM                       2026-09-30 19:08:29.566000  5459.9  
-16628664  Anton Tikhonov              2026-09-30 20:42:57.013000  5395.7  
+16628664  itwastony                   2026-09-30 20:42:57.013000  5395.7  
 16623716  tetsuya & yuanzhe & guoqin  2026-09-30 22:03:35.073000  5338.7  
 16654697  KawattaTaido                2026-09-30 23:25:15.443000  5334.0  
 16684994  TKNP                        2026-09-30 23:55:23.326000  5322.6  
